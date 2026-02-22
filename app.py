@@ -39,13 +39,20 @@ COLORS = {
     'chart_colors': ['#0ea5e9', '#8b5cf6', '#f97316', '#10b981', '#f43f5e', '#06b6d4', '#eab308', '#ec4899', '#14b8a6', '#a855f7'],
 }
 
-PLOTLY_LAYOUT = dict(
-    paper_bgcolor='rgba(0,0,0,0)',
-    plot_bgcolor='rgba(0,0,0,0)',
-    font=dict(family='Inter, sans-serif', color=COLORS['text'], size=12),
-    xaxis=dict(gridcolor='#e2e8f0', zerolinecolor='#e2e8f0'),
-    yaxis=dict(gridcolor='#e2e8f0', zerolinecolor='#e2e8f0'),
-)
+def plotly_base(**overrides):
+    layout = dict(
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        font=dict(family='Inter, sans-serif', color=COLORS['text'], size=12),
+        xaxis=dict(gridcolor='#e2e8f0', zerolinecolor='#e2e8f0'),
+        yaxis=dict(gridcolor='#e2e8f0', zerolinecolor='#e2e8f0'),
+    )
+    for k, v in overrides.items():
+        if k in ('xaxis', 'yaxis') and k in layout and isinstance(v, dict):
+            layout[k] = {**layout[k], **v}
+        else:
+            layout[k] = v
+    return layout
 
 st.markdown("""
 <style>
@@ -114,19 +121,22 @@ st.markdown("""
     .dash-header {
         display: flex;
         justify-content: space-between;
-        align-items: baseline;
-        margin-bottom: 1.2rem;
+        align-items: center;
+        padding: 0.75rem 0 1rem 0;
+        margin-bottom: 0.5rem;
     }
     .dash-title {
         font-size: 1.8rem;
         font-weight: 800;
         color: #0f172a;
         letter-spacing: -0.02em;
+        line-height: 1.2;
     }
     .dash-date {
         font-size: 0.95rem;
         color: #64748b;
         font-weight: 500;
+        white-space: nowrap;
     }
 
     .section-header-row {
@@ -202,20 +212,6 @@ st.markdown("""
         padding: 20px;
         margin-bottom: 10px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-
-    .ml-footnote {
-        background: linear-gradient(135deg, #f0f9ff, #f8fafc);
-        border: 1px solid #bae6fd;
-        border-radius: 12px;
-        padding: 20px 24px;
-        margin-top: 1.5rem;
-    }
-    .ml-footnote-title {
-        font-size: 1.05rem;
-        font-weight: 700;
-        color: #0f172a;
-        margin-bottom: 0.75rem;
     }
 
     .stDownloadButton > button {
@@ -447,11 +443,10 @@ def render_tab_overview(portfolio_data, analysis_results, ml_results, red_count,
             hole=0.45,
             color_discrete_sequence=COLORS['chart_colors'],
         )
-        fig.update_layout(
+        fig.update_layout(**plotly_base(
             margin=dict(t=10, b=10, l=10, r=10), height=340,
             showlegend=True, legend=dict(font=dict(size=11, family='Inter')),
-            **{k: v for k, v in PLOTLY_LAYOUT.items() if k not in ('xaxis', 'yaxis')},
-        )
+        ))
         fig.update_traces(textposition='inside', textinfo='percent', textfont_size=12)
         st.plotly_chart(fig, use_container_width=True)
 
@@ -466,10 +461,9 @@ def render_tab_overview(portfolio_data, analysis_results, ml_results, red_count,
             textinfo='label+value',
             textfont=dict(size=13, family='Inter'),
         ))
-        fig_pie.update_layout(
+        fig_pie.update_layout(**plotly_base(
             margin=dict(t=10, b=10, l=10, r=10), height=200, showlegend=False,
-            **{k: v for k, v in PLOTLY_LAYOUT.items() if k not in ('xaxis', 'yaxis')},
-        )
+        ))
         st.plotly_chart(fig_pie, use_container_width=True)
 
         st.markdown("**Volatility vs Drawdown**")
@@ -481,18 +475,17 @@ def render_tab_overview(portfolio_data, analysis_results, ml_results, red_count,
             hover_data=['symbol'],
             labels={'volatility': 'Volatility', 'max_drawdown': 'Max Drawdown'},
         )
-        fig_sc.update_layout(
+        fig_sc.update_layout(**plotly_base(
             margin=dict(t=10, b=10, l=10, r=10), height=200, showlegend=False,
-            **PLOTLY_LAYOUT,
-        )
+        ))
         st.plotly_chart(fig_sc, use_container_width=True)
 
     render_ml_footnote(ml_results)
 
 
 def render_ml_footnote(ml_results):
-    st.markdown('<div class="ml-footnote">', unsafe_allow_html=True)
-    st.markdown('<div class="ml-footnote-title">ML Analysis Summary</div>', unsafe_allow_html=True)
+    st.markdown("---")
+    st.markdown("#### ML Analysis Summary")
 
     ml_summary = ml_results['ml_summary']
     m1, m2, m3, m4 = st.columns(4)
@@ -504,8 +497,7 @@ def render_ml_footnote(ml_results):
 
     fi = ml_results.get('feature_importance', [])[:5]
     if fi:
-        fi_names = ', '.join([f['feature'] for f in fi])
-        m4.metric("Top Features", fi[:1][0]['feature'] if fi else 'N/A')
+        m4.metric("Top Feature", fi[0]['feature'] if fi else 'N/A')
 
     if total_anomalies > 0:
         show_anom = st.toggle("Show Anomaly Details", key="anomaly_toggle")
@@ -533,14 +525,11 @@ def render_ml_footnote(ml_results):
                 color_discrete_sequence=[COLORS['accent1']],
                 labels={'importance': 'Importance (%)', 'feature': ''},
             )
-            fig_fi.update_layout(
+            fig_fi.update_layout(**plotly_base(
                 margin=dict(t=10, b=10, l=10, r=10), height=200,
                 yaxis=dict(autorange='reversed'),
-                **PLOTLY_LAYOUT,
-            )
+            ))
             st.plotly_chart(fig_fi, use_container_width=True)
-
-    st.markdown('</div>', unsafe_allow_html=True)
 
 
 def render_tab_risk_sentiment(analysis_results, sentiment_results):
@@ -726,14 +715,13 @@ def render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment
                 fillcolor='rgba(14, 165, 233, 0.08)',
                 name='Price',
             ))
-            fig_price.update_layout(
+            fig_price.update_layout(**plotly_base(
                 title=dict(text=f"{symbol} Historical Prices", font=dict(size=14, family='Inter', color='#0f172a')),
                 xaxis_title="Trading Day",
                 yaxis_title="Price ($)",
                 margin=dict(t=40, b=30, l=40, r=10),
                 height=320,
-                **PLOTLY_LAYOUT,
-            )
+            ))
             st.plotly_chart(fig_price, use_container_width=True)
 
     with rc:

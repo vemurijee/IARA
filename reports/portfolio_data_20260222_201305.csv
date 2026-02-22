@@ -1,0 +1,76 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+BKT,Metro Industries,Materials,187.08,330795780316,17.86,0.0,NYSE,USD
+SE,Superior Resources,Materials,171.85,294480297513,16.68,0.0132,NASDAQ,USD
+BE,Global Global,Consumer Discretionary,154.29,290519650405,34.38,0.0,NASDAQ,USD
+VNM,Consolidated Global,Healthcare,266.82,285832200307,12.33,0.0524,NYSE,USD
+AAJ,American Industries,Industrial,148.85,265973140662,19.05,0.0332,NASDAQ,USD
+GN,American Services,Energy,137.13,258011595455,19.41,0.0,NYSE,USD
+CSL,National Solutions,Healthcare,252.7,251473860664,18.89,0.0403,NYSE,USD
+XYQW,American Solutions,Industrial,166.33,237330114566,12.21,0.0,NYSE,USD
+GILI,Global Solutions,Real Estate,179.7,231315165864,16.16,0.0289,NASDAQ,USD
+AEVO,International Holdings,Consumer Discretionary,167.98,206347678046,,0.044,NASDAQ,USD
+REO,Global International,Technology,342.38,202552080126,17.43,0.0152,NYSE,USD
+XL,Alliance Industries,Consumer Discretionary,157.57,202244449288,15.86,0.0033,NYSE,USD
+XKD,International Capital,Real Estate,122.53,187462001187,10.23,0.0,NYSE,USD
+TQLU,Innovative LLC,Technology,97.47,183463187715,13.08,0.0,NYSE,USD
+AC,Alliance Resources,Consumer Discretionary,182.17,179197227293,22.49,0.0078,NYSE,USD
+RWX,Alliance Solutions,Consumer Discretionary,149.56,176611746499,26.82,0.0,NASDAQ,USD
+VGKD,International Group,Real Estate,158.9,166337986811,17.76,0.004,NYSE,USD
+GAVO,United Industries,Healthcare,237.17,160767770186,,0.0375,NYSE,USD
+SI,Alliance Inc,Consumer Discretionary,83.38,153119041541,27.96,0.0161,NYSE,USD
+DE,American Global,Consumer Discretionary,95.03,151448428600,17.12,0.0351,NASDAQ,USD
+XSI,United Resources,Consumer Staples,95.33,147659243338,,0.0177,NYSE,USD
+BLA,National Group,Materials,141.84,146710837384,31.72,0.0176,NASDAQ,USD
+BXY,Regional Systems,Technology,130.48,144168659060,30.7,0.0235,NASDAQ,USD
+MTG,Consolidated Global,Industrial,127.74,144065385243,20.05,0.0454,NYSE,USD
+XJBR,United Enterprises,Technology,304.03,139476021161,16.63,0.0,NASDAQ,USD
+NKB,Pacific Resources,Real Estate,189.1,139283804338,21.72,0.0329,NYSE,USD
+ANN,Alliance Enterprises,Materials,153.99,137737553601,23.57,0.0598,NASDAQ,USD
+AKO,Pacific Partners,Consumer Staples,116.66,137730046980,23.66,0.0114,NYSE,USD
+TG,International Inc,Industrial,135.73,135174071839,14.59,0.0178,NYSE,USD
+BCR,National Capital,Financial Services,111.65,122488054437,11.5,0.0541,NASDAQ,USD
+ZWR,Superior Technologies,Financial Services,76.84,118741813841,30.71,0.0456,NYSE,USD
+VSTN,Capital Group,Financial Services,114.44,118318418000,31.12,0.014,NYSE,USD
+CCP,International Holdings,Financial Services,106.36,115639537933,20.84,0.0,NASDAQ,USD
+RU,United International,Consumer Staples,96.68,98941418265,15.65,0.0391,NASDAQ,USD
+XYC,Pacific Group,Utilities,118.89,94069353618,29.45,0.0,NYSE,USD
+GTVP,American LLC,Consumer Staples,46.71,90155292194,14.29,0.0,NYSE,USD
+NFI,United Global,Consumer Discretionary,161.54,88987644650,12.81,0.0,NYSE,USD
+DTL,Global Global,Consumer Staples,48.31,88985827659,16.99,0.0,NASDAQ,USD
+NMK,American Systems,Financial Services,118.28,87305930406,20.71,0.0151,NASDAQ,USD
+MFC,Pacific Holdings,Financial Services,62.15,86326669138,10.52,0.0238,NYSE,USD
+GKHH,Capital Enterprises,Utilities,54.27,80821846649,16.71,0.0,NYSE,USD
+TXQ,Consolidated Inc,Materials,136.55,78292440997,24.22,0.0254,NYSE,USD
+NQUN,Metro Services,Financial Services,58.56,77758913990,31.78,0.0,NASDAQ,USD
+MNC,Advanced Services,Industrial,132.38,68899998237,28.58,0.0,NYSE,USD
+MPRX,United LLC,Consumer Discretionary,93.26,66580195610,,0.0,NYSE,USD
+BCO,Premier Capital,Industrial,166.95,63860739447,28.71,0.0216,NASDAQ,USD
+XPD,Regional Systems,Utilities,49.75,60076326092,11.8,0.0217,NASDAQ,USD
+TC,Dynamic International,Real Estate,118.43,59742257188,22.51,0.0561,NASDAQ,USD
+RIWS,United Industries,Consumer Staples,102.85,57927691441,20.19,0.0,NASDAQ,USD
+MGK,Consolidated Technologies,Consumer Discretionary,126.12,55361859321,14.26,0.0,NASDAQ,USD
+TP,International Solutions,Financial Services,139.15,52185560938,16.89,0.0,NASDAQ,USD
+SF,Capital Industries,Energy,131.97,50309506037,14.81,0.0077,NYSE,USD
+SKGR,First Industries,Utilities,57.15,48826740171,10.15,0.0,NASDAQ,USD
+ACZ,Metro Industries,Industrial,75.57,47955453428,,0.009,NYSE,USD
+GIY,Superior Global,Consumer Discretionary,70.7,45223448167,29.78,0.0019,NASDAQ,USD
+XV,United Inc,Utilities,53.68,43148610239,,0.0058,NASDAQ,USD
+CT,Innovative Resources,Utilities,73.54,42125263983,15.45,0.0324,NASDAQ,USD
+ATZF,Strategic LLC,Energy,68.61,38358969441,32.16,0.0,NASDAQ,USD
+GVP,Alliance Industries,Financial Services,103.81,36380169066,,0.0129,NYSE,USD
+AWX,Metro Inc,Real Estate,57.93,31229303819,26.35,0.0255,NYSE,USD
+PVZ,Innovative Group,Materials,112.25,30382459075,24.39,0.0559,NYSE,USD
+CTQ,Advanced Systems,Energy,44.91,28542606830,15.31,0.0,NASDAQ,USD
+BAC,Global Systems,Consumer Discretionary,46.69,28186319621,13.72,0.0,NYSE,USD
+NS,Premier Global,Healthcare,76.2,27999452847,9.2,0.0056,NYSE,USD
+XJB,Premier Corp,Energy,125.82,27779789750,8.2,0.0,NYSE,USD
+THE,Dynamic Inc,Consumer Discretionary,50.64,27676319491,27.55,0.0376,NASDAQ,USD
+THM,Dynamic Group,Energy,51.59,26298137136,19.31,0.0,NYSE,USD
+BDQ,Advanced International,Financial Services,148.25,25813826263,28.04,0.0162,NASDAQ,USD
+AQLW,United Group,Financial Services,70.28,24146129404,26.59,0.0086,NASDAQ,USD
+RF,Consolidated Enterprises,Utilities,83.46,22035740324,17.28,0.0454,NYSE,USD
+TMZQ,Strategic Global,Real Estate,171.21,21877859407,8.64,0.0,NASDAQ,USD
+VQE,Superior International,Materials,97.38,17476813225,,0.0,NASDAQ,USD
+VIE,Premier Enterprises,Financial Services,82.16,12208823093,18.16,0.0267,NYSE,USD
+MH,Pacific Resources,Energy,108.39,5765304286,18.12,0.0188,NYSE,USD
+ZNV,Consolidated Corp,Financial Services,31.08,4096651880,25.33,0.0429,NASDAQ,USD
