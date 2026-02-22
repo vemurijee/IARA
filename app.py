@@ -139,14 +139,10 @@ st.markdown("""
         white-space: nowrap;
     }
 
-    .download-inline {
-        position: relative;
-    }
-    .download-inline > div[data-testid="column"]:last-child {
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 10;
+    div[data-testid="stExpander"]:first-of-type details summary span p {
+        color: #d97706 !important;
+        font-weight: 700 !important;
+        font-size: 1.1rem !important;
     }
 
     .section-header-row {
@@ -400,30 +396,6 @@ def render_dashboard():
         unsafe_allow_html=True
     )
 
-    dl_left, dl_right = st.columns([4, 1])
-    with dl_right:
-        with st.popover("Download Report"):
-            if os.path.exists(r['pdf_path']):
-                with open(r['pdf_path'], 'rb') as f:
-                    st.download_button("PDF Report", f.read(), os.path.basename(r['pdf_path']), "application/pdf", key="dl_pdf_top")
-            if os.path.exists(r['portfolio_csv']):
-                with open(r['portfolio_csv'], 'rb') as f:
-                    st.download_button("Portfolio CSV", f.read(), os.path.basename(r['portfolio_csv']), "text/csv", key="dl_port_top")
-            if os.path.exists(r['analysis_csv']):
-                with open(r['analysis_csv'], 'rb') as f:
-                    st.download_button("Risk Analysis CSV", f.read(), os.path.basename(r['analysis_csv']), "text/csv", key="dl_risk_top")
-
-    st.markdown(
-        '<style>'
-        '[data-testid="stHorizontalBlock"]:has(> [data-testid="column"] [data-testid="stPopover"]) {'
-        '  margin-bottom: -3.5rem;'
-        '  position: relative;'
-        '  z-index: 10;'
-        '}'
-        '</style>',
-        unsafe_allow_html=True
-    )
-
     tab1, tab2, tab3, tab4 = st.tabs(["Overview", "Risk & Sentiment", "Asset Deep Dive", "Appendix"])
 
     with tab1:
@@ -440,13 +412,25 @@ def render_dashboard():
 
 
 def render_tab_overview(portfolio_data, analysis_results, ml_results, red_count, yellow_count, green_count, total_mcap, avg_vol, r):
-    c1, c2, c3, c4, c5, c6 = st.columns(6)
+    c1, c2, c3, c4, c5, c6, c7 = st.columns([1, 1, 1, 1, 1, 1, 1])
     c1.metric("Total Assets", len(portfolio_data))
     c2.metric("Market Cap", f"${total_mcap / 1e9:.1f}B")
     c3.metric("High Risk", red_count)
     c4.metric("Moderate Risk", yellow_count)
     c5.metric("Low Risk", green_count)
     c6.metric("Avg Volatility", f"{avg_vol * 100:.1f}%")
+    with c7:
+        st.markdown("<div style='height: 0.5rem'></div>", unsafe_allow_html=True)
+        with st.popover("Download Report", use_container_width=True):
+            if os.path.exists(r['pdf_path']):
+                with open(r['pdf_path'], 'rb') as f:
+                    st.download_button("PDF Report", f.read(), os.path.basename(r['pdf_path']), "application/pdf", key="dl_pdf_top")
+            if os.path.exists(r['portfolio_csv']):
+                with open(r['portfolio_csv'], 'rb') as f:
+                    st.download_button("Portfolio CSV", f.read(), os.path.basename(r['portfolio_csv']), "text/csv", key="dl_port_top")
+            if os.path.exists(r['analysis_csv']):
+                with open(r['analysis_csv'], 'rb') as f:
+                    st.download_button("Risk Analysis CSV", f.read(), os.path.basename(r['analysis_csv']), "text/csv", key="dl_risk_top")
 
     st.markdown('<div class="section-header">Summary</div>', unsafe_allow_html=True)
 
@@ -553,14 +537,8 @@ def render_ml_footnote(ml_results):
 
 
 def render_tab_risk_sentiment(analysis_results, sentiment_results):
-    st.markdown(
-        '<div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: 1px solid #f59e0b; '
-        'border-radius: 10px; padding: 2px 0; margin-bottom: 1rem;">',
-        unsafe_allow_html=True
-    )
-    with st.expander("Recommendations", expanded=False):
+    with st.expander("⚠ Recommendations", expanded=False):
         render_recommendations_content(analysis_results, sentiment_results)
-    st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('<div class="section-header">Flagged Assets</div>', unsafe_allow_html=True)
     flagged = [a for a in analysis_results if a['risk_rating'] in ['RED', 'YELLOW']]
@@ -794,6 +772,16 @@ def render_tab_appendix(portfolio_data, analysis_results):
         })
     st.dataframe(pd.DataFrame(perf_rows), use_container_width=True, hide_index=True)
 
+    st.markdown('<div class="section-header">Risk Flags Detail</div>', unsafe_allow_html=True)
+    flag_rows = []
+    for a in analysis_results:
+        row = {'Symbol': a['symbol']}
+        for flag_name, flag_val in a.get('risk_flags', {}).items():
+            label = flag_name.replace('_', ' ').title()
+            row[label] = "Yes" if flag_val else "—"
+        flag_rows.append(row)
+    st.dataframe(pd.DataFrame(flag_rows), use_container_width=True, hide_index=True)
+
     with st.expander("Risk Thresholds", expanded=False):
         thresholds = pd.DataFrame([
             {"Metric": "Volatility (RED)", "Threshold": "> 40%"},
@@ -808,16 +796,6 @@ def render_tab_appendix(portfolio_data, analysis_results):
             {"Metric": "High Correlation", "Threshold": "> 0.8"},
         ])
         st.dataframe(thresholds, use_container_width=True, hide_index=True)
-
-    st.markdown('<div class="section-header">Risk Flags Detail</div>', unsafe_allow_html=True)
-    flag_rows = []
-    for a in analysis_results:
-        row = {'Symbol': a['symbol']}
-        for flag_name, flag_val in a.get('risk_flags', {}).items():
-            label = flag_name.replace('_', ' ').title()
-            row[label] = "Yes" if flag_val else "—"
-        flag_rows.append(row)
-    st.dataframe(pd.DataFrame(flag_rows), use_container_width=True, hide_index=True)
 
 
 def main():
