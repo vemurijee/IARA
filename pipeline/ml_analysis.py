@@ -226,9 +226,15 @@ class MLAnalysisEngine:
             }
         
         # Split data for validation
-        if len(X) >= 15:
+        min_class_count = y.value_counts().min()
+        can_stratify = min_class_count >= 2 and len(X) >= 15
+        if can_stratify:
             X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=0.3, random_state=42, stratify=y if len(y.unique()) > 1 else None
+                X, y, test_size=0.3, random_state=42, stratify=y
+            )
+        elif len(X) >= 15:
+            X_train, X_test, y_train, y_test = train_test_split(
+                X, y, test_size=0.3, random_state=42
             )
         else:
             X_train, X_test, y_train, y_test = X, X, y, y
