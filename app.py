@@ -23,50 +23,227 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    .block-container { padding-top: 1rem; padding-bottom: 1rem; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    html, body, [class*="css"] {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    }
+
+    .block-container {
+        padding-top: 1.5rem;
+        padding-bottom: 2rem;
+        max-width: 1400px;
+    }
+
+    /* Sidebar */
+    section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+    }
+    section[data-testid="stSidebar"] * {
+        color: #e2e8f0 !important;
+    }
+    section[data-testid="stSidebar"] .stSlider label {
+        color: #94a3b8 !important;
+        font-size: 0.95rem !important;
+    }
+    section[data-testid="stSidebar"] h1,
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3 {
+        color: #f1f5f9 !important;
+        font-weight: 700 !important;
+    }
+
+    /* Metric cards */
     div[data-testid="stMetric"] {
         background: #ffffff;
         border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        padding: 12px 16px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        border-radius: 12px;
+        padding: 16px 20px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+        transition: box-shadow 0.2s ease;
     }
-    div[data-testid="stMetric"] label { font-size: 0.8rem; color: #64748b; }
-    div[data-testid="stMetric"] [data-testid="stMetricValue"] { font-size: 1.3rem; font-weight: 700; }
+    div[data-testid="stMetric"]:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    div[data-testid="stMetric"] label {
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
+        color: #64748b !important;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+    }
+    div[data-testid="stMetric"] [data-testid="stMetricValue"] {
+        font-size: 1.6rem !important;
+        font-weight: 700 !important;
+        color: #0f172a !important;
+    }
+    div[data-testid="stMetric"] [data-testid="stMetricDelta"] {
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+    }
+
+    /* Section headers */
     .section-header {
-        font-size: 1.25rem;
+        font-size: 1.4rem;
         font-weight: 700;
-        color: #1e293b;
-        border-bottom: 2px solid #e2e8f0;
-        padding-bottom: 8px;
-        margin-top: 1.5rem;
-        margin-bottom: 1rem;
+        color: #0f172a;
+        border-bottom: 3px solid #6366f1;
+        padding-bottom: 10px;
+        margin-top: 2.5rem;
+        margin-bottom: 1.2rem;
+        letter-spacing: -0.01em;
     }
+
+    /* Dashboard title */
+    .dash-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.25rem;
+    }
+    .dash-subtitle {
+        font-size: 1rem;
+        color: #64748b;
+        font-weight: 400;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Risk badges */
     .risk-badge-red {
-        background: #fef2f2; color: #dc2626; padding: 2px 10px;
-        border-radius: 12px; font-weight: 600; font-size: 0.85rem;
-        border: 1px solid #fecaca; display: inline-block; margin: 2px;
+        background: linear-gradient(135deg, #fef2f2, #fee2e2);
+        color: #dc2626;
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        border: 1px solid #fca5a5;
+        display: inline-block;
+        margin: 3px 2px;
     }
     .risk-badge-yellow {
-        background: #fffbeb; color: #d97706; padding: 2px 10px;
-        border-radius: 12px; font-weight: 600; font-size: 0.85rem;
-        border: 1px solid #fde68a; display: inline-block; margin: 2px;
+        background: linear-gradient(135deg, #fffbeb, #fef3c7);
+        color: #b45309;
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        border: 1px solid #fcd34d;
+        display: inline-block;
+        margin: 3px 2px;
     }
     .risk-badge-green {
-        background: #f0fdf4; color: #16a34a; padding: 2px 10px;
-        border-radius: 12px; font-weight: 600; font-size: 0.85rem;
-        border: 1px solid #bbf7d0; display: inline-block; margin: 2px;
+        background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+        color: #15803d;
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        border: 1px solid #86efac;
+        display: inline-block;
+        margin: 3px 2px;
     }
-    .flag-on { color: #dc2626; font-weight: bold; }
-    .flag-off { color: #d1d5db; }
+
+    /* Welcome box */
     .welcome-box {
-        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-        border: 1px solid #bae6fd; border-radius: 12px;
-        padding: 3rem; text-align: center; margin: 2rem 0;
+        background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 50%, #c7d2fe 100%);
+        border: none;
+        border-radius: 20px;
+        padding: 4rem 3rem;
+        text-align: center;
+        margin: 3rem auto;
+        max-width: 800px;
+        box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);
     }
+    .welcome-box h2 {
+        color: #1e1b4b !important;
+        font-weight: 800 !important;
+        font-size: 2rem !important;
+        margin-bottom: 1rem;
+    }
+
+    /* Card containers */
     .info-card {
-        background: #f8fafc; border: 1px solid #e2e8f0;
-        border-radius: 8px; padding: 16px; margin-bottom: 8px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    /* DataFrames */
+    .stDataFrame {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    /* Expander styling */
+    .streamlit-expanderHeader {
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        color: #1e293b !important;
+        background: #f8fafc !important;
+        border-radius: 12px !important;
+    }
+
+    /* Download buttons */
+    .stDownloadButton > button {
+        background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 10px !important;
+        padding: 0.6rem 1.5rem !important;
+        font-weight: 600 !important;
+        font-size: 0.9rem !important;
+        transition: all 0.2s ease !important;
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3) !important;
+    }
+    .stDownloadButton > button:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4) !important;
+    }
+
+    /* Selectbox styling */
+    div[data-baseweb="select"] {
+        font-size: 1rem !important;
+    }
+
+    /* General text readability */
+    .stMarkdown p, .stMarkdown li {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #334155;
+    }
+    .stMarkdown strong {
+        color: #0f172a;
+    }
+
+    /* Plotly chart containers */
+    .stPlotlyChart {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    /* Primary button override */
+    .stButton > button[kind="primary"] {
+        background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        font-size: 1rem !important;
+        padding: 0.6rem 2rem !important;
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3) !important;
+    }
+
+    /* KPI strip container */
+    .kpi-strip {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 8px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        margin-bottom: 1rem;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -145,18 +322,18 @@ def render_dashboard():
     total_mcap = sum(a['market_cap'] for a in portfolio_data)
     avg_vol = np.mean([a['volatility'] for a in analysis_results])
 
-    st.markdown("## Portfolio Risk Dashboard")
-    st.markdown(f"*Report Date: {datetime.now().strftime('%B %d, %Y')} · Execution Time: {st.session_state.execution_time:.1f}s*")
+    st.markdown('<div class="dash-title">Portfolio Risk Dashboard</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="dash-subtitle">Report Date: {datetime.now().strftime("%B %d, %Y")} &middot; Execution Time: {st.session_state.execution_time:.1f}s &middot; {len(portfolio_data)} Assets Analyzed</div>', unsafe_allow_html=True)
 
     c1, c2, c3, c4, c5, c6 = st.columns(6)
     c1.metric("Total Assets", len(portfolio_data))
-    c2.metric("Total Market Cap", f"${total_mcap / 1e9:.1f}B")
-    c3.metric("🔴 RED Flags", red_count)
-    c4.metric("🟡 YELLOW Flags", yellow_count)
-    c5.metric("🟢 GREEN Count", green_count)
+    c2.metric("Market Cap", f"${total_mcap / 1e9:.1f}B")
+    c3.metric("High Risk", red_count)
+    c4.metric("Moderate Risk", yellow_count)
+    c5.metric("Low Risk", green_count)
     c6.metric("Avg Volatility", f"{avg_vol * 100:.1f}%")
 
-    st.markdown('<div class="section-header">Downloads</div>', unsafe_allow_html=True)
+    st.markdown("")
     dc1, dc2, dc3 = st.columns(3)
     with dc1:
         if os.path.exists(r['pdf_path']):
@@ -192,10 +369,15 @@ def render_summary_grid(portfolio_data, analysis_results, ml_results, red_count,
             names=list(sector_data.keys()),
             values=list(sector_data.values()),
             hole=0.45,
-            color_discrete_sequence=px.colors.qualitative.Set3,
+            color_discrete_sequence=['#6366f1', '#8b5cf6', '#a78bfa', '#c4b5fd', '#818cf8', '#6d28d9', '#4f46e5', '#7c3aed', '#5b21b6', '#4338ca'],
         )
-        fig.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=320, showlegend=True, legend=dict(font=dict(size=10)))
-        fig.update_traces(textposition='inside', textinfo='percent')
+        fig.update_layout(
+            margin=dict(t=10, b=10, l=10, r=10), height=320,
+            showlegend=True, legend=dict(font=dict(size=11, family='Inter')),
+            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+            font=dict(family='Inter', color='#334155'),
+        )
+        fig.update_traces(textposition='inside', textinfo='percent', textfont_size=12)
         st.plotly_chart(fig, use_container_width=True)
 
     with center:
@@ -206,9 +388,14 @@ def render_summary_grid(portfolio_data, analysis_results, ml_results, red_count,
         fig_pie = go.Figure(go.Pie(
             labels=labels, values=values,
             marker=dict(colors=[color_map[l] for l in labels]),
-            textinfo='label+value'
+            textinfo='label+value',
+            textfont=dict(size=13, family='Inter'),
         ))
-        fig_pie.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=200, showlegend=False)
+        fig_pie.update_layout(
+            margin=dict(t=10, b=10, l=10, r=10), height=200, showlegend=False,
+            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+            font=dict(family='Inter', color='#334155'),
+        )
         st.plotly_chart(fig_pie, use_container_width=True)
 
         df_scatter = pd.DataFrame(analysis_results)
@@ -219,7 +406,13 @@ def render_summary_grid(portfolio_data, analysis_results, ml_results, red_count,
             hover_data=['symbol'],
             labels={'volatility': 'Volatility', 'max_drawdown': 'Max Drawdown'},
         )
-        fig_sc.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=200, showlegend=False)
+        fig_sc.update_layout(
+            margin=dict(t=10, b=10, l=10, r=10), height=200, showlegend=False,
+            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+            font=dict(family='Inter', color='#334155'),
+            xaxis=dict(gridcolor='#e2e8f0', zerolinecolor='#e2e8f0'),
+            yaxis=dict(gridcolor='#e2e8f0', zerolinecolor='#e2e8f0'),
+        )
         st.plotly_chart(fig_sc, use_container_width=True)
 
     with right:
@@ -238,7 +431,13 @@ def render_summary_grid(portfolio_data, analysis_results, ml_results, red_count,
                 color_discrete_sequence=['#6366f1'],
                 labels={'importance': 'Importance (%)', 'feature': ''},
             )
-            fig_fi.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=200, yaxis=dict(autorange='reversed'))
+            fig_fi.update_layout(
+                margin=dict(t=10, b=10, l=10, r=10), height=200,
+                yaxis=dict(autorange='reversed'),
+                paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+                font=dict(family='Inter', size=12, color='#334155'),
+                xaxis=dict(gridcolor='#e2e8f0'),
+            )
             st.plotly_chart(fig_fi, use_container_width=True)
 
 
@@ -355,15 +554,21 @@ def render_asset_drilldown(portfolio_data, analysis_results, ml_results, sentime
                 y=prices,
                 x=list(range(len(prices))),
                 mode='lines',
-                line=dict(color='#3b82f6', width=2),
+                line=dict(color='#6366f1', width=2.5),
+                fill='tozeroy',
+                fillcolor='rgba(99, 102, 241, 0.08)',
                 name='Price',
             ))
             fig_price.update_layout(
-                title=f"{symbol} Historical Prices",
+                title=dict(text=f"{symbol} Historical Prices", font=dict(size=15, family='Inter', color='#0f172a')),
                 xaxis_title="Trading Day",
                 yaxis_title="Price ($)",
                 margin=dict(t=40, b=30, l=40, r=10),
                 height=300,
+                paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+                font=dict(family='Inter', color='#334155'),
+                xaxis=dict(gridcolor='#e2e8f0', zerolinecolor='#e2e8f0'),
+                yaxis=dict(gridcolor='#e2e8f0', zerolinecolor='#e2e8f0'),
             )
             st.plotly_chart(fig_price, use_container_width=True)
 
@@ -511,13 +716,32 @@ def main():
     else:
         st.markdown("""
         <div class="welcome-box">
-            <h2>Welcome to the Portfolio Risk Dashboard</h2>
-            <p style="font-size:1.1rem; color:#475569;">
+            <h2>Portfolio Risk Dashboard</h2>
+            <p style="font-size:1.15rem; color:#3730a3; font-weight:500; margin-bottom:1.5rem;">
                 Configure your portfolio size in the sidebar and click <b>Execute Full Pipeline</b> to begin analysis.
             </p>
-            <p style="color:#64748b;">
-                The pipeline will run 5 stages: Data Ingestion → Core Analysis → ML Analysis → Sentiment Analysis → Report Generation
-            </p>
+            <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
+                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(99,102,241,0.1); min-width:140px;">
+                    <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase; font-weight:600;">Step 1</div>
+                    <div style="font-size:0.95rem; color:#1e293b; font-weight:600; margin-top:4px;">Data Ingestion</div>
+                </div>
+                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(99,102,241,0.1); min-width:140px;">
+                    <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase; font-weight:600;">Step 2</div>
+                    <div style="font-size:0.95rem; color:#1e293b; font-weight:600; margin-top:4px;">Core Analysis</div>
+                </div>
+                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(99,102,241,0.1); min-width:140px;">
+                    <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase; font-weight:600;">Step 3</div>
+                    <div style="font-size:0.95rem; color:#1e293b; font-weight:600; margin-top:4px;">ML Analysis</div>
+                </div>
+                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(99,102,241,0.1); min-width:140px;">
+                    <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase; font-weight:600;">Step 4</div>
+                    <div style="font-size:0.95rem; color:#1e293b; font-weight:600; margin-top:4px;">Sentiment Analysis</div>
+                </div>
+                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(99,102,241,0.1); min-width:140px;">
+                    <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase; font-weight:600;">Step 5</div>
+                    <div style="font-size:0.95rem; color:#1e293b; font-weight:600; margin-top:4px;">Report Generation</div>
+                </div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
