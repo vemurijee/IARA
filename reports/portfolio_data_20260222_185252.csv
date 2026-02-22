@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+RGU,International Resources,Technology,203.88,278185228727,14.96,0.0,NYSE,USD
+DIK,International Capital,Healthcare,187.1,270378074731,13.53,0.0095,NYSE,USD
+AUHW,Capital Global,Technology,188.72,256207236740,20.73,0.0,NYSE,USD
+VUF,Regional Partners,Energy,142.36,254939235989,11.82,0.0177,NASDAQ,USD
+DIW,Regional Inc,Healthcare,216.87,226013224869,32.91,0.0243,NASDAQ,USD
+ZLK,Strategic Global,Utilities,112.33,210601115009,,0.0036,NYSE,USD
+VPIM,Regional Inc,Real Estate,141.65,194746258785,28.38,0.0049,NYSE,USD
+AP,American Industries,Consumer Discretionary,154.78,186318533505,30.66,0.0,NASDAQ,USD
+ASA,Capital Inc,Materials,158.61,177048514520,34.0,0.0,NYSE,USD
+XYKG,Strategic Resources,Consumer Staples,99.25,169860578431,23.27,0.0327,NASDAQ,USD
+BWB,Consolidated International,Consumer Discretionary,164.34,109679549564,24.28,0.0215,NASDAQ,USD
+PCY,Superior Inc,Real Estate,156.16,98871336330,,0.0327,NYSE,USD
+ZLY,Premier Group,Materials,48.85,93750139264,10.34,0.0377,NYSE,USD
+PC,United Enterprises,Materials,147.66,89700232094,20.48,0.0334,NASDAQ,USD
+PQ,Pacific Group,Technology,60.87,84827227534,18.61,0.0,NASDAQ,USD
+TH,National Group,Energy,30.35,49693414366,23.85,0.0,NYSE,USD
+DLP,Global Systems,Consumer Discretionary,70.62,42805110396,17.99,0.0,NYSE,USD
+DK,Innovative LLC,Real Estate,118.96,39900670210,21.67,0.0203,NYSE,USD
+VG,National Technologies,Real Estate,37.05,35461472133,,0.0,NASDAQ,USD
+SU,Dynamic Resources,Industrial,112.53,34383597315,24.69,0.0055,NASDAQ,USD
+GLY,Metro International,Real Estate,162.77,23968645544,34.19,0.0527,NYSE,USD
+MXV,Premier Capital,Real Estate,104.3,23097494515,14.58,0.0,NYSE,USD
+PA,National Enterprises,Financial Services,59.38,17272480493,23.79,0.0032,NYSE,USD
+MJCT,Alliance Industries,Utilities,42.11,8026349486,11.85,0.0502,NYSE,USD
+NHOT,Innovative Inc,Financial Services,32.31,6234360491,,0.0574,NASDAQ,USD
