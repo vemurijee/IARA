@@ -473,7 +473,7 @@ def render_tab_overview(portfolio_data, analysis_results, ml_results, red_count,
             textfont=dict(size=13, family='Inter'),
         ))
         fig_pie.update_layout(**plotly_base(
-            margin=dict(t=20, b=20, l=20, r=20), height=280, showlegend=False,
+            margin=dict(t=10, b=10, l=10, r=10), height=200, showlegend=False,
         ))
         st.plotly_chart(fig_pie, use_container_width=True)
 
