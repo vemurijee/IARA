@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+MMR,Innovative Systems,Healthcare,366.17,513289165616,25.71,0.0019,NYSE,USD
+CD,Capital LLC,Healthcare,330.6,244989296206,17.56,0.0,NASDAQ,USD
+XXGH,Premier Capital,Healthcare,153.77,238085501216,,0.0498,NYSE,USD
+RRB,Superior Partners,Technology,363.29,232104994878,30.07,0.0428,NASDAQ,USD
+SQCB,Alliance Enterprises,Healthcare,223.5,200488382452,31.16,0.0148,NASDAQ,USD
+PTXE,Capital LLC,Healthcare,121.25,180926239321,32.04,0.056,NASDAQ,USD
+RWW,Pacific Inc,Consumer Discretionary,189.74,179431319136,33.34,0.0316,NASDAQ,USD
+BZ,National LLC,Energy,138.92,156017400488,33.55,0.0,NYSE,USD
+APH,Global Group,Consumer Staples,86.91,125059988569,11.6,0.0056,NASDAQ,USD
+PHBY,United Services,Consumer Staples,93.4,120556117634,10.94,0.043,NYSE,USD
+NA,Metro Enterprises,Healthcare,160.2,96718716191,31.98,0.0,NYSE,USD
+CLE,First Corp,Utilities,52.35,74130251385,,0.0,NASDAQ,USD
+CVUZ,Capital Capital,Healthcare,233.74,68328656296,18.28,0.0301,NASDAQ,USD
+TEA,Strategic Partners,Real Estate,165.86,67451539611,15.56,0.0443,NASDAQ,USD
+XWM,International Corp,Consumer Staples,113.31,67216705957,20.05,0.0,NYSE,USD
+MQD,Strategic Resources,Utilities,47.54,65585234391,27.09,0.0,NYSE,USD
+DZJ,Consolidated Capital,Energy,31.07,57095132692,30.75,0.0491,NASDAQ,USD
+DLFJ,United LLC,Consumer Staples,50.77,50436645328,20.78,0.0302,NYSE,USD
+TQ,United Resources,Real Estate,77.27,40690267189,31.53,0.0,NYSE,USD
+SCEN,Superior Global,Industrial,153.92,32147226168,15.94,0.0,NASDAQ,USD
+GG,Consolidated LLC,Materials,160.88,28393817430,17.2,0.0419,NASDAQ,USD
+AHP,American Solutions,Consumer Staples,57.46,26483757940,21.06,0.0525,NYSE,USD
+MO,Superior Services,Materials,64.44,20090582088,18.36,0.02,NASDAQ,USD
+NCHB,Regional Partners,Energy,84.64,15289204966,29.11,0.0383,NYSE,USD
+BWC,Alliance International,Utilities,43.62,7670282119,32.73,0.0412,NYSE,USD
