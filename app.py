@@ -398,7 +398,7 @@ def render_dashboard():
     st.markdown(
         f'<div class="dash-title-row">'
         f'<h1>Portfolio Risk Dashboard</h1>'
-        f'<span class="dash-date">{datetime.now().strftime("%B %d, %Y")}</span>'
+        f'<span class="dash-date">{datetime.now().strftime("%B %d, %Y %I:%M %p")}</span>'
         f'</div>',
         unsafe_allow_html=True
     )
