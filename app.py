@@ -118,25 +118,21 @@ st.markdown("""
         margin-bottom: 1rem;
     }
 
-    .dash-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.75rem 0 1rem 0;
-        margin-bottom: 0.5rem;
-    }
     .dash-title {
         font-size: 1.8rem;
         font-weight: 800;
         color: #0f172a;
         letter-spacing: -0.02em;
-        line-height: 1.2;
+        line-height: 1.3;
+        margin: 0;
+        padding: 0;
     }
     .dash-date {
         font-size: 0.95rem;
         color: #64748b;
         font-weight: 500;
-        white-space: nowrap;
+        text-align: right;
+        padding-top: 0.5rem;
     }
 
     .section-header-row {
@@ -292,15 +288,15 @@ st.markdown("""
     }
 
     .exec-time-badge {
-        background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-        color: #065f46;
-        padding: 6px 14px;
+        background: rgba(16, 185, 129, 0.15);
+        color: #6ee7b7 !important;
+        padding: 8px 14px;
         border-radius: 8px;
         font-weight: 600;
-        font-size: 0.85rem;
-        border: 1px solid #6ee7b7;
+        font-size: 0.9rem;
+        border: 1px solid rgba(110, 231, 183, 0.3);
         display: inline-block;
-        margin-top: 8px;
+        margin-top: 10px;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -382,13 +378,24 @@ def render_dashboard():
     total_mcap = sum(a['market_cap'] for a in portfolio_data)
     avg_vol = np.mean([a['volatility'] for a in analysis_results])
 
-    st.markdown(
-        f'<div class="dash-header">'
-        f'<span class="dash-title">Portfolio Risk Dashboard</span>'
-        f'<span class="dash-date">{datetime.now().strftime("%B %d, %Y")}</span>'
-        f'</div>',
-        unsafe_allow_html=True
-    )
+    title_col, date_col = st.columns([3, 1])
+    with title_col:
+        st.markdown('<p class="dash-title">Portfolio Risk Dashboard</p>', unsafe_allow_html=True)
+    with date_col:
+        st.markdown(f'<p class="dash-date">{datetime.now().strftime("%B %d, %Y")}</p>', unsafe_allow_html=True)
+
+    tab_cols = st.columns([1, 1, 1, 1, 1])
+    with tab_cols[4]:
+        with st.popover("Download Report", use_container_width=True):
+            if os.path.exists(r['pdf_path']):
+                with open(r['pdf_path'], 'rb') as f:
+                    st.download_button("PDF Report", f.read(), os.path.basename(r['pdf_path']), "application/pdf", key="dl_pdf_top")
+            if os.path.exists(r['portfolio_csv']):
+                with open(r['portfolio_csv'], 'rb') as f:
+                    st.download_button("Portfolio CSV", f.read(), os.path.basename(r['portfolio_csv']), "text/csv", key="dl_port_top")
+            if os.path.exists(r['analysis_csv']):
+                with open(r['analysis_csv'], 'rb') as f:
+                    st.download_button("Risk Analysis CSV", f.read(), os.path.basename(r['analysis_csv']), "text/csv", key="dl_risk_top")
 
     tab1, tab2, tab3, tab4 = st.tabs(["Overview", "Risk & Sentiment", "Asset Deep Dive", "Appendix"])
 
@@ -414,21 +421,7 @@ def render_tab_overview(portfolio_data, analysis_results, ml_results, red_count,
     c5.metric("Low Risk", green_count)
     c6.metric("Avg Volatility", f"{avg_vol * 100:.1f}%")
 
-    hdr_left, hdr_right = st.columns([3, 1])
-    with hdr_left:
-        st.markdown('<div class="section-header">Summary</div>', unsafe_allow_html=True)
-    with hdr_right:
-        st.markdown("<div style='height:2rem'></div>", unsafe_allow_html=True)
-        with st.popover("Downloads", use_container_width=True):
-            if os.path.exists(r['pdf_path']):
-                with open(r['pdf_path'], 'rb') as f:
-                    st.download_button("PDF Report", f.read(), os.path.basename(r['pdf_path']), "application/pdf", key="dl_pdf")
-            if os.path.exists(r['portfolio_csv']):
-                with open(r['portfolio_csv'], 'rb') as f:
-                    st.download_button("Portfolio CSV", f.read(), os.path.basename(r['portfolio_csv']), "text/csv", key="dl_port")
-            if os.path.exists(r['analysis_csv']):
-                with open(r['analysis_csv'], 'rb') as f:
-                    st.download_button("Risk Analysis CSV", f.read(), os.path.basename(r['analysis_csv']), "text/csv", key="dl_risk")
+    st.markdown('<div class="section-header">Summary</div>', unsafe_allow_html=True)
 
     left, center = st.columns(2)
 
@@ -577,8 +570,8 @@ def render_tab_risk_sentiment(analysis_results, sentiment_results):
                 })
             st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
-    st.markdown('<div class="section-header">Recommendations</div>', unsafe_allow_html=True)
-    render_recommendations_content(analysis_results, sentiment_results)
+    with st.expander("Recommendations", expanded=False):
+        render_recommendations_content(analysis_results, sentiment_results)
 
 
 def render_recommendations_content(analysis_results, sentiment_results):
@@ -640,7 +633,17 @@ def render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment
         rating = next((a['risk_rating'] for a in analysis_results if a['symbol'] == p['symbol']), 'N/A')
         asset_options.append(f"{p['symbol']} - {p['company_name']} [{rating}]")
 
-    selected = st.selectbox("Select an asset to explore", asset_options, key="drilldown_select")
+    search_term = st.text_input("Search asset", placeholder="Type to filter assets...", key="asset_search")
+    if search_term:
+        filtered = [o for o in asset_options if search_term.upper() in o.upper()]
+    else:
+        filtered = asset_options
+
+    if not filtered:
+        st.warning("No assets match your search.")
+        return
+
+    selected = st.selectbox("Select an asset", filtered, key="drilldown_select", label_visibility="collapsed")
     if not selected:
         return
 
@@ -701,49 +704,50 @@ def render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment
                 flag_html += f"<span class='risk-badge-green'>{label}</span>"
         st.markdown(flag_html, unsafe_allow_html=True)
 
-    lc, rc = st.columns(2)
-    with lc:
-        prices = port_asset.get('historical_prices', [])
-        if prices:
-            fig_price = go.Figure()
-            fig_price.add_trace(go.Scatter(
-                y=prices,
-                x=list(range(len(prices))),
-                mode='lines',
-                line=dict(color=COLORS['primary'], width=2.5),
-                fill='tozeroy',
-                fillcolor='rgba(14, 165, 233, 0.08)',
-                name='Price',
-            ))
-            fig_price.update_layout(**plotly_base(
-                title=dict(text=f"{symbol} Historical Prices", font=dict(size=14, family='Inter', color='#0f172a')),
-                xaxis_title="Trading Day",
-                yaxis_title="Price ($)",
-                margin=dict(t=40, b=30, l=40, r=10),
-                height=320,
-            ))
-            st.plotly_chart(fig_price, use_container_width=True)
+    with st.expander("Historical Prices & ML Anomaly Analysis", expanded=False):
+        lc, rc = st.columns(2)
+        with lc:
+            prices = port_asset.get('historical_prices', [])
+            if prices:
+                fig_price = go.Figure()
+                fig_price.add_trace(go.Scatter(
+                    y=prices,
+                    x=list(range(len(prices))),
+                    mode='lines',
+                    line=dict(color=COLORS['primary'], width=2.5),
+                    fill='tozeroy',
+                    fillcolor='rgba(14, 165, 233, 0.08)',
+                    name='Price',
+                ))
+                fig_price.update_layout(**plotly_base(
+                    title=dict(text=f"{symbol} Historical Prices", font=dict(size=14, family='Inter', color='#0f172a')),
+                    xaxis_title="Trading Day",
+                    yaxis_title="Price ($)",
+                    margin=dict(t=40, b=30, l=40, r=10),
+                    height=320,
+                ))
+                st.plotly_chart(fig_price, use_container_width=True)
 
-    with rc:
-        if ml_anomaly:
-            st.markdown("**ML Anomaly Analysis**")
-            st.markdown(f"Anomaly Score: **{ml_anomaly['anomaly_score']:.1f}**")
-            st.markdown(f"Severity: **{ml_anomaly['severity']}**")
-            st.markdown(f"Recommendation: {ml_anomaly['recommendation']}")
+        with rc:
+            if ml_anomaly:
+                st.markdown("**ML Anomaly Analysis**")
+                st.markdown(f"Anomaly Score: **{ml_anomaly['anomaly_score']:.1f}**")
+                st.markdown(f"Severity: **{ml_anomaly['severity']}**")
+                st.markdown(f"Recommendation: {ml_anomaly['recommendation']}")
 
-        if ml_pred:
-            st.markdown(f"Trend: **{ml_pred['trend']}**")
+            if ml_pred:
+                st.markdown(f"Trend: **{ml_pred['trend']}**")
 
-        sent_asset = next((s for s in sentiment_results if s['symbol'] == symbol), None)
-        if sent_asset:
-            st.markdown("**Sentiment Analysis**")
-            st.markdown(f"Score: **{sent_asset['sentiment_score']:.3f}** ({sent_asset.get('sentiment_label', '')})")
-            st.markdown(f"Trend: **{sent_asset.get('sentiment_trend', '')}**")
-            st.markdown(f"News Count: **{sent_asset.get('news_count', 0)}**")
-            themes = ', '.join(sent_asset.get('key_themes', [])[:3])
-            if themes:
-                st.markdown(f"Key Themes: {themes}")
-            st.markdown(f"Confidence: **{sent_asset.get('confidence', 0):.2f}**")
+    sent_asset = next((s for s in sentiment_results if s['symbol'] == symbol), None)
+    if sent_asset:
+        st.markdown("**Sentiment Analysis**")
+        st.markdown(f"Score: **{sent_asset['sentiment_score']:.3f}** ({sent_asset.get('sentiment_label', '')})")
+        st.markdown(f"Trend: **{sent_asset.get('sentiment_trend', '')}**")
+        st.markdown(f"News Count: **{sent_asset.get('news_count', 0)}**")
+        themes = ', '.join(sent_asset.get('key_themes', [])[:3])
+        if themes:
+            st.markdown(f"Key Themes: {themes}")
+        st.markdown(f"Confidence: **{sent_asset.get('confidence', 0):.2f}**")
 
 
 def render_tab_appendix(portfolio_data, analysis_results):
