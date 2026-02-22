@@ -21,6 +21,32 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+COLORS = {
+    'primary': '#0ea5e9',
+    'primary_dark': '#0284c7',
+    'secondary': '#f97316',
+    'accent1': '#8b5cf6',
+    'accent2': '#06b6d4',
+    'accent3': '#10b981',
+    'accent4': '#f43f5e',
+    'accent5': '#eab308',
+    'text_dark': '#0f172a',
+    'text': '#334155',
+    'text_light': '#64748b',
+    'bg': '#f8fafc',
+    'card': '#ffffff',
+    'border': '#e2e8f0',
+    'chart_colors': ['#0ea5e9', '#8b5cf6', '#f97316', '#10b981', '#f43f5e', '#06b6d4', '#eab308', '#ec4899', '#14b8a6', '#a855f7'],
+}
+
+PLOTLY_LAYOUT = dict(
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+    font=dict(family='Inter, sans-serif', color=COLORS['text'], size=12),
+    xaxis=dict(gridcolor='#e2e8f0', zerolinecolor='#e2e8f0'),
+    yaxis=dict(gridcolor='#e2e8f0', zerolinecolor='#e2e8f0'),
+)
+
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -30,21 +56,16 @@ st.markdown("""
     }
 
     .block-container {
-        padding-top: 1.5rem;
+        padding-top: 1rem;
         padding-bottom: 2rem;
         max-width: 1400px;
     }
 
-    /* Sidebar */
     section[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+        background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
     }
     section[data-testid="stSidebar"] * {
         color: #e2e8f0 !important;
-    }
-    section[data-testid="stSidebar"] .stSlider label {
-        color: #94a3b8 !important;
-        font-size: 0.95rem !important;
     }
     section[data-testid="stSidebar"] h1,
     section[data-testid="stSidebar"] h2,
@@ -53,27 +74,25 @@ st.markdown("""
         font-weight: 700 !important;
     }
 
-    /* Metric cards */
     div[data-testid="stMetric"] {
         background: #ffffff;
         border: 1px solid #e2e8f0;
         border-radius: 12px;
         padding: 16px 20px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-        transition: box-shadow 0.2s ease;
     }
     div[data-testid="stMetric"]:hover {
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
     div[data-testid="stMetric"] label {
-        font-size: 0.85rem !important;
-        font-weight: 500 !important;
+        font-size: 0.82rem !important;
+        font-weight: 600 !important;
         color: #64748b !important;
-        letter-spacing: 0.02em;
+        letter-spacing: 0.03em;
         text-transform: uppercase;
     }
     div[data-testid="stMetric"] [data-testid="stMetricValue"] {
-        font-size: 1.6rem !important;
+        font-size: 1.5rem !important;
         font-weight: 700 !important;
         color: #0f172a !important;
     }
@@ -82,34 +101,49 @@ st.markdown("""
         font-weight: 600 !important;
     }
 
-    /* Section headers */
     .section-header {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         font-weight: 700;
         color: #0f172a;
-        border-bottom: 3px solid #6366f1;
+        border-bottom: 3px solid #0ea5e9;
         padding-bottom: 10px;
-        margin-top: 2.5rem;
-        margin-bottom: 1.2rem;
-        letter-spacing: -0.01em;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
     }
 
-    /* Dashboard title */
+    .dash-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 1.2rem;
+    }
     .dash-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
         font-weight: 800;
         color: #0f172a;
         letter-spacing: -0.02em;
-        margin-bottom: 0.25rem;
     }
-    .dash-subtitle {
-        font-size: 1rem;
+    .dash-date {
+        font-size: 0.95rem;
         color: #64748b;
-        font-weight: 400;
-        margin-bottom: 1.5rem;
+        font-weight: 500;
     }
 
-    /* Risk badges */
+    .section-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 3px solid #0ea5e9;
+        padding-bottom: 10px;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    .section-header-row .title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #0f172a;
+    }
+
     .risk-badge-red {
         background: linear-gradient(135deg, #fef2f2, #fee2e2);
         color: #dc2626;
@@ -119,7 +153,7 @@ st.markdown("""
         font-size: 0.9rem;
         border: 1px solid #fca5a5;
         display: inline-block;
-        margin: 3px 2px;
+        margin: 3px 4px;
     }
     .risk-badge-yellow {
         background: linear-gradient(135deg, #fffbeb, #fef3c7);
@@ -130,7 +164,7 @@ st.markdown("""
         font-size: 0.9rem;
         border: 1px solid #fcd34d;
         display: inline-block;
-        margin: 3px 2px;
+        margin: 3px 4px;
     }
     .risk-badge-green {
         background: linear-gradient(135deg, #f0fdf4, #dcfce7);
@@ -141,28 +175,26 @@ st.markdown("""
         font-size: 0.9rem;
         border: 1px solid #86efac;
         display: inline-block;
-        margin: 3px 2px;
+        margin: 3px 4px;
     }
 
-    /* Welcome box */
     .welcome-box {
-        background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 50%, #c7d2fe 100%);
+        background: linear-gradient(135deg, #ecfeff 0%, #e0f2fe 40%, #ede9fe 100%);
         border: none;
         border-radius: 20px;
         padding: 4rem 3rem;
         text-align: center;
         margin: 3rem auto;
         max-width: 800px;
-        box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);
+        box-shadow: 0 4px 20px rgba(14, 165, 233, 0.08);
     }
     .welcome-box h2 {
-        color: #1e1b4b !important;
+        color: #0f172a !important;
         font-weight: 800 !important;
         font-size: 2rem !important;
         margin-bottom: 1rem;
     }
 
-    /* Card containers */
     .info-card {
         background: #ffffff;
         border: 1px solid #e2e8f0;
@@ -172,44 +204,72 @@ st.markdown("""
         box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
 
-    /* DataFrames */
-    .stDataFrame {
+    .ml-footnote {
+        background: linear-gradient(135deg, #f0f9ff, #f8fafc);
+        border: 1px solid #bae6fd;
         border-radius: 12px;
-        overflow: hidden;
+        padding: 20px 24px;
+        margin-top: 1.5rem;
+    }
+    .ml-footnote-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 0.75rem;
     }
 
-    /* Expander styling */
-    .streamlit-expanderHeader {
-        font-size: 1.1rem !important;
-        font-weight: 600 !important;
-        color: #1e293b !important;
-        background: #f8fafc !important;
-        border-radius: 12px !important;
-    }
-
-    /* Download buttons */
     .stDownloadButton > button {
-        background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+        background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
         color: white !important;
         border: none !important;
         border-radius: 10px !important;
-        padding: 0.6rem 1.5rem !important;
+        padding: 0.5rem 1.2rem !important;
         font-weight: 600 !important;
-        font-size: 0.9rem !important;
-        transition: all 0.2s ease !important;
-        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3) !important;
+        font-size: 0.85rem !important;
+        box-shadow: 0 2px 8px rgba(14, 165, 233, 0.25) !important;
     }
     .stDownloadButton > button:hover {
-        transform: translateY(-1px) !important;
-        box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4) !important;
+        box-shadow: 0 4px 16px rgba(14, 165, 233, 0.35) !important;
     }
 
-    /* Selectbox styling */
+    .stButton > button[kind="primary"] {
+        background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        font-size: 1rem !important;
+        padding: 0.6rem 2rem !important;
+        box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3) !important;
+    }
+
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 0px;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .stTabs [data-baseweb="tab"] {
+        border-radius: 8px;
+        padding: 10px 24px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: #64748b;
+    }
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(135deg, #0ea5e9, #06b6d4) !important;
+        color: white !important;
+        border-radius: 8px;
+    }
+    .stTabs [data-baseweb="tab-panel"] {
+        padding-top: 1rem;
+    }
+
     div[data-baseweb="select"] {
         font-size: 1rem !important;
     }
 
-    /* General text readability */
     .stMarkdown p, .stMarkdown li {
         font-size: 1rem;
         line-height: 1.6;
@@ -219,31 +279,32 @@ st.markdown("""
         color: #0f172a;
     }
 
-    /* Plotly chart containers */
     .stPlotlyChart {
         border-radius: 12px;
         overflow: hidden;
     }
 
-    /* Primary button override */
-    .stButton > button[kind="primary"] {
-        background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 10px !important;
-        font-weight: 600 !important;
-        font-size: 1rem !important;
-        padding: 0.6rem 2rem !important;
-        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3) !important;
+    .stDataFrame {
+        border-radius: 12px;
+        overflow: hidden;
     }
 
-    /* KPI strip container */
-    .kpi-strip {
-        background: #ffffff;
-        border-radius: 16px;
-        padding: 8px;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-        margin-bottom: 1rem;
+    .streamlit-expanderHeader {
+        font-size: 1.05rem !important;
+        font-weight: 600 !important;
+        color: #1e293b !important;
+    }
+
+    .exec-time-badge {
+        background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+        color: #065f46;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        border: 1px solid #6ee7b7;
+        display: inline-block;
+        margin-top: 8px;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -252,6 +313,8 @@ if 'pipeline_results' not in st.session_state:
     st.session_state.pipeline_results = None
 if 'execution_time' not in st.session_state:
     st.session_state.execution_time = None
+if 'show_anomalies' not in st.session_state:
+    st.session_state.show_anomalies = False
 
 
 def execute_pipeline(portfolio_size):
@@ -302,7 +365,8 @@ def execute_pipeline(portfolio_size):
             'analysis_csv': report_files['analysis_csv'],
         }
         st.session_state.execution_time = execution_time
-        status_text.text(f"Pipeline completed in {execution_time:.1f}s")
+        status_text.empty()
+        progress_bar.empty()
 
     except Exception as e:
         st.error(f"Pipeline execution failed: {str(e)}")
@@ -322,9 +386,30 @@ def render_dashboard():
     total_mcap = sum(a['market_cap'] for a in portfolio_data)
     avg_vol = np.mean([a['volatility'] for a in analysis_results])
 
-    st.markdown('<div class="dash-title">Portfolio Risk Dashboard</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="dash-subtitle">Report Date: {datetime.now().strftime("%B %d, %Y")} &middot; Execution Time: {st.session_state.execution_time:.1f}s &middot; {len(portfolio_data)} Assets Analyzed</div>', unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="dash-header">'
+        f'<span class="dash-title">Portfolio Risk Dashboard</span>'
+        f'<span class="dash-date">{datetime.now().strftime("%B %d, %Y")}</span>'
+        f'</div>',
+        unsafe_allow_html=True
+    )
 
+    tab1, tab2, tab3, tab4 = st.tabs(["Overview", "Risk & Sentiment", "Asset Deep Dive", "Appendix"])
+
+    with tab1:
+        render_tab_overview(portfolio_data, analysis_results, ml_results, red_count, yellow_count, green_count, total_mcap, avg_vol, r)
+
+    with tab2:
+        render_tab_risk_sentiment(analysis_results, sentiment_results)
+
+    with tab3:
+        render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment_results)
+
+    with tab4:
+        render_tab_appendix(portfolio_data, analysis_results)
+
+
+def render_tab_overview(portfolio_data, analysis_results, ml_results, red_count, yellow_count, green_count, total_mcap, avg_vol, r):
     c1, c2, c3, c4, c5, c6 = st.columns(6)
     c1.metric("Total Assets", len(portfolio_data))
     c2.metric("Market Cap", f"${total_mcap / 1e9:.1f}B")
@@ -333,32 +418,23 @@ def render_dashboard():
     c5.metric("Low Risk", green_count)
     c6.metric("Avg Volatility", f"{avg_vol * 100:.1f}%")
 
-    st.markdown("")
-    dc1, dc2, dc3 = st.columns(3)
-    with dc1:
-        if os.path.exists(r['pdf_path']):
-            with open(r['pdf_path'], 'rb') as f:
-                st.download_button("📄 PDF Report", f.read(), os.path.basename(r['pdf_path']), "application/pdf", key="dl_pdf")
-    with dc2:
-        if os.path.exists(r['portfolio_csv']):
-            with open(r['portfolio_csv'], 'rb') as f:
-                st.download_button("📊 Portfolio CSV", f.read(), os.path.basename(r['portfolio_csv']), "text/csv", key="dl_port")
-    with dc3:
-        if os.path.exists(r['analysis_csv']):
-            with open(r['analysis_csv'], 'rb') as f:
-                st.download_button("📈 Risk Analysis CSV", f.read(), os.path.basename(r['analysis_csv']), "text/csv", key="dl_risk")
+    hdr_left, hdr_right = st.columns([3, 1])
+    with hdr_left:
+        st.markdown('<div class="section-header">Summary</div>', unsafe_allow_html=True)
+    with hdr_right:
+        st.markdown("<div style='height:2rem'></div>", unsafe_allow_html=True)
+        with st.popover("Downloads", use_container_width=True):
+            if os.path.exists(r['pdf_path']):
+                with open(r['pdf_path'], 'rb') as f:
+                    st.download_button("PDF Report", f.read(), os.path.basename(r['pdf_path']), "application/pdf", key="dl_pdf")
+            if os.path.exists(r['portfolio_csv']):
+                with open(r['portfolio_csv'], 'rb') as f:
+                    st.download_button("Portfolio CSV", f.read(), os.path.basename(r['portfolio_csv']), "text/csv", key="dl_port")
+            if os.path.exists(r['analysis_csv']):
+                with open(r['analysis_csv'], 'rb') as f:
+                    st.download_button("Risk Analysis CSV", f.read(), os.path.basename(r['analysis_csv']), "text/csv", key="dl_risk")
 
-    render_summary_grid(portfolio_data, analysis_results, ml_results, red_count, yellow_count, green_count)
-    render_flagged_assets(analysis_results)
-    render_sentiment_overview(sentiment_results)
-    render_asset_drilldown(portfolio_data, analysis_results, ml_results, sentiment_results)
-    render_recommendations(analysis_results, sentiment_results)
-    render_appendix(portfolio_data, analysis_results)
-
-
-def render_summary_grid(portfolio_data, analysis_results, ml_results, red_count, yellow_count, green_count):
-    st.markdown('<div class="section-header">Summary</div>', unsafe_allow_html=True)
-    left, center, right = st.columns(3)
+    left, center = st.columns(2)
 
     with left:
         st.markdown("**Sector Allocation**")
@@ -369,13 +445,12 @@ def render_summary_grid(portfolio_data, analysis_results, ml_results, red_count,
             names=list(sector_data.keys()),
             values=list(sector_data.values()),
             hole=0.45,
-            color_discrete_sequence=['#6366f1', '#8b5cf6', '#a78bfa', '#c4b5fd', '#818cf8', '#6d28d9', '#4f46e5', '#7c3aed', '#5b21b6', '#4338ca'],
+            color_discrete_sequence=COLORS['chart_colors'],
         )
         fig.update_layout(
-            margin=dict(t=10, b=10, l=10, r=10), height=320,
+            margin=dict(t=10, b=10, l=10, r=10), height=340,
             showlegend=True, legend=dict(font=dict(size=11, family='Inter')),
-            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(family='Inter', color='#334155'),
+            **{k: v for k, v in PLOTLY_LAYOUT.items() if k not in ('xaxis', 'yaxis')},
         )
         fig.update_traces(textposition='inside', textinfo='percent', textfont_size=12)
         st.plotly_chart(fig, use_container_width=True)
@@ -393,11 +468,11 @@ def render_summary_grid(portfolio_data, analysis_results, ml_results, red_count,
         ))
         fig_pie.update_layout(
             margin=dict(t=10, b=10, l=10, r=10), height=200, showlegend=False,
-            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(family='Inter', color='#334155'),
+            **{k: v for k, v in PLOTLY_LAYOUT.items() if k not in ('xaxis', 'yaxis')},
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
+        st.markdown("**Volatility vs Drawdown**")
         df_scatter = pd.DataFrame(analysis_results)
         fig_sc = px.scatter(
             df_scatter, x='volatility', y='max_drawdown',
@@ -408,88 +483,167 @@ def render_summary_grid(portfolio_data, analysis_results, ml_results, red_count,
         )
         fig_sc.update_layout(
             margin=dict(t=10, b=10, l=10, r=10), height=200, showlegend=False,
-            paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(family='Inter', color='#334155'),
-            xaxis=dict(gridcolor='#e2e8f0', zerolinecolor='#e2e8f0'),
-            yaxis=dict(gridcolor='#e2e8f0', zerolinecolor='#e2e8f0'),
+            **PLOTLY_LAYOUT,
         )
         st.plotly_chart(fig_sc, use_container_width=True)
 
-    with right:
-        st.markdown("**ML Summary**")
-        ml_summary = ml_results['ml_summary']
-        st.metric("Total Anomalies", ml_summary['anomaly_summary']['total_anomalies'])
-        acc = ml_summary['prediction_summary'].get('model_accuracy', 'N/A')
-        st.metric("Model Accuracy", f"{acc}%" if isinstance(acc, (int, float)) else acc)
-        st.metric("Rating Changes", ml_summary['prediction_summary'].get('rating_changes_predicted', 0))
+    render_ml_footnote(ml_results)
 
-        fi = ml_results.get('feature_importance', [])[:5]
-        if fi:
+
+def render_ml_footnote(ml_results):
+    st.markdown('<div class="ml-footnote">', unsafe_allow_html=True)
+    st.markdown('<div class="ml-footnote-title">ML Analysis Summary</div>', unsafe_allow_html=True)
+
+    ml_summary = ml_results['ml_summary']
+    m1, m2, m3, m4 = st.columns(4)
+    total_anomalies = ml_summary['anomaly_summary']['total_anomalies']
+    m1.metric("Total Anomalies", total_anomalies)
+    acc = ml_summary['prediction_summary'].get('model_accuracy', 'N/A')
+    m2.metric("Model Accuracy", f"{acc}%" if isinstance(acc, (int, float)) else acc)
+    m3.metric("Rating Changes", ml_summary['prediction_summary'].get('rating_changes_predicted', 0))
+
+    fi = ml_results.get('feature_importance', [])[:5]
+    if fi:
+        fi_names = ', '.join([f['feature'] for f in fi])
+        m4.metric("Top Features", fi[:1][0]['feature'] if fi else 'N/A')
+
+    if total_anomalies > 0:
+        show_anom = st.toggle("Show Anomaly Details", key="anomaly_toggle")
+        if show_anom:
+            anomalies = ml_results.get('anomaly_detection', [])
+            flagged_anomalies = [a for a in anomalies if a.get('is_anomaly')]
+            if flagged_anomalies:
+                rows = []
+                for a in flagged_anomalies:
+                    rows.append({
+                        'Symbol': a['symbol'],
+                        'Anomaly Score': f"{a['anomaly_score']:.1f}",
+                        'Severity': a['severity'],
+                        'Recommendation': a['recommendation'],
+                    })
+                st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+            else:
+                st.info("No anomalies flagged by the model.")
+
+    if fi:
+        with st.expander("Feature Importance"):
             fi_df = pd.DataFrame(fi)
             fig_fi = px.bar(
                 fi_df, y='feature', x='importance', orientation='h',
-                color_discrete_sequence=['#6366f1'],
+                color_discrete_sequence=[COLORS['accent1']],
                 labels={'importance': 'Importance (%)', 'feature': ''},
             )
             fig_fi.update_layout(
                 margin=dict(t=10, b=10, l=10, r=10), height=200,
                 yaxis=dict(autorange='reversed'),
-                paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-                font=dict(family='Inter', size=12, color='#334155'),
-                xaxis=dict(gridcolor='#e2e8f0'),
+                **PLOTLY_LAYOUT,
             )
             st.plotly_chart(fig_fi, use_container_width=True)
 
+    st.markdown('</div>', unsafe_allow_html=True)
 
-def render_flagged_assets(analysis_results):
+
+def render_tab_risk_sentiment(analysis_results, sentiment_results):
     st.markdown('<div class="section-header">Flagged Assets</div>', unsafe_allow_html=True)
     flagged = [a for a in analysis_results if a['risk_rating'] in ['RED', 'YELLOW']]
     flagged = sorted(flagged, key=lambda x: x['risk_score'], reverse=True)
     if not flagged:
         st.info("No flagged assets.")
-        return
-    rows = []
-    for a in flagged:
-        rows.append({
-            'Symbol': a['symbol'],
-            'Sector': a['sector'],
-            'Risk Rating': a['risk_rating'],
-            'Volatility (%)': f"{a['volatility'] * 100:.1f}",
-            'Max Drawdown (%)': f"{a['max_drawdown'] * 100:.1f}",
-            'Sharpe Ratio': f"{a['sharpe_ratio']:.2f}",
-            'Risk Score': a['risk_score'],
-        })
-    st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
-
-
-def render_sentiment_overview(sentiment_results):
-    st.markdown('<div class="section-header">Sentiment Overview</div>', unsafe_allow_html=True)
-    if not sentiment_results:
-        st.info("No RED-flagged assets required sentiment analysis.")
-        return
-    left, right = st.columns(2)
-    with left:
-        avg_sent = np.mean([s['sentiment_score'] for s in sentiment_results])
-        neg_count = len([s for s in sentiment_results if s.get('sentiment_label') == 'NEGATIVE'])
-        total_articles = sum(s.get('news_count', 0) for s in sentiment_results)
-        st.metric("Avg Sentiment Score", f"{avg_sent:.3f}")
-        st.metric("Negative Sentiment Count", neg_count)
-        st.metric("Total Articles Analyzed", total_articles)
-    with right:
+    else:
         rows = []
-        for s in sentiment_results:
-            themes = ', '.join(s.get('key_themes', [])[:3]) if s.get('key_themes') else ''
+        for a in flagged:
             rows.append({
-                'Symbol': s['symbol'],
-                'Sentiment Score': f"{s['sentiment_score']:.3f}",
-                'Label': s.get('sentiment_label', ''),
-                'Trend': s.get('sentiment_trend', ''),
-                'Key Themes': themes,
+                'Symbol': a['symbol'],
+                'Sector': a['sector'],
+                'Risk Rating': a['risk_rating'],
+                'Volatility (%)': f"{a['volatility'] * 100:.1f}",
+                'Max Drawdown (%)': f"{a['max_drawdown'] * 100:.1f}",
+                'Sharpe Ratio': f"{a['sharpe_ratio']:.2f}",
+                'Risk Score': a['risk_score'],
             })
         st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
+    st.markdown('<div class="section-header">Sentiment Overview</div>', unsafe_allow_html=True)
+    if not sentiment_results:
+        st.info("No RED-flagged assets required sentiment analysis.")
+    else:
+        left, right = st.columns(2)
+        with left:
+            avg_sent = np.mean([s['sentiment_score'] for s in sentiment_results])
+            neg_count = len([s for s in sentiment_results if s.get('sentiment_label') == 'NEGATIVE'])
+            total_articles = sum(s.get('news_count', 0) for s in sentiment_results)
+            st.metric("Avg Sentiment Score", f"{avg_sent:.3f}")
+            st.metric("Negative Sentiment Count", neg_count)
+            st.metric("Total Articles Analyzed", total_articles)
+        with right:
+            rows = []
+            for s in sentiment_results:
+                themes = ', '.join(s.get('key_themes', [])[:3]) if s.get('key_themes') else ''
+                rows.append({
+                    'Symbol': s['symbol'],
+                    'Sentiment Score': f"{s['sentiment_score']:.3f}",
+                    'Label': s.get('sentiment_label', ''),
+                    'Trend': s.get('sentiment_trend', ''),
+                    'Key Themes': themes,
+                })
+            st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
-def render_asset_drilldown(portfolio_data, analysis_results, ml_results, sentiment_results):
+    st.markdown('<div class="section-header">Recommendations</div>', unsafe_allow_html=True)
+    render_recommendations_content(analysis_results, sentiment_results)
+
+
+def render_recommendations_content(analysis_results, sentiment_results):
+    red_assets = [a for a in analysis_results if a['risk_rating'] == 'RED']
+    yellow_assets = [a for a in analysis_results if a['risk_rating'] == 'YELLOW']
+
+    st.markdown("#### Immediate Actions (RED)")
+    if red_assets:
+        for a in sorted(red_assets, key=lambda x: x['risk_score'], reverse=True):
+            flags_triggered = [k.replace('_', ' ').title() for k, v in a.get('risk_flags', {}).items() if v]
+            st.markdown(f"- **{a['symbol']}** (Risk Score: {a['risk_score']}) — Triggered: {', '.join(flags_triggered)}. "
+                        f"Volatility {a['volatility']*100:.0f}%, Max Drawdown {a['max_drawdown']*100:.0f}%. "
+                        f"Consider reducing position or hedging.")
+    else:
+        st.markdown("No RED-rated assets. Portfolio looks healthy on critical risk front.")
+
+    st.markdown("#### Medium-term Actions (YELLOW)")
+    if yellow_assets:
+        for a in sorted(yellow_assets, key=lambda x: x['risk_score'], reverse=True):
+            st.markdown(f"- **{a['symbol']}** (Score: {a['risk_score']}) — Monitor closely. "
+                        f"Sharpe {a['sharpe_ratio']:.2f}, Beta {a['beta']:.2f}.")
+    else:
+        st.markdown("No YELLOW-rated assets requiring medium-term action.")
+
+    st.markdown("#### Portfolio-level")
+    total_assets = len(analysis_results)
+    avg_vol = np.mean([a['volatility'] for a in analysis_results])
+    avg_sharpe = np.mean([a['sharpe_ratio'] for a in analysis_results])
+    st.markdown(f"- Portfolio of **{total_assets}** assets with average volatility **{avg_vol*100:.1f}%** "
+                f"and average Sharpe Ratio **{avg_sharpe:.2f}**.")
+    high_corr = [a for a in analysis_results if a.get('high_correlation_flag')]
+    if high_corr:
+        st.markdown(f"- **{len(high_corr)}** assets have high correlation flags — consider diversification.")
+    sector_counts = {}
+    for a in analysis_results:
+        sector_counts[a['sector']] = sector_counts.get(a['sector'], 0) + 1
+    max_sector = max(sector_counts, key=sector_counts.get)
+    st.markdown(f"- Largest sector concentration: **{max_sector}** ({sector_counts[max_sector]} assets).")
+
+    st.markdown("#### Sentiment-based")
+    if sentiment_results:
+        neg_sents = [s for s in sentiment_results if s.get('sentiment_label') == 'NEGATIVE']
+        if neg_sents:
+            for s in neg_sents:
+                themes = ', '.join(s.get('key_themes', [])[:3])
+                st.markdown(f"- **{s['symbol']}** has negative sentiment (score: {s['sentiment_score']:.3f}, "
+                            f"trend: {s.get('sentiment_trend', 'N/A')}). Themes: {themes}.")
+        else:
+            st.markdown("No assets with negative sentiment detected.")
+    else:
+        st.markdown("Sentiment analysis was not triggered (no RED-flagged assets).")
+
+
+def render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment_results):
     st.markdown('<div class="section-header">Asset Deep Dive</div>', unsafe_allow_html=True)
 
     asset_options = []
@@ -497,7 +651,7 @@ def render_asset_drilldown(portfolio_data, analysis_results, ml_results, sentime
         rating = next((a['risk_rating'] for a in analysis_results if a['symbol'] == p['symbol']), 'N/A')
         asset_options.append(f"{p['symbol']} - {p['company_name']} [{rating}]")
 
-    selected = st.selectbox("Select an asset", asset_options, key="drilldown_select")
+    selected = st.selectbox("Select an asset to explore", asset_options, key="drilldown_select")
     if not selected:
         return
 
@@ -507,15 +661,15 @@ def render_asset_drilldown(portfolio_data, analysis_results, ml_results, sentime
     if not port_asset or not anal_asset:
         return
 
+    rating = anal_asset['risk_rating']
+    badge_class = f"risk-badge-{rating.lower()}"
+
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("**Asset Info**")
-        rating = anal_asset['risk_rating']
-        badge_class = f"risk-badge-{rating.lower()}"
         st.markdown(f"<span class='{badge_class}'>{rating}</span>", unsafe_allow_html=True)
         st.markdown(f"**{port_asset['company_name']}**")
-        st.markdown(f"Sector: {port_asset['sector']}")
-        st.markdown(f"Exchange: {port_asset['exchange']}")
+        st.markdown(f"Sector: {port_asset['sector']} · Exchange: {port_asset['exchange']}")
         st.metric("Current Price", f"${port_asset['current_price']:.2f}")
         st.metric("Market Cap", f"${port_asset['market_cap'] / 1e9:.2f}B")
         pe = port_asset.get('pe_ratio')
@@ -536,14 +690,27 @@ def render_asset_drilldown(portfolio_data, analysis_results, ml_results, sentime
         st.metric("1M Return", f"{anal_asset['price_change_1m'] * 100:.1f}%", delta=f"{anal_asset['price_change_1m'] * 100:.1f}%")
         st.metric("3M Return", f"{anal_asset['price_change_3m'] * 100:.1f}%", delta=f"{anal_asset['price_change_3m'] * 100:.1f}%")
         st.metric("6M Return", f"{anal_asset['price_change_6m'] * 100:.1f}%", delta=f"{anal_asset['price_change_6m'] * 100:.1f}%")
+
+        ml_anomaly = next((a for a in ml_results.get('anomaly_detection', []) if a['symbol'] == symbol), None)
+        ml_pred = None
+        if ml_results.get('risk_prediction', {}).get('model_trained'):
+            ml_pred = next((p for p in ml_results['risk_prediction']['predictions'] if p['symbol'] == symbol), None)
+
+        if ml_pred:
+            st.metric("ML Predicted Rating", ml_pred['predicted_rating'])
+            st.metric("ML Confidence", f"{ml_pred['confidence']:.1f}%")
+
+    flags = anal_asset.get('risk_flags', {})
+    if flags:
         st.markdown("**Risk Flags**")
-        flags = anal_asset.get('risk_flags', {})
+        flag_html = ""
         for flag_name, flag_val in flags.items():
             label = flag_name.replace('_', ' ').title()
             if flag_val:
-                st.markdown(f"<span class='risk-badge-red'>{label}</span>", unsafe_allow_html=True)
+                flag_html += f"<span class='risk-badge-red'>{label}</span>"
             else:
-                st.markdown(f"<span class='risk-badge-green'>{label}</span>", unsafe_allow_html=True)
+                flag_html += f"<span class='risk-badge-green'>{label}</span>"
+        st.markdown(flag_html, unsafe_allow_html=True)
 
     lc, rc = st.columns(2)
     with lc:
@@ -554,44 +721,34 @@ def render_asset_drilldown(portfolio_data, analysis_results, ml_results, sentime
                 y=prices,
                 x=list(range(len(prices))),
                 mode='lines',
-                line=dict(color='#6366f1', width=2.5),
+                line=dict(color=COLORS['primary'], width=2.5),
                 fill='tozeroy',
-                fillcolor='rgba(99, 102, 241, 0.08)',
+                fillcolor='rgba(14, 165, 233, 0.08)',
                 name='Price',
             ))
             fig_price.update_layout(
-                title=dict(text=f"{symbol} Historical Prices", font=dict(size=15, family='Inter', color='#0f172a')),
+                title=dict(text=f"{symbol} Historical Prices", font=dict(size=14, family='Inter', color='#0f172a')),
                 xaxis_title="Trading Day",
                 yaxis_title="Price ($)",
                 margin=dict(t=40, b=30, l=40, r=10),
-                height=300,
-                paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-                font=dict(family='Inter', color='#334155'),
-                xaxis=dict(gridcolor='#e2e8f0', zerolinecolor='#e2e8f0'),
-                yaxis=dict(gridcolor='#e2e8f0', zerolinecolor='#e2e8f0'),
+                height=320,
+                **PLOTLY_LAYOUT,
             )
             st.plotly_chart(fig_price, use_container_width=True)
 
     with rc:
-        ml_anomaly = next((a for a in ml_results.get('anomaly_detection', []) if a['symbol'] == symbol), None)
-        ml_pred = None
-        if ml_results.get('risk_prediction', {}).get('model_trained'):
-            ml_pred = next((p for p in ml_results['risk_prediction']['predictions'] if p['symbol'] == symbol), None)
+        if ml_anomaly:
+            st.markdown("**ML Anomaly Analysis**")
+            st.markdown(f"Anomaly Score: **{ml_anomaly['anomaly_score']:.1f}**")
+            st.markdown(f"Severity: **{ml_anomaly['severity']}**")
+            st.markdown(f"Recommendation: {ml_anomaly['recommendation']}")
 
-        if ml_anomaly or ml_pred:
-            st.markdown("**ML Analysis**")
-            if ml_anomaly:
-                st.markdown(f"Anomaly Score: **{ml_anomaly['anomaly_score']:.1f}**")
-                st.markdown(f"Severity: **{ml_anomaly['severity']}**")
-                st.markdown(f"Recommendation: {ml_anomaly['recommendation']}")
-            if ml_pred:
-                st.markdown(f"Predicted Rating: **{ml_pred['predicted_rating']}**")
-                st.markdown(f"Confidence: **{ml_pred['confidence']:.1f}%**")
-                st.markdown(f"Trend: **{ml_pred['trend']}**")
+        if ml_pred:
+            st.markdown(f"Trend: **{ml_pred['trend']}**")
 
         sent_asset = next((s for s in sentiment_results if s['symbol'] == symbol), None)
         if sent_asset:
-            st.markdown("**Sentiment**")
+            st.markdown("**Sentiment Analysis**")
             st.markdown(f"Score: **{sent_asset['sentiment_score']:.3f}** ({sent_asset.get('sentiment_label', '')})")
             st.markdown(f"Trend: **{sent_asset.get('sentiment_trend', '')}**")
             st.markdown(f"News Count: **{sent_asset.get('news_count', 0)}**")
@@ -601,115 +758,69 @@ def render_asset_drilldown(portfolio_data, analysis_results, ml_results, sentime
             st.markdown(f"Confidence: **{sent_asset.get('confidence', 0):.2f}**")
 
 
-def render_recommendations(analysis_results, sentiment_results):
-    with st.expander("📋 Recommendations", expanded=False):
-        red_assets = [a for a in analysis_results if a['risk_rating'] == 'RED']
-        yellow_assets = [a for a in analysis_results if a['risk_rating'] == 'YELLOW']
+def render_tab_appendix(portfolio_data, analysis_results):
+    st.markdown('<div class="section-header">Methodology</div>', unsafe_allow_html=True)
+    st.markdown(
+        "This pipeline uses a five-stage approach: (1) Data Ingestion from simulated Bloomberg feeds, "
+        "(2) Core time-series and rule-based risk analysis with 7 risk flags, "
+        "(3) ML-based anomaly detection (Isolation Forest) and risk prediction (Random Forest), "
+        "(4) Sentiment analysis on RED-flagged assets using financial news, and "
+        "(5) Comprehensive report generation with PDF and CSV outputs."
+    )
 
-        st.markdown("### Immediate Actions (RED)")
-        if red_assets:
-            for a in sorted(red_assets, key=lambda x: x['risk_score'], reverse=True):
-                flags_triggered = [k.replace('_', ' ').title() for k, v in a.get('risk_flags', {}).items() if v]
-                st.markdown(f"- **{a['symbol']}** (Risk Score: {a['risk_score']}) — Triggered: {', '.join(flags_triggered)}. "
-                            f"Volatility {a['volatility']*100:.0f}%, Max Drawdown {a['max_drawdown']*100:.0f}%. "
-                            f"Consider reducing position or hedging.")
-        else:
-            st.markdown("No RED-rated assets. Portfolio looks healthy on critical risk front.")
+    st.markdown('<div class="section-header">Risk Thresholds</div>', unsafe_allow_html=True)
+    thresholds = pd.DataFrame([
+        {"Metric": "Volatility (RED)", "Threshold": "> 40%"},
+        {"Metric": "Volatility (YELLOW)", "Threshold": "> 25%"},
+        {"Metric": "Max Drawdown (RED)", "Threshold": "< -20%"},
+        {"Metric": "Max Drawdown (YELLOW)", "Threshold": "< -10%"},
+        {"Metric": "Volume Decline (RED)", "Threshold": "< -50%"},
+        {"Metric": "Volume Decline (YELLOW)", "Threshold": "< -30%"},
+        {"Metric": "Severe Decline (1M)", "Threshold": "< -15%"},
+        {"Metric": "Extended Decline (3M)", "Threshold": "< -25%"},
+        {"Metric": "Poor Risk/Return", "Threshold": "Sharpe < -0.5"},
+        {"Metric": "High Correlation", "Threshold": "> 0.8"},
+    ])
+    st.dataframe(thresholds, use_container_width=True, hide_index=True)
 
-        st.markdown("### Medium-term Actions (YELLOW)")
-        if yellow_assets:
-            for a in sorted(yellow_assets, key=lambda x: x['risk_score'], reverse=True):
-                st.markdown(f"- **{a['symbol']}** (Score: {a['risk_score']}) — Monitor closely. "
-                            f"Sharpe {a['sharpe_ratio']:.2f}, Beta {a['beta']:.2f}.")
-        else:
-            st.markdown("No YELLOW-rated assets requiring medium-term action.")
+    st.markdown('<div class="section-header">Performance Metrics</div>', unsafe_allow_html=True)
+    perf_rows = []
+    for a in analysis_results:
+        perf_rows.append({
+            'Symbol': a['symbol'],
+            'Sector': a['sector'],
+            '1M Return (%)': f"{a['price_change_1m'] * 100:.1f}",
+            '3M Return (%)': f"{a['price_change_3m'] * 100:.1f}",
+            '6M Return (%)': f"{a['price_change_6m'] * 100:.1f}",
+            'Sharpe Ratio': f"{a['sharpe_ratio']:.2f}",
+        })
+    st.dataframe(pd.DataFrame(perf_rows), use_container_width=True, hide_index=True)
 
-        st.markdown("### Portfolio-level")
-        total_assets = len(analysis_results)
-        avg_vol = np.mean([a['volatility'] for a in analysis_results])
-        avg_sharpe = np.mean([a['sharpe_ratio'] for a in analysis_results])
-        st.markdown(f"- Portfolio of **{total_assets}** assets with average volatility **{avg_vol*100:.1f}%** "
-                    f"and average Sharpe Ratio **{avg_sharpe:.2f}**.")
-        high_corr = [a for a in analysis_results if a.get('high_correlation_flag')]
-        if high_corr:
-            st.markdown(f"- **{len(high_corr)}** assets have high correlation flags — consider diversification.")
-        sector_counts = {}
-        for a in analysis_results:
-            sector_counts[a['sector']] = sector_counts.get(a['sector'], 0) + 1
-        max_sector = max(sector_counts, key=sector_counts.get)
-        st.markdown(f"- Largest sector concentration: **{max_sector}** ({sector_counts[max_sector]} assets).")
-
-        st.markdown("### Sentiment-based")
-        if sentiment_results:
-            neg_sents = [s for s in sentiment_results if s.get('sentiment_label') == 'NEGATIVE']
-            if neg_sents:
-                for s in neg_sents:
-                    themes = ', '.join(s.get('key_themes', [])[:3])
-                    st.markdown(f"- **{s['symbol']}** has negative sentiment (score: {s['sentiment_score']:.3f}, "
-                                f"trend: {s.get('sentiment_trend', 'N/A')}). Themes: {themes}.")
-            else:
-                st.markdown("No assets with negative sentiment detected.")
-        else:
-            st.markdown("Sentiment analysis was not triggered (no RED-flagged assets).")
-
-
-def render_appendix(portfolio_data, analysis_results):
-    with st.expander("📎 Appendix", expanded=False):
-        st.markdown("### Methodology")
-        st.markdown(
-            "This pipeline uses a five-stage approach: (1) Data Ingestion from simulated Bloomberg feeds, "
-            "(2) Core time-series and rule-based risk analysis with 7 risk flags, "
-            "(3) ML-based anomaly detection (Isolation Forest) and risk prediction (Random Forest), "
-            "(4) Sentiment analysis on RED-flagged assets using financial news, and "
-            "(5) Comprehensive report generation with PDF and CSV outputs."
-        )
-
-        st.markdown("### Risk Thresholds")
-        thresholds = pd.DataFrame([
-            {"Metric": "Volatility (RED)", "Threshold": "> 40%"},
-            {"Metric": "Volatility (YELLOW)", "Threshold": "> 25%"},
-            {"Metric": "Max Drawdown (RED)", "Threshold": "< -20%"},
-            {"Metric": "Max Drawdown (YELLOW)", "Threshold": "< -10%"},
-            {"Metric": "Volume Decline (RED)", "Threshold": "< -50%"},
-            {"Metric": "Volume Decline (YELLOW)", "Threshold": "< -30%"},
-            {"Metric": "Severe Decline (1M)", "Threshold": "< -15%"},
-            {"Metric": "Extended Decline (3M)", "Threshold": "< -25%"},
-            {"Metric": "Poor Risk/Return", "Threshold": "Sharpe < -0.5"},
-            {"Metric": "High Correlation", "Threshold": "> 0.8"},
-        ])
-        st.dataframe(thresholds, use_container_width=True, hide_index=True)
-
-        st.markdown("### Performance Metrics")
-        perf_rows = []
-        for a in analysis_results:
-            perf_rows.append({
-                'Symbol': a['symbol'],
-                'Sector': a['sector'],
-                '1M Return (%)': f"{a['price_change_1m'] * 100:.1f}",
-                '3M Return (%)': f"{a['price_change_3m'] * 100:.1f}",
-                '6M Return (%)': f"{a['price_change_6m'] * 100:.1f}",
-                'Sharpe Ratio': f"{a['sharpe_ratio']:.2f}",
-            })
-        st.dataframe(pd.DataFrame(perf_rows), use_container_width=True, hide_index=True)
-
-        st.markdown("### Risk Flags Detail")
-        flag_rows = []
-        for a in analysis_results:
-            row = {'Symbol': a['symbol']}
-            for flag_name, flag_val in a.get('risk_flags', {}).items():
-                label = flag_name.replace('_', ' ').title()
-                row[label] = "✅" if flag_val else "—"
-            flag_rows.append(row)
-        st.dataframe(pd.DataFrame(flag_rows), use_container_width=True, hide_index=True)
+    st.markdown('<div class="section-header">Risk Flags Detail</div>', unsafe_allow_html=True)
+    flag_rows = []
+    for a in analysis_results:
+        row = {'Symbol': a['symbol']}
+        for flag_name, flag_val in a.get('risk_flags', {}).items():
+            label = flag_name.replace('_', ' ').title()
+            row[label] = "Yes" if flag_val else "—"
+        flag_rows.append(row)
+    st.dataframe(pd.DataFrame(flag_rows), use_container_width=True, hide_index=True)
 
 
 def main():
     st.sidebar.header("Pipeline Controls")
     portfolio_size = st.sidebar.slider("Portfolio Size", min_value=10, max_value=100, value=25)
-    execute_btn = st.sidebar.button("🚀 Execute Full Pipeline", type="primary")
+    execute_btn = st.sidebar.button("Execute Full Pipeline", type="primary")
 
     if execute_btn:
-        execute_pipeline(portfolio_size)
+        with st.sidebar:
+            execute_pipeline(portfolio_size)
+
+    if st.session_state.execution_time is not None:
+        st.sidebar.markdown(
+            f"<div class='exec-time-badge'>Completed in {st.session_state.execution_time:.1f}s</div>",
+            unsafe_allow_html=True
+        )
 
     if st.session_state.pipeline_results:
         render_dashboard()
@@ -717,29 +828,29 @@ def main():
         st.markdown("""
         <div class="welcome-box">
             <h2>Portfolio Risk Dashboard</h2>
-            <p style="font-size:1.15rem; color:#3730a3; font-weight:500; margin-bottom:1.5rem;">
+            <p style="font-size:1.15rem; color:#0c4a6e; font-weight:500; margin-bottom:1.5rem;">
                 Configure your portfolio size in the sidebar and click <b>Execute Full Pipeline</b> to begin analysis.
             </p>
             <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
-                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(99,102,241,0.1); min-width:140px;">
-                    <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase; font-weight:600;">Step 1</div>
-                    <div style="font-size:0.95rem; color:#1e293b; font-weight:600; margin-top:4px;">Data Ingestion</div>
+                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(14,165,233,0.1); min-width:130px;">
+                    <div style="font-size:0.75rem; color:#0ea5e9; text-transform:uppercase; font-weight:700;">Step 1</div>
+                    <div style="font-size:0.9rem; color:#1e293b; font-weight:600; margin-top:4px;">Data Ingestion</div>
                 </div>
-                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(99,102,241,0.1); min-width:140px;">
-                    <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase; font-weight:600;">Step 2</div>
-                    <div style="font-size:0.95rem; color:#1e293b; font-weight:600; margin-top:4px;">Core Analysis</div>
+                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(139,92,246,0.1); min-width:130px;">
+                    <div style="font-size:0.75rem; color:#8b5cf6; text-transform:uppercase; font-weight:700;">Step 2</div>
+                    <div style="font-size:0.9rem; color:#1e293b; font-weight:600; margin-top:4px;">Core Analysis</div>
                 </div>
-                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(99,102,241,0.1); min-width:140px;">
-                    <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase; font-weight:600;">Step 3</div>
-                    <div style="font-size:0.95rem; color:#1e293b; font-weight:600; margin-top:4px;">ML Analysis</div>
+                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(249,115,22,0.1); min-width:130px;">
+                    <div style="font-size:0.75rem; color:#f97316; text-transform:uppercase; font-weight:700;">Step 3</div>
+                    <div style="font-size:0.9rem; color:#1e293b; font-weight:600; margin-top:4px;">ML Analysis</div>
                 </div>
-                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(99,102,241,0.1); min-width:140px;">
-                    <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase; font-weight:600;">Step 4</div>
-                    <div style="font-size:0.95rem; color:#1e293b; font-weight:600; margin-top:4px;">Sentiment Analysis</div>
+                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(16,185,129,0.1); min-width:130px;">
+                    <div style="font-size:0.75rem; color:#10b981; text-transform:uppercase; font-weight:700;">Step 4</div>
+                    <div style="font-size:0.9rem; color:#1e293b; font-weight:600; margin-top:4px;">Sentiment</div>
                 </div>
-                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(99,102,241,0.1); min-width:140px;">
-                    <div style="font-size:0.8rem; color:#64748b; text-transform:uppercase; font-weight:600;">Step 5</div>
-                    <div style="font-size:0.95rem; color:#1e293b; font-weight:600; margin-top:4px;">Report Generation</div>
+                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(244,63,94,0.1); min-width:130px;">
+                    <div style="font-size:0.75rem; color:#f43f5e; text-transform:uppercase; font-weight:700;">Step 5</div>
+                    <div style="font-size:0.9rem; color:#1e293b; font-weight:600; margin-top:4px;">Reports</div>
                 </div>
             </div>
         </div>
