@@ -246,23 +246,30 @@ st.markdown("""
     }
 
     .stTabs [data-baseweb="tab-list"] {
-        gap: 0px;
-        background: #ffffff;
+        gap: 4px;
+        background: #f1f5f9;
         border-radius: 12px;
-        padding: 4px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        padding: 5px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     }
     .stTabs [data-baseweb="tab"] {
         border-radius: 8px;
-        padding: 10px 24px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        color: #64748b;
+        padding: 10px 28px;
+        font-weight: 700;
+        font-size: 1rem;
+        color: #0f172a;
+        letter-spacing: 0.01em;
+        transition: all 0.2s ease;
+    }
+    .stTabs [data-baseweb="tab"]:hover {
+        background: rgba(14, 165, 233, 0.1);
+        color: #0284c7;
     }
     .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #0ea5e9, #06b6d4) !important;
+        background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
         color: white !important;
         border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
     }
     .stTabs [data-baseweb="tab-panel"] {
         padding-top: 1rem;
