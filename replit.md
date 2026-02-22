@@ -6,12 +6,12 @@ A multi-stage portfolio risk analysis application built with Streamlit. Features
 ## Recent Changes
 - **Feb 2026**: Restructured dashboard from single-page scroll to 4-tab layout
   - Tab 1 (Overview): KPI strip, Summary charts (sector allocation, risk distribution, scatter), ML Summary footnote with anomaly drilldown
-  - Tab 2 (Risk & Sentiment): Flagged assets table, sentiment overview, recommendations (collapsed by default)
-  - Tab 3 (Asset Deep Dive): Searchable asset filter, per-asset drilldown with horizontal risk flags, Historical Prices & ML Anomaly in collapsed expander, sentiment details
-  - Tab 4 (Appendix): Methodology, thresholds, performance metrics, risk flags detail
+  - Tab 2 (Risk & Sentiment): Recommendations at top (collapsed, amber highlight), Flagged assets table, sentiment overview
+  - Tab 3 (Asset Deep Dive): Type-ahead selectbox, per-asset drilldown with horizontal risk flags, Sentiment collapsed expander, Historical Prices & ML Anomaly collapsed expander
+  - Tab 4 (Appendix): Methodology, performance metrics, risk thresholds (collapsed), risk flags detail
 - Multi-color palette (sky blue, violet, orange, emerald, rose) replacing monotone indigo
-- Download Report dropdown popover positioned above tabs (far right)
-- Title and date on separate Streamlit columns for full visibility
+- Download Report dropdown popover inline with tab bar (far right, uses CSS overlap)
+- Title and date rendered as HTML flex row for full visibility
 - Execution time badge styled for dark sidebar contrast
 - Pipeline progress and status runs in sidebar
 - ML analysis stratify fix: skips stratification when min class count < 2
