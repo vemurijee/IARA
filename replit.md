@@ -4,6 +4,7 @@
 A multi-stage portfolio risk analysis application built with Streamlit. Features a tabbed interactive dashboard with drilldown capabilities. Uses a 5-stage pipeline: Data Ingestion, Core Risk Analysis, ML Analysis (Anomaly Detection & Risk Prediction), Sentiment Analysis, and Report Generation.
 
 ## Recent Changes
+- **Feb 2026**: Cloud storage for pipeline runs — results from each execution are automatically saved to PostgreSQL and can be loaded later from the sidebar. Supports listing, loading, and deleting past runs.
 - **Feb 2026**: Added configurable risk thresholds in sidebar expander — all thresholds (volatility, drawdown, volume decline, Sharpe, momentum, etc.) can now be adjusted via sliders before running the pipeline
 - **Feb 2026**: Restructured dashboard from single-page scroll to 4-tab layout
   - Tab 1 (Overview): KPI strip, Summary charts (sector allocation, risk distribution, scatter), ML Summary footnote with anomaly drilldown
@@ -34,8 +35,13 @@ A multi-stage portfolio risk analysis application built with Streamlit. Features
 - `pipeline/report_generator.py` - Stage 5: PDF and CSV report generation
 - `utils/mock_data.py` - Mock Bloomberg data generator
 - `.streamlit/config.toml` - Streamlit theme and server configuration (port 5000)
+- `pipeline/storage.py` - Cloud storage: save/load/delete pipeline runs in PostgreSQL
 - `reports/` - Generated PDF and CSV reports
 - `charts/` - Generated chart images
 
+## Database
+- PostgreSQL (Replit built-in) via `DATABASE_URL` environment variable
+- Table `pipeline_runs`: stores complete pipeline results as JSONB for later reload
+
 ## Dependencies
-- streamlit, pandas, numpy, scikit-learn, plotly, matplotlib, reportlab, textblob
+- streamlit, pandas, numpy, scikit-learn, plotly, matplotlib, reportlab, textblob, psycopg2-binary

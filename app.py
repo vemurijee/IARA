@@ -13,6 +13,7 @@ from pipeline.core_analysis import CoreAnalysisEngine
 from pipeline.ml_analysis import MLAnalysisEngine
 from pipeline.sentiment_analysis import SentimentAnalysisEngine
 from pipeline.report_generator import ReportGenerator
+from pipeline.storage import save_pipeline_run, list_pipeline_runs, load_pipeline_run, delete_pipeline_run
 
 st.set_page_config(
     page_title="Portfolio Risk Dashboard",
@@ -375,6 +376,24 @@ def execute_pipeline(portfolio_size, risk_thresholds=None):
             'analysis_csv': report_files['analysis_csv'],
         }
         st.session_state.execution_time = execution_time
+
+        status_text.text("Saving results to cloud storage...")
+        try:
+            run_name = f"Run {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+            run_id = save_pipeline_run(
+                run_name=run_name,
+                portfolio_size=portfolio_size,
+                risk_thresholds=risk_thresholds or {},
+                portfolio_data=portfolio_data,
+                analysis_results=analysis_results,
+                ml_results=ml_results,
+                sentiment_results=sentiment_results,
+                execution_time=execution_time,
+            )
+            st.session_state.last_saved_run_id = run_id
+        except Exception as e:
+            st.warning(f"Could not save to cloud storage: {e}")
+
         status_text.empty()
         progress_bar.empty()
 
@@ -939,6 +958,59 @@ def main():
             f"<div class='exec-time-badge'>Completed in {st.session_state.execution_time:.1f}s</div>",
             unsafe_allow_html=True
         )
+
+    if st.session_state.get('last_saved_run_id'):
+        st.sidebar.success(f"Saved as Run #{st.session_state.last_saved_run_id}")
+
+    st.sidebar.markdown("---")
+    st.sidebar.header("Saved Runs")
+    try:
+        saved_runs = list_pipeline_runs()
+    except Exception:
+        saved_runs = []
+
+    if saved_runs:
+        run_options = {
+            f"#{r['id']} — {r['run_name']} ({r['total_assets']} assets, "
+            f"R:{r['red_count']} Y:{r['yellow_count']} G:{r['green_count']})": r['id']
+            for r in saved_runs
+        }
+        selected_run = st.sidebar.selectbox("Select a saved run", [""] + list(run_options.keys()), key="saved_run_select")
+
+        col_load, col_del = st.sidebar.columns(2)
+        if selected_run:
+            run_id = run_options[selected_run]
+            if col_load.button("Load Run", key="load_run_btn"):
+                with st.spinner("Loading from cloud storage..."):
+                    loaded = load_pipeline_run(run_id)
+                    if loaded:
+                        st.session_state.pipeline_results = {
+                            'portfolio_data': loaded['portfolio_data'],
+                            'analysis_results': loaded['analysis_results'],
+                            'ml_results': loaded['ml_results'],
+                            'sentiment_results': loaded['sentiment_results'],
+                            'pdf_path': '',
+                            'portfolio_csv': '',
+                            'analysis_csv': '',
+                        }
+                        st.session_state.execution_time = loaded['execution_time']
+                        st.session_state.loaded_run_name = loaded['run_name']
+                        st.session_state.loaded_run_timestamp = loaded['run_timestamp']
+                        st.rerun()
+                    else:
+                        st.sidebar.error("Run not found.")
+
+            if col_del.button("Delete", key="delete_run_btn"):
+                delete_pipeline_run(run_id)
+                st.rerun()
+    else:
+        st.sidebar.info("No saved runs yet. Execute a pipeline to save results.")
+
+    if st.session_state.get('loaded_run_name'):
+        ts = st.session_state.get('loaded_run_timestamp', '')
+        if ts:
+            ts = ts.strftime('%Y-%m-%d %H:%M') if hasattr(ts, 'strftime') else str(ts)[:16]
+        st.sidebar.info(f"Viewing: {st.session_state.loaded_run_name} ({ts})")
 
     if st.session_state.pipeline_results:
         render_dashboard()
