@@ -603,11 +603,13 @@ def render_tab_risk_sentiment(analysis_results, sentiment_results):
                 })
             st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
-        for s in sentiment_results:
-            articles = s.get('all_articles', [])
-            if not articles:
-                continue
-            with st.expander(f"Articles for {s['symbol']} ({len(articles)} articles)", expanded=False):
+        total_art_count = sum(len(s.get('all_articles', [])) for s in sentiment_results)
+        with st.expander(f"News Articles ({total_art_count} total)", expanded=False):
+            for s in sentiment_results:
+                articles = s.get('all_articles', [])
+                if not articles:
+                    continue
+                st.markdown(f"**{s['symbol']}** — {len(articles)} articles")
                 article_rows = []
                 for art in articles:
                     pub_date = art.get('published_date', '')
