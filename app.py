@@ -851,28 +851,28 @@ def render_tab_appendix(portfolio_data, analysis_results):
         "(5) Comprehensive report generation with PDF and CSV outputs."
     )
 
-    st.markdown('<div class="section-header">Performance Metrics</div>', unsafe_allow_html=True)
-    perf_rows = []
-    for a in analysis_results:
-        perf_rows.append({
-            'Symbol': a['symbol'],
-            'Sector': a['sector'],
-            '1M Return (%)': f"{a['price_change_1m'] * 100:.1f}",
-            '3M Return (%)': f"{a['price_change_3m'] * 100:.1f}",
-            '6M Return (%)': f"{a['price_change_6m'] * 100:.1f}",
-            'Sharpe Ratio': f"{a['sharpe_ratio']:.2f}",
-        })
-    st.dataframe(pd.DataFrame(perf_rows), use_container_width=True, hide_index=True)
+    with st.expander("Performance Metrics", expanded=False):
+        perf_rows = []
+        for a in analysis_results:
+            perf_rows.append({
+                'Symbol': a['symbol'],
+                'Sector': a['sector'],
+                '1M Return (%)': f"{a['price_change_1m'] * 100:.1f}",
+                '3M Return (%)': f"{a['price_change_3m'] * 100:.1f}",
+                '6M Return (%)': f"{a['price_change_6m'] * 100:.1f}",
+                'Sharpe Ratio': f"{a['sharpe_ratio']:.2f}",
+            })
+        st.dataframe(pd.DataFrame(perf_rows), use_container_width=True, hide_index=True)
 
-    st.markdown('<div class="section-header">Risk Flags Detail</div>', unsafe_allow_html=True)
-    flag_rows = []
-    for a in analysis_results:
-        row = {'Symbol': a['symbol']}
-        for flag_name, flag_val in a.get('risk_flags', {}).items():
-            label = flag_name.replace('_', ' ').title()
-            row[label] = "Yes" if flag_val else "—"
-        flag_rows.append(row)
-    st.dataframe(pd.DataFrame(flag_rows), use_container_width=True, hide_index=True)
+    with st.expander("Risk Flags Detail", expanded=False):
+        flag_rows = []
+        for a in analysis_results:
+            row = {'Symbol': a['symbol']}
+            for flag_name, flag_val in a.get('risk_flags', {}).items():
+                label = flag_name.replace('_', ' ').title()
+                row[label] = "Yes" if flag_val else "—"
+            flag_rows.append(row)
+        st.dataframe(pd.DataFrame(flag_rows), use_container_width=True, hide_index=True)
 
     with st.expander("Risk Thresholds", expanded=False):
         thresholds = pd.DataFrame([

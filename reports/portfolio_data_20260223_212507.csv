@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+GEM,American Group,Technology,314.06,242291793655,30.48,0.0,NASDAQ,USD
+ROP,Advanced Enterprises,Financial Services,132.82,233666482973,30.68,0.039,NYSE,USD
+PH,First International,Technology,148.64,219243154452,17.12,0.0169,NYSE,USD
+PLO,Superior Services,Technology,205.41,211196340271,13.11,0.0516,NYSE,USD
+NG,Pacific LLC,Technology,117.39,203053079410,10.72,0.0409,NYSE,USD
+GG,Dynamic Systems,Financial Services,113.58,197858416811,25.59,0.0,NYSE,USD
+MFE,International Industries,Industrial,99.17,171255276638,18.96,0.0374,NASDAQ,USD
+AVMO,American Resources,Industrial,195.72,146872875575,,0.0166,NASDAQ,USD
+CQN,Consolidated Services,Utilities,108.95,141452316165,28.46,0.0143,NASDAQ,USD
+CNJ,Regional Inc,Consumer Staples,101.07,136502062882,20.03,0.0078,NASDAQ,USD
+ZWS,Consolidated Enterprises,Technology,89.9,133258505814,32.82,0.0,NASDAQ,USD
+VTV,National Holdings,Real Estate,135.05,127895411241,10.13,0.0375,NASDAQ,USD
+RBN,First Systems,Financial Services,67.61,120728039114,,0.0145,NASDAQ,USD
+DKPX,Strategic Global,Financial Services,73.15,120436819526,24.44,0.0204,NYSE,USD
+MTH,Consolidated Services,Utilities,85.51,103519591287,31.29,0.0169,NYSE,USD
+TOOM,Capital Global,Industrial,55.83,101452780162,,0.023,NYSE,USD
+POO,Strategic Solutions,Healthcare,84.2,99132377102,16.45,0.0475,NASDAQ,USD
+BCE,Global Services,Energy,128.33,87863878159,19.32,0.022,NASDAQ,USD
+ZGBS,Capital Holdings,Materials,134.08,53834896710,9.5,0.0223,NYSE,USD
+MC,Dynamic Partners,Utilities,42.33,52553299011,34.11,0.0243,NASDAQ,USD
+SCB,American Inc,Healthcare,201.11,51330525146,14.71,0.0051,NYSE,USD
+SSH,Regional International,Financial Services,66.57,47972186266,34.15,0.0013,NASDAQ,USD
+CWPX,Global International,Materials,59.25,43676548193,30.84,0.0586,NYSE,USD
+SM,Consolidated Inc,Industrial,175.58,27715927272,20.86,0.0215,NASDAQ,USD
+MCMB,National Systems,Consumer Discretionary,85.96,26814977840,32.71,0.036,NYSE,USD
