@@ -245,34 +245,38 @@ st.markdown("""
         box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3) !important;
     }
 
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 4px;
+    div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"] > div > div > div[data-testid="stRadio"]) {
         background: #f1f5f9;
         border-radius: 12px;
         padding: 5px;
         box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     }
-    .stTabs [data-baseweb="tab"] {
-        border-radius: 8px;
-        padding: 10px 28px;
-        font-weight: 700;
-        font-size: 1rem;
-        color: #0f172a;
+    div[data-testid="stRadio"] > div {
+        gap: 4px !important;
+    }
+    div[data-testid="stRadio"] label {
+        border-radius: 8px !important;
+        padding: 10px 28px !important;
+        font-weight: 700 !important;
+        font-size: 1rem !important;
+        color: #0f172a !important;
         letter-spacing: 0.01em;
         transition: all 0.2s ease;
+        cursor: pointer;
     }
-    .stTabs [data-baseweb="tab"]:hover {
+    div[data-testid="stRadio"] label:hover {
         background: rgba(14, 165, 233, 0.1);
-        color: #0284c7;
     }
-    .stTabs [aria-selected="true"] {
+    div[data-testid="stRadio"] label[data-checked="true"],
+    div[data-testid="stRadio"] label:has(input:checked) {
         background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
         color: white !important;
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
     }
-    .stTabs [data-baseweb="tab-panel"] {
-        padding-top: 1rem;
+    div[data-testid="stRadio"] label[data-checked="true"] p,
+    div[data-testid="stRadio"] label:has(input:checked) p {
+        color: white !important;
     }
 
     div[data-baseweb="select"] {
@@ -324,6 +328,8 @@ if 'execution_time' not in st.session_state:
     st.session_state.execution_time = None
 if 'show_anomalies' not in st.session_state:
     st.session_state.show_anomalies = False
+if 'active_tab' not in st.session_state:
+    st.session_state.active_tab = "Overview"
 
 
 def execute_pipeline(portfolio_size, risk_thresholds=None):
@@ -403,18 +409,21 @@ def render_dashboard():
         unsafe_allow_html=True
     )
 
-    tab1, tab2, tab3, tab4 = st.tabs(["Overview", "Risk & Sentiment", "Asset Deep Dive", "Appendix"])
+    tab_options = ["Overview", "Risk & Sentiment", "Asset Deep Dive", "Appendix"]
+    active_tab = st.radio(
+        "Navigation", tab_options,
+        index=tab_options.index(st.session_state.active_tab),
+        horizontal=True, label_visibility="collapsed", key="tab_nav"
+    )
+    st.session_state.active_tab = active_tab
 
-    with tab1:
+    if active_tab == "Overview":
         render_tab_overview(portfolio_data, analysis_results, ml_results, red_count, yellow_count, green_count, total_mcap, avg_vol, r)
-
-    with tab2:
+    elif active_tab == "Risk & Sentiment":
         render_tab_risk_sentiment(analysis_results, sentiment_results)
-
-    with tab3:
+    elif active_tab == "Asset Deep Dive":
         render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment_results)
-
-    with tab4:
+    elif active_tab == "Appendix":
         render_tab_appendix(portfolio_data, analysis_results)
 
 
@@ -553,40 +562,27 @@ def render_tab_risk_sentiment(analysis_results, sentiment_results):
     if not flagged:
         st.info("No flagged assets.")
     else:
-        rating_color_map = {
-            'RED': 'background-color: #fef2f2; color: #dc2626; font-weight: 700;',
-            'YELLOW': 'background-color: #fffbeb; color: #b45309; font-weight: 700;',
-            'GREEN': 'background-color: #f0fdf4; color: #15803d; font-weight: 700;',
-        }
-        rows = []
+        header_cols = st.columns([1, 1.2, 1, 1, 1.2, 1, 0.8])
+        headers = ["Symbol", "Sector", "Risk Rating", "Volatility (%)", "Max Drawdown (%)", "Sharpe Ratio", "Risk Score"]
+        for col, h in zip(header_cols, headers):
+            col.markdown(f"<span style='font-size:0.8rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.03em;'>{h}</span>", unsafe_allow_html=True)
+
         for a in flagged:
-            rows.append({
-                'Symbol': a['symbol'],
-                'Sector': a['sector'],
-                'Risk Rating': a['risk_rating'],
-                'Volatility (%)': f"{a['volatility'] * 100:.1f}",
-                'Max Drawdown (%)': f"{a['max_drawdown'] * 100:.1f}",
-                'Sharpe Ratio': f"{a['sharpe_ratio']:.2f}",
-                'Risk Score': a['risk_score'],
-            })
-        df_flagged = pd.DataFrame(rows)
-
-        def color_risk_rating(val):
-            return rating_color_map.get(val, '')
-
-        styled = df_flagged.style.map(color_risk_rating, subset=['Risk Rating'])
-        st.dataframe(styled, use_container_width=True, hide_index=True)
-
-        st.markdown("**Jump to Deep Dive**")
-        cols = st.columns(min(len(flagged), 6))
-        for i, a in enumerate(flagged):
-            col_idx = i % min(len(flagged), 6)
-            rating = a['risk_rating']
-            badge = 'risk-badge-red' if rating == 'RED' else 'risk-badge-yellow'
-            with cols[col_idx]:
-                if st.button(f"{a['symbol']}", key=f"deepdive_{a['symbol']}"):
+            row_cols = st.columns([1, 1.2, 1, 1, 1.2, 1, 0.8])
+            with row_cols[0]:
+                if st.button(a['symbol'], key=f"flagged_{a['symbol']}", type="tertiary"):
                     st.session_state['drilldown_symbol'] = a['symbol']
-                    st.info(f"Switch to the **Asset Deep Dive** tab to view {a['symbol']}")
+                    st.session_state.active_tab = "Asset Deep Dive"
+                    st.session_state.tab_nav = "Asset Deep Dive"
+                    st.rerun()
+            row_cols[1].markdown(a['sector'])
+            rating = a['risk_rating']
+            badge_class = f"risk-badge-{'red' if rating == 'RED' else 'yellow'}"
+            row_cols[2].markdown(f"<span class='{badge_class}'>{rating}</span>", unsafe_allow_html=True)
+            row_cols[3].markdown(f"{a['volatility'] * 100:.1f}")
+            row_cols[4].markdown(f"{a['max_drawdown'] * 100:.1f}")
+            row_cols[5].markdown(f"{a['sharpe_ratio']:.2f}")
+            row_cols[6].markdown(f"{a['risk_score']}")
 
     st.markdown('<div class="section-header">Sentiment Overview</div>', unsafe_allow_html=True)
     if not sentiment_results:
@@ -626,14 +622,20 @@ def render_tab_risk_sentiment(analysis_results, sentiment_results):
                             pub_date = datetime.fromisoformat(pub_date).strftime('%Y-%m-%d')
                         except Exception:
                             pass
+                    url = art.get('url', '')
+                    headline = art.get('headline', '')
                     article_rows.append({
                         'Date': pub_date,
-                        'Headline': art.get('headline', ''),
+                        'Headline': headline,
                         'Source': art.get('source', ''),
                         'Sentiment': f"{art.get('sentiment_score', 0):.2f}",
                         'Relevance': f"{art.get('relevance_score', 0):.2f}",
+                        'Link': url,
                     })
-                st.dataframe(pd.DataFrame(article_rows), use_container_width=True, hide_index=True)
+                st.dataframe(
+                    pd.DataFrame(article_rows), use_container_width=True, hide_index=True,
+                    column_config={"Link": st.column_config.LinkColumn("Link", display_text="View")}
+                )
 
 
 def render_recommendations_content(analysis_results, sentiment_results):
