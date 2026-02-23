@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+VWV,International Capital,Technology,336.22,645461602230,24.34,0.0,NYSE,USD
+ZCBC,National Enterprises,Healthcare,363.87,380960118614,28.06,0.0,NASDAQ,USD
+XTW,Capital Global,Real Estate,174.17,245249190953,23.58,0.0087,NYSE,USD
+MY,Superior Partners,Technology,179.43,232336885725,27.83,0.0082,NYSE,USD
+SC,Strategic LLC,Healthcare,154.05,222223322724,24.63,0.0554,NASDAQ,USD
+XSC,Premier Enterprises,Energy,112.21,210964460679,18.06,0.0453,NASDAQ,USD
+PCM,Pacific LLC,Consumer Discretionary,194.55,194914695013,29.87,0.0,NYSE,USD
+BKGR,Superior Systems,Technology,220.71,187375903148,11.83,0.0079,NASDAQ,USD
+PHDW,Superior Resources,Industrial,175.6,184690468075,33.56,0.0,NASDAQ,USD
+ZIU,United LLC,Materials,116.14,183771455858,18.22,0.0,NASDAQ,USD
+PTN,Global Solutions,Materials,127.07,180294921155,24.32,0.0091,NYSE,USD
+PJN,Superior International,Consumer Discretionary,143.13,179695140441,30.72,0.0,NYSE,USD
+BPI,Innovative LLC,Technology,228.62,151182732983,11.93,0.0,NYSE,USD
+ZVRG,Alliance Capital,Industrial,110.11,128253547749,17.85,0.0,NYSE,USD
+VWXO,Regional Capital,Real Estate,187.25,118210593180,12.77,0.0548,NASDAQ,USD
+VU,Metro Systems,Healthcare,208.62,98988142249,23.67,0.0053,NYSE,USD
+NEC,Alliance Systems,Consumer Discretionary,69.27,81803673279,,0.0,NASDAQ,USD
+BX,American Industries,Technology,62.53,81761596721,23.31,0.0,NASDAQ,USD
+VWD,Superior Capital,Consumer Discretionary,122.3,72373847638,18.35,0.0,NYSE,USD
+XWK,Pacific Holdings,Consumer Staples,77.81,65282355609,9.04,0.0198,NYSE,USD
+TRA,First Resources,Utilities,55.04,60134213642,33.25,0.0,NYSE,USD
+CN,Alliance Group,Financial Services,71.21,25106796903,23.52,0.0186,NYSE,USD
+CS,Pacific Enterprises,Technology,185.84,18639838313,11.93,0.017,NASDAQ,USD
+MTC,Metro Inc,Financial Services,130.41,18440962341,19.06,0.0,NASDAQ,USD
+MTFQ,Regional Technologies,Utilities,87.33,7990003910,27.38,0.0156,NASDAQ,USD

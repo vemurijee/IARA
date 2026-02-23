@@ -582,7 +582,7 @@ def render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sent
         selected_flagged = st.selectbox("Select a flagged asset to inspect", flagged_options, key="flagged_inspect")
         if selected_flagged:
             sel_symbol = selected_flagged.split(' [')[0]
-            with st.expander(f"Deep Dive — {sel_symbol}", expanded=True):
+            with st.expander(f"Deep Dive — {sel_symbol}", expanded=False):
                 port_asset = next((p for p in portfolio_data if p['symbol'] == sel_symbol), None)
                 anal_asset = next((a for a in analysis_results if a['symbol'] == sel_symbol), None)
                 if port_asset and anal_asset:
