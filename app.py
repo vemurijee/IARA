@@ -410,7 +410,7 @@ def render_dashboard():
         render_tab_overview(portfolio_data, analysis_results, ml_results, red_count, yellow_count, green_count, total_mcap, avg_vol, r)
 
     with tab2:
-        render_tab_risk_sentiment(analysis_results, sentiment_results)
+        render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sentiment_results)
 
     with tab3:
         render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment_results)
@@ -544,7 +544,7 @@ def render_ml_footnote(ml_results):
             st.plotly_chart(fig_fi, use_container_width=True)
 
 
-def render_tab_risk_sentiment(analysis_results, sentiment_results):
+def render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sentiment_results):
     with st.expander("⚠ Recommendations", expanded=False):
         render_recommendations_content(analysis_results, sentiment_results)
 
@@ -577,6 +577,71 @@ def render_tab_risk_sentiment(analysis_results, sentiment_results):
 
         styled = df_flagged.style.map(color_risk_rating, subset=['Risk Rating'])
         st.dataframe(styled, use_container_width=True, hide_index=True)
+
+        flagged_options = [f"{a['symbol']} [{a['risk_rating']}]" for a in flagged]
+        selected_flagged = st.selectbox("Select a flagged asset to inspect", flagged_options, key="flagged_inspect")
+        if selected_flagged:
+            sel_symbol = selected_flagged.split(' [')[0]
+            with st.expander(f"Deep Dive — {sel_symbol}", expanded=True):
+                port_asset = next((p for p in portfolio_data if p['symbol'] == sel_symbol), None)
+                anal_asset = next((a for a in analysis_results if a['symbol'] == sel_symbol), None)
+                if port_asset and anal_asset:
+                    ar = anal_asset['risk_rating']
+                    badge_class = f"risk-badge-{ar.lower()}"
+
+                    c1, c2, c3, c4 = st.columns(4)
+                    with c1:
+                        st.markdown("**Asset Info**")
+                        st.markdown(f"<span class='{badge_class}'>{ar}</span>", unsafe_allow_html=True)
+                        st.markdown(f"**{port_asset['company_name']}**")
+                        st.markdown(f"Sector: {port_asset['sector']} · Exchange: {port_asset['exchange']}")
+                        st.metric("Current Price", f"${port_asset['current_price']:.2f}")
+                        st.metric("Market Cap", f"${port_asset['market_cap'] / 1e9:.2f}B")
+                        pe = port_asset.get('pe_ratio')
+                        st.metric("P/E Ratio", f"{pe:.1f}" if pe else "N/A")
+                        st.metric("Dividend Yield", f"{port_asset.get('dividend_yield', 0) * 100:.2f}%")
+
+                    with c2:
+                        st.markdown("**Risk Metrics**")
+                        st.metric("Volatility", f"{anal_asset['volatility'] * 100:.1f}%")
+                        st.metric("Max Drawdown", f"{anal_asset['max_drawdown'] * 100:.1f}%")
+                        st.metric("Beta", f"{anal_asset['beta']:.2f}")
+                        st.metric("Sharpe Ratio", f"{anal_asset['sharpe_ratio']:.2f}")
+                        st.metric("RSI", f"{anal_asset['rsi']:.1f}")
+                        st.metric("Volume Decline", f"{anal_asset['volume_decline'] * 100:.1f}%")
+
+                    with c3:
+                        st.markdown("**Performance**")
+                        st.metric("1M Return", f"{anal_asset['price_change_1m'] * 100:.1f}%", delta=f"{anal_asset['price_change_1m'] * 100:.1f}%")
+                        st.metric("3M Return", f"{anal_asset['price_change_3m'] * 100:.1f}%", delta=f"{anal_asset['price_change_3m'] * 100:.1f}%")
+                        st.metric("6M Return", f"{anal_asset['price_change_6m'] * 100:.1f}%", delta=f"{anal_asset['price_change_6m'] * 100:.1f}%")
+                        ml_pred = None
+                        if ml_results.get('risk_prediction', {}).get('model_trained'):
+                            ml_pred = next((p for p in ml_results['risk_prediction']['predictions'] if p['symbol'] == sel_symbol), None)
+                        if ml_pred:
+                            st.metric("ML Predicted Rating", ml_pred['predicted_rating'])
+                            st.metric("ML Confidence", f"{ml_pred['confidence']:.1f}%")
+
+                    with c4:
+                        st.markdown("**Risk Flags**")
+                        flags = anal_asset.get('risk_flags', {})
+                        if flags:
+                            for flag_name, flag_val in flags.items():
+                                label = flag_name.replace('_', ' ').title()
+                                if flag_val:
+                                    st.markdown(f"<span class='risk-badge-red'>{label}</span>", unsafe_allow_html=True)
+                                else:
+                                    st.markdown(f"<span class='risk-badge-green'>{label}</span>", unsafe_allow_html=True)
+
+                    sent_asset = next((s for s in sentiment_results if s['symbol'] == sel_symbol), None)
+                    if sent_asset:
+                        st.markdown("---")
+                        st.markdown("**Sentiment**")
+                        sc1, sc2, sc3, sc4 = st.columns(4)
+                        sc1.metric("Score", f"{sent_asset['sentiment_score']:.3f}")
+                        sc2.metric("Label", sent_asset.get('sentiment_label', ''))
+                        sc3.metric("Trend", sent_asset.get('sentiment_trend', ''))
+                        sc4.metric("Confidence", f"{sent_asset.get('confidence', 0):.2f}")
 
     st.markdown('<div class="section-header">Sentiment Overview</div>', unsafe_allow_html=True)
     if not sentiment_results:
