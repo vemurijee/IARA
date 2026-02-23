@@ -668,29 +668,6 @@ def render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sent
                 })
             st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
-        total_art_count = sum(len(s.get('all_articles', [])) for s in sentiment_results)
-        with st.expander(f"News Articles ({total_art_count} total)", expanded=False):
-            for s in sentiment_results:
-                articles = s.get('all_articles', [])
-                if not articles:
-                    continue
-                st.markdown(f"**{s['symbol']}** — {len(articles)} articles")
-                article_rows = []
-                for art in articles:
-                    pub_date = art.get('published_date', '')
-                    if pub_date:
-                        try:
-                            pub_date = datetime.fromisoformat(pub_date).strftime('%Y-%m-%d')
-                        except Exception:
-                            pass
-                    article_rows.append({
-                        'Date': pub_date,
-                        'Headline': art.get('headline', ''),
-                        'Source': art.get('source', ''),
-                        'Sentiment': f"{art.get('sentiment_score', 0):.2f}",
-                        'Relevance': f"{art.get('relevance_score', 0):.2f}",
-                    })
-                st.dataframe(pd.DataFrame(article_rows), use_container_width=True, hide_index=True)
 
 
 def render_recommendations_content(analysis_results, sentiment_results):

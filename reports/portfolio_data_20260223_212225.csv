@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+BKQ,Pacific Solutions,Energy,141.03,278382716101,17.89,0.0,NYSE,USD
+VS,Regional Industries,Industrial,150.6,229015982849,33.47,0.0434,NYSE,USD
+SUC,National Resources,Materials,171.4,227014505422,24.82,0.0056,NASDAQ,USD
+DV,United Capital,Technology,181.21,208344049711,17.73,0.0215,NYSE,USD
+ZKD,International Systems,Industrial,157.41,169569292202,13.49,0.0056,NYSE,USD
+VJE,Innovative Solutions,Healthcare,142.73,161410557920,8.27,0.0,NASDAQ,USD
+VKA,Innovative Technologies,Technology,157.34,150353345326,32.76,0.0108,NASDAQ,USD
+NIEO,Premier International,Industrial,181.41,146279214415,10.93,0.0306,NASDAQ,USD
+CCFX,Capital Holdings,Consumer Discretionary,160.05,139818019406,34.56,0.0273,NASDAQ,USD
+PYEL,American Partners,Consumer Discretionary,107.89,136735217650,10.77,0.0,NASDAQ,USD
+DVP,Innovative International,Industrial,68.02,135982081688,26.91,0.0106,NYSE,USD
+NP,Global Capital,Consumer Discretionary,119.46,129695911826,22.7,0.0373,NASDAQ,USD
+PA,Pacific Group,Energy,91.58,111863468051,,0.0363,NASDAQ,USD
+GKL,Consolidated Technologies,Healthcare,343.58,108976888842,16.42,0.0,NYSE,USD
+XOE,Global Enterprises,Consumer Staples,58.41,97121792330,20.71,0.0,NASDAQ,USD
+AKC,Metro Inc,Energy,113.22,48166775057,28.76,0.0159,NASDAQ,USD
+ZVD,United Corp,Energy,63.64,48139510989,18.01,0.0247,NASDAQ,USD
+MA,National Capital,Real Estate,91.82,45600900046,,0.0,NASDAQ,USD
+TV,Premier Partners,Consumer Staples,59.05,37626308660,31.13,0.0,NASDAQ,USD
+CFD,Regional Global,Real Estate,107.86,37053648384,20.11,0.0462,NYSE,USD
+NCR,Innovative Enterprises,Utilities,60.4,25225907064,13.95,0.0,NASDAQ,USD
+RGLF,National Capital,Technology,82.88,22180533955,29.89,0.0317,NASDAQ,USD
+XND,Alliance Industries,Energy,145.59,16236246240,17.44,0.0,NASDAQ,USD
+SFR,National Technologies,Consumer Staples,101.6,15880791952,24.77,0.025,NYSE,USD
+SU,Pacific International,Industrial,40.05,4321236676,15.34,0.0447,NASDAQ,USD
