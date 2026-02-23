@@ -1,0 +1,53 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+TER,Superior Technologies,Healthcare,294.34,462257931990,9.46,0.0263,NASDAQ,USD
+NCX,Consolidated Systems,Technology,394.01,364235426423,24.39,0.0521,NASDAQ,USD
+BRN,United Solutions,Industrial,162.24,302952613342,12.66,0.0418,NYSE,USD
+MTWZ,Dynamic Resources,Healthcare,309.9,277153178666,16.71,0.059,NYSE,USD
+DJWI,Premier LLC,Real Estate,147.74,275515133967,19.94,0.0238,NYSE,USD
+MISU,United Corp,Industrial,193.5,244342062044,32.68,0.0318,NYSE,USD
+ZT,Pacific Corp,Materials,167.08,237012834930,34.48,0.0,NASDAQ,USD
+CNF,Metro Solutions,Healthcare,350.83,228533804093,34.69,0.0096,NASDAQ,USD
+AIG,International Global,Healthcare,243.46,225895323681,16.13,0.0,NYSE,USD
+AW,Global Enterprises,Consumer Discretionary,190.64,222540325728,27.51,0.0504,NYSE,USD
+XBFV,Pacific Enterprises,Industrial,108.05,212721980141,23.68,0.0289,NYSE,USD
+NDV,Dynamic International,Materials,184.04,207819842072,32.5,0.0402,NYSE,USD
+DG,Global Enterprises,Energy,131.51,206895204872,17.45,0.0278,NASDAQ,USD
+RWZ,Regional Technologies,Energy,137.07,198087606499,18.02,0.0,NYSE,USD
+DV,National Services,Technology,235.81,179988691410,18.89,0.0499,NASDAQ,USD
+BEO,Innovative Holdings,Materials,173.87,176422111543,32.58,0.0,NASDAQ,USD
+GH,Pacific Systems,Real Estate,110.89,163722860541,22.26,0.0207,NASDAQ,USD
+CQR,Alliance LLC,Energy,126.44,158893424954,27.43,0.0475,NYSE,USD
+CCNV,Consolidated Global,Financial Services,145.47,157561769898,13.77,0.0,NASDAQ,USD
+CRRD,First Holdings,Utilities,88.54,150412074180,18.97,0.0312,NYSE,USD
+GGSJ,Strategic Global,Technology,128.5,146374857516,14.36,0.0,NYSE,USD
+DLVQ,Capital Resources,Consumer Staples,111.72,139733160546,19.24,0.0,NASDAQ,USD
+ZOC,Premier Resources,Consumer Staples,87.58,137078947196,21.29,0.0,NYSE,USD
+TIMP,Premier Global,Consumer Staples,81.73,135597263067,14.99,0.0,NYSE,USD
+ALC,Alliance Enterprises,Financial Services,91.85,129308138539,31.05,0.0,NASDAQ,USD
+SGIK,Metro Capital,Utilities,67.13,124657572283,17.32,0.0,NYSE,USD
+MRZE,Capital Corp,Consumer Staples,88.78,124573869074,31.05,0.0342,NASDAQ,USD
+XOJ,Metro Enterprises,Materials,74.32,115005281166,30.48,0.0014,NASDAQ,USD
+MG,Premier Systems,Industrial,66.36,112328480248,30.86,0.0235,NASDAQ,USD
+GRN,Capital Partners,Utilities,60.62,111101714172,13.78,0.0456,NASDAQ,USD
+TPFO,United Corp,Financial Services,86.16,108918652840,11.73,0.0254,NASDAQ,USD
+BASM,Alliance Capital,Consumer Staples,98.18,105646192657,26.76,0.0,NYSE,USD
+CUB,American Technologies,Materials,89.84,100523603644,16.14,0.0,NYSE,USD
+GOK,Consolidated International,Industrial,54.45,99271699381,20.41,0.0,NASDAQ,USD
+ZAUM,Capital Capital,Consumer Discretionary,147.18,90157785831,34.39,0.0082,NASDAQ,USD
+SRF,Innovative Resources,Consumer Discretionary,66.69,88035962288,28.22,0.0564,NASDAQ,USD
+RRV,Alliance Enterprises,Energy,131.95,85056735366,22.77,0.0104,NYSE,USD
+DKA,Metro Holdings,Consumer Staples,64.98,84268024467,24.2,0.0164,NYSE,USD
+MOKO,Global Systems,Utilities,42.43,76837761213,,0.0133,NASDAQ,USD
+MJ,Advanced Systems,Materials,107.4,76644314395,11.11,0.0274,NYSE,USD
+GC,Superior International,Industrial,48.73,64409156924,25.28,0.0279,NYSE,USD
+TLO,Advanced Holdings,Financial Services,54.17,49814096171,10.98,0.0527,NYSE,USD
+BSFM,Capital Resources,Technology,119.7,48180632481,26.4,0.0,NASDAQ,USD
+ZI,National Holdings,Materials,35.75,44708678175,28.88,0.0364,NASDAQ,USD
+DGLQ,Strategic Partners,Materials,40.22,43585591007,26.23,0.0147,NASDAQ,USD
+TJX,Pacific Resources,Energy,131.0,43481677649,,0.0296,NASDAQ,USD
+RRQ,United Systems,Consumer Staples,101.55,41528895605,13.79,0.0373,NYSE,USD
+SCX,Consolidated Corp,Real Estate,48.05,39272384392,27.19,0.0,NASDAQ,USD
+SQW,American Technologies,Consumer Discretionary,87.89,16262918023,20.39,0.0,NASDAQ,USD
+GGUE,Pacific Technologies,Utilities,119.2,16256149914,11.56,0.0256,NYSE,USD
+ZDD,Pacific Technologies,Consumer Discretionary,113.37,14122222175,33.36,0.0,NYSE,USD
+CO,Premier Solutions,Utilities,77.95,8625147222,24.22,0.0065,NYSE,USD

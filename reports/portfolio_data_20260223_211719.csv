@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+GXA,Global Resources,Technology,238.93,419797650029,,0.0567,NYSE,USD
+CXL,Superior Industries,Technology,246.46,384261811877,15.93,0.0,NYSE,USD
+DJH,Premier Enterprises,Real Estate,193.15,370942311281,,0.005,NYSE,USD
+BDJL,First Capital,Technology,281.34,370353363623,32.75,0.0018,NASDAQ,USD
+SY,Capital Group,Healthcare,244.33,309200818732,29.76,0.0,NYSE,USD
+GD,First Systems,Energy,129.51,251103255616,14.55,0.0125,NYSE,USD
+SVLR,Pacific Services,Healthcare,123.47,223229917930,34.68,0.0057,NYSE,USD
+TUQ,Superior International,Materials,190.34,182519776229,13.45,0.0,NASDAQ,USD
+DV,United International,Industrial,120.48,136859188843,26.21,0.0236,NYSE,USD
+MLG,Strategic Partners,Technology,213.52,120153184674,26.1,0.0037,NYSE,USD
+VFT,Pacific Industries,Materials,65.79,91878896109,,0.0,NASDAQ,USD
+ZDH,Strategic Services,Utilities,99.11,90723015549,,0.0226,NASDAQ,USD
+MLX,Regional Holdings,Consumer Discretionary,56.65,85236181170,34.7,0.0,NASDAQ,USD
+XS,Premier Corp,Consumer Staples,78.62,84932928516,28.47,0.015,NYSE,USD
+PGNY,United Solutions,Consumer Staples,84.36,82848151335,8.02,0.0581,NASDAQ,USD
+TZO,National LLC,Utilities,86.14,76758579631,13.68,0.0188,NASDAQ,USD
+NQ,Dynamic Capital,Consumer Discretionary,148.61,67208570048,22.74,0.0589,NYSE,USD
+GOBA,Premier Holdings,Financial Services,67.69,64516291847,18.45,0.0065,NASDAQ,USD
+CJUW,First Services,Technology,186.73,44888045733,34.22,0.0,NYSE,USD
+BUAH,Capital Industries,Energy,53.26,44012232582,20.63,0.0,NYSE,USD
+DUD,Strategic Systems,Materials,164.09,42540144421,19.81,0.0,NASDAQ,USD
+DAQD,Global Solutions,Energy,58.21,20866873199,13.02,0.0114,NYSE,USD
+XB,Premier Inc,Real Estate,132.87,20825030242,32.52,0.0,NYSE,USD
+NQL,Alliance Global,Industrial,36.82,20528327952,25.0,0.0361,NASDAQ,USD
+GTDF,Superior Resources,Financial Services,33.91,17961851474,32.27,0.0,NASDAQ,USD

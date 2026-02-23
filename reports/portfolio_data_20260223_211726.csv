@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+ADGQ,American Holdings,Real Estate,167.31,318590249715,34.73,0.0,NYSE,USD
+MKFR,Pacific Global,Consumer Discretionary,170.29,278898308063,28.59,0.0,NYSE,USD
+RB,Regional Partners,Financial Services,130.06,240433351544,25.94,0.0577,NYSE,USD
+DQKY,Premier Systems,Real Estate,184.81,220535230398,9.98,0.0,NASDAQ,USD
+GXXR,Dynamic Industries,Financial Services,114.79,205271245562,21.6,0.0378,NYSE,USD
+RYZ,International Global,Industrial,136.24,191814998651,18.93,0.0,NASDAQ,USD
+BDO,Dynamic Resources,Financial Services,114.16,179842333442,20.31,0.0214,NYSE,USD
+VDY,International Technologies,Utilities,119.03,168353090134,31.89,0.0359,NYSE,USD
+RX,First Resources,Financial Services,124.54,154894205151,12.03,0.0,NYSE,USD
+XDN,Premier Holdings,Industrial,168.22,145112516027,33.9,0.0104,NASDAQ,USD
+XHRP,Metro Partners,Energy,126.98,143382376701,24.74,0.0303,NASDAQ,USD
+SMAY,Metro Capital,Energy,89.7,129536826440,27.32,0.0,NASDAQ,USD
+TR,Capital Global,Healthcare,211.84,124025360322,19.88,0.0264,NYSE,USD
+DQH,Dynamic Systems,Utilities,63.09,122073964459,9.3,0.0,NYSE,USD
+SL,Alliance International,Technology,122.96,105477887420,25.47,0.0483,NYSE,USD
+ZQL,National Global,Consumer Staples,112.28,101067192839,28.85,0.0257,NYSE,USD
+TZR,Advanced Technologies,Industrial,191.64,92360829940,18.56,0.0143,NYSE,USD
+BNC,Global Services,Financial Services,102.92,77967744222,29.35,0.0,NYSE,USD
+CS,First Enterprises,Utilities,51.57,76572205604,15.66,0.0577,NASDAQ,USD
+MLSW,Premier Capital,Technology,120.16,70073850105,9.52,0.0,NYSE,USD
+MNOB,American Global,Financial Services,51.42,61759886250,13.96,0.0326,NASDAQ,USD
+BZU,Innovative Holdings,Financial Services,33.23,50153800574,21.66,0.0,NASDAQ,USD
+GPF,Alliance Group,Energy,144.17,26615210437,21.68,0.0052,NYSE,USD
+DKI,Strategic Corp,Materials,138.48,20700398305,29.33,0.0308,NASDAQ,USD
+MDY,Premier Industries,Consumer Staples,45.96,13465065398,33.41,0.0391,NYSE,USD
