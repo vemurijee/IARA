@@ -577,17 +577,6 @@ def render_tab_risk_sentiment(analysis_results, sentiment_results):
         styled = df_flagged.style.map(color_risk_rating, subset=['Risk Rating'])
         st.dataframe(styled, use_container_width=True, hide_index=True)
 
-        st.markdown("**Jump to Deep Dive**")
-        cols = st.columns(min(len(flagged), 6))
-        for i, a in enumerate(flagged):
-            col_idx = i % min(len(flagged), 6)
-            rating = a['risk_rating']
-            badge = 'risk-badge-red' if rating == 'RED' else 'risk-badge-yellow'
-            with cols[col_idx]:
-                if st.button(f"{a['symbol']}", key=f"deepdive_{a['symbol']}"):
-                    st.session_state['drilldown_symbol'] = a['symbol']
-                    st.info(f"Switch to the **Asset Deep Dive** tab to view {a['symbol']}")
-
     st.markdown('<div class="section-header">Sentiment Overview</div>', unsafe_allow_html=True)
     if not sentiment_results:
         st.info("No RED-flagged assets required sentiment analysis.")
