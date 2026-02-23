@@ -5,12 +5,11 @@ A multi-stage portfolio risk analysis application built with Streamlit. Features
 
 ## Recent Changes
 - **Feb 2026**: Added configurable risk thresholds in sidebar expander — all thresholds (volatility, drawdown, volume decline, Sharpe, momentum, etc.) can now be adjusted via sliders before running the pipeline
-- **Feb 2026**: Navigation uses session-state-controlled horizontal radio (styled as tabs) to allow programmatic tab switching from symbol links
-- **Feb 2026**: Restructured dashboard into 4-view layout
-  - Overview: KPI strip, Summary charts (sector allocation, risk distribution, scatter), ML Summary footnote with anomaly drilldown
-  - Risk & Sentiment: Recommendations, Flagged Assets with clickable symbol buttons (navigate to Deep Dive), color-coded risk ratings, Sentiment Overview with per-asset article listings (with clickable links) in collapsible panes
-  - Asset Deep Dive: Selectbox (auto-populated from Flagged Assets links), per-asset drilldown with horizontal risk flags, Sentiment collapsed expander, Historical Prices & ML Anomaly collapsed expander
-  - Appendix: Methodology, performance metrics, risk thresholds (collapsed), risk flags detail
+- **Feb 2026**: Restructured dashboard from single-page scroll to 4-tab layout
+  - Tab 1 (Overview): KPI strip, Summary charts (sector allocation, risk distribution, scatter), ML Summary footnote with anomaly drilldown
+  - Tab 2 (Risk & Sentiment): Recommendations, color-coded Flagged Assets table with Deep Dive links, Sentiment Overview with per-asset article listings in collapsible panes
+  - Tab 3 (Asset Deep Dive): Type-ahead selectbox, per-asset drilldown with horizontal risk flags, Sentiment collapsed expander, Historical Prices & ML Anomaly collapsed expander
+  - Tab 4 (Appendix): Methodology, performance metrics, risk thresholds (collapsed), risk flags detail
 - Multi-color palette (sky blue, violet, orange, emerald, rose) replacing monotone indigo
 - Download Report dropdown popover in KPI row (far right of Overview tab)
 - Title and date rendered as HTML flex row for full visibility
