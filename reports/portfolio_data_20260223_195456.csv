@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+DWB,Dynamic Services,Technology,349.3,497343090745,,0.0,NASDAQ,USD
+TVU,United Industries,Healthcare,378.01,306608338431,15.7,0.0191,NYSE,USD
+BA,International Resources,Consumer Discretionary,198.42,277175851930,,0.0201,NASDAQ,USD
+MDQN,Innovative Enterprises,Energy,142.96,237038119971,17.81,0.0,NYSE,USD
+TC,American Systems,Technology,196.55,210712478687,11.15,0.0,NASDAQ,USD
+XBE,Capital Industries,Financial Services,132.73,190563291786,13.29,0.0193,NYSE,USD
+VHYO,United International,Technology,163.8,188527718940,23.4,0.0267,NYSE,USD
+BA,Innovative Solutions,Technology,114.84,167063234757,28.03,0.0078,NASDAQ,USD
+SKI,Consolidated Systems,Materials,135.87,155306362007,15.93,0.0,NASDAQ,USD
+SSR,Regional Holdings,Financial Services,119.01,148815936156,15.28,0.0508,NASDAQ,USD
+CG,United Holdings,Financial Services,146.08,143190677351,23.96,0.0,NASDAQ,USD
+NFZ,Innovative Technologies,Utilities,95.46,107377623198,18.78,0.0365,NASDAQ,USD
+NI,Capital Enterprises,Materials,91.42,82915003537,9.08,0.0058,NYSE,USD
+MZE,Global Enterprises,Consumer Staples,111.86,59145561270,30.2,0.0415,NASDAQ,USD
+DWL,Capital Holdings,Industrial,35.92,55229677252,19.02,0.0462,NASDAQ,USD
+GMXA,Metro Resources,Financial Services,102.78,48577922895,18.28,0.0191,NASDAQ,USD
+PBM,Advanced Enterprises,Consumer Staples,72.82,39771637458,28.94,0.0,NYSE,USD
+AEQ,International Services,Consumer Staples,88.23,39138981289,26.35,0.0,NYSE,USD
+BCGZ,Capital Global,Financial Services,51.84,36154453395,17.67,0.0479,NASDAQ,USD
+TZTU,Alliance Resources,Energy,35.42,32614844532,33.16,0.0564,NYSE,USD
+RYJ,Metro Enterprises,Energy,34.22,18817946829,14.41,0.0436,NASDAQ,USD
+VJ,Alliance Inc,Energy,49.5,16903068251,27.92,0.0064,NASDAQ,USD
+MNLA,Pacific Enterprises,Consumer Discretionary,107.02,16720257475,30.08,0.0339,NYSE,USD
+DDY,Innovative Services,Financial Services,35.39,10899780691,18.31,0.0,NASDAQ,USD
+GOGO,Global Systems,Consumer Staples,115.86,8926188190,26.45,0.0019,NYSE,USD
