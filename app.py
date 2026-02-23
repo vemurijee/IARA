@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
@@ -245,44 +246,34 @@ st.markdown("""
         box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3) !important;
     }
 
-    div[data-testid="stRadio"][aria-label="Navigation"] > div {
-        gap: 4px !important;
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 4px;
         background: #f1f5f9;
         border-radius: 12px;
         padding: 5px;
         box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     }
-    div[data-testid="stRadio"][aria-label="Navigation"] label {
-        border-radius: 8px !important;
-        padding: 10px 28px !important;
-        font-weight: 700 !important;
-        font-size: 1rem !important;
-        color: #0f172a !important;
+    .stTabs [data-baseweb="tab"] {
+        border-radius: 8px;
+        padding: 10px 28px;
+        font-weight: 700;
+        font-size: 1rem;
+        color: #0f172a;
         letter-spacing: 0.01em;
         transition: all 0.2s ease;
-        cursor: pointer;
-        margin: 0 !important;
     }
-    div[data-testid="stRadio"][aria-label="Navigation"] label:hover {
+    .stTabs [data-baseweb="tab"]:hover {
         background: rgba(14, 165, 233, 0.1);
-        color: #0284c7 !important;
+        color: #0284c7;
     }
-    div[data-testid="stRadio"][aria-label="Navigation"] label[data-checked="true"],
-    div[data-testid="stRadio"][aria-label="Navigation"] label:has(input:checked) {
+    .stTabs [aria-selected="true"] {
         background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
         color: white !important;
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
     }
-    div[data-testid="stRadio"][aria-label="Navigation"] label[data-checked="true"] p,
-    div[data-testid="stRadio"][aria-label="Navigation"] label:has(input:checked) p {
-        color: white !important;
-    }
-    div[data-testid="stRadio"][aria-label="Navigation"] input {
-        display: none !important;
-    }
-    div[data-testid="stRadio"][aria-label="Navigation"] label > div:first-child {
-        display: none !important;
+    .stTabs [data-baseweb="tab-panel"] {
+        padding-top: 1rem;
     }
 
     div[data-baseweb="select"] {
@@ -334,8 +325,11 @@ if 'execution_time' not in st.session_state:
     st.session_state.execution_time = None
 if 'show_anomalies' not in st.session_state:
     st.session_state.show_anomalies = False
-if 'active_tab' not in st.session_state:
-    st.session_state.active_tab = "Overview"
+
+qp = st.query_params
+if 'drilldown' in qp:
+    st.session_state['drilldown_symbol'] = qp['drilldown']
+    st.query_params.clear()
 
 
 def execute_pipeline(portfolio_size, risk_thresholds=None):
@@ -415,25 +409,18 @@ def render_dashboard():
         unsafe_allow_html=True
     )
 
-    tab_options = ["Overview", "Risk & Sentiment", "Asset Deep Dive", "Appendix"]
-    active = st.radio(
-        "Navigation",
-        tab_options,
-        index=tab_options.index(st.session_state.active_tab),
-        horizontal=True,
-        key="nav_tabs",
-        label_visibility="collapsed",
-    )
-    if active != st.session_state.active_tab:
-        st.session_state.active_tab = active
+    tab1, tab2, tab3, tab4 = st.tabs(["Overview", "Risk & Sentiment", "Asset Deep Dive", "Appendix"])
 
-    if active == "Overview":
+    with tab1:
         render_tab_overview(portfolio_data, analysis_results, ml_results, red_count, yellow_count, green_count, total_mcap, avg_vol, r)
-    elif active == "Risk & Sentiment":
+
+    with tab2:
         render_tab_risk_sentiment(analysis_results, sentiment_results)
-    elif active == "Asset Deep Dive":
+
+    with tab3:
         render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment_results)
-    elif active == "Appendix":
+
+    with tab4:
         render_tab_appendix(portfolio_data, analysis_results)
 
 
@@ -572,33 +559,73 @@ def render_tab_risk_sentiment(analysis_results, sentiment_results):
     if not flagged:
         st.info("No flagged assets.")
     else:
-        rating_color_map = {
-            'RED': 'background-color: #fef2f2; color: #dc2626; font-weight: 700;',
-            'YELLOW': 'background-color: #fffbeb; color: #b45309; font-weight: 700;',
-            'GREEN': 'background-color: #f0fdf4; color: #15803d; font-weight: 700;',
+        rating_badges = {
+            'RED': '<span style="background:linear-gradient(135deg,#fef2f2,#fee2e2);color:#dc2626;padding:3px 10px;border-radius:12px;font-weight:700;font-size:0.85rem;border:1px solid #fca5a5;">RED</span>',
+            'YELLOW': '<span style="background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#b45309;padding:3px 10px;border-radius:12px;font-weight:700;font-size:0.85rem;border:1px solid #fcd34d;">YELLOW</span>',
         }
-        rows = []
+        table_rows = ""
         for a in flagged:
-            rows.append({
-                'Symbol': a['symbol'],
-                'Sector': a['sector'],
-                'Risk Rating': a['risk_rating'],
-                'Volatility (%)': f"{a['volatility'] * 100:.1f}",
-                'Max Drawdown (%)': f"{a['max_drawdown'] * 100:.1f}",
-                'Sharpe Ratio': f"{a['sharpe_ratio']:.2f}",
-                'Risk Score': a['risk_score'],
-            })
-        df_flagged = pd.DataFrame(rows)
-        styled = df_flagged.style.map(lambda val: rating_color_map.get(val, ''), subset=['Risk Rating'])
-        st.dataframe(styled, use_container_width=True, hide_index=True)
+            sym = a['symbol']
+            badge = rating_badges.get(a['risk_rating'], a['risk_rating'])
+            table_rows += f"""<tr>
+                <td><a href="javascript:void(0)" class="symbol-link" data-symbol="{sym}"
+                    style="color:#0ea5e9;font-weight:700;text-decoration:none;cursor:pointer;"
+                    onmouseover="this.style.textDecoration='underline'"
+                    onmouseout="this.style.textDecoration='none'">{sym}</a></td>
+                <td>{a['sector']}</td>
+                <td>{badge}</td>
+                <td>{a['volatility']*100:.1f}</td>
+                <td>{a['max_drawdown']*100:.1f}</td>
+                <td>{a['sharpe_ratio']:.2f}</td>
+                <td>{a['risk_score']}</td>
+            </tr>"""
 
-        cols = st.columns(min(len(flagged), 8))
-        for i, a in enumerate(flagged):
-            with cols[i % min(len(flagged), 8)]:
-                if st.button(f"🔍 {a['symbol']}", key=f"nav_{a['symbol']}", use_container_width=True):
-                    st.session_state['drilldown_symbol'] = a['symbol']
-                    st.session_state.active_tab = "Asset Deep Dive"
-                    st.rerun()
+        table_html = f"""
+        <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-family:Inter,sans-serif;font-size:0.9rem;">
+            <thead>
+                <tr style="border-bottom:2px solid #e2e8f0;text-align:left;">
+                    <th style="padding:10px 12px;color:#64748b;font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.03em;">Symbol</th>
+                    <th style="padding:10px 12px;color:#64748b;font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.03em;">Sector</th>
+                    <th style="padding:10px 12px;color:#64748b;font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.03em;">Risk Rating</th>
+                    <th style="padding:10px 12px;color:#64748b;font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.03em;">Volatility (%)</th>
+                    <th style="padding:10px 12px;color:#64748b;font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.03em;">Max Drawdown (%)</th>
+                    <th style="padding:10px 12px;color:#64748b;font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.03em;">Sharpe Ratio</th>
+                    <th style="padding:10px 12px;color:#64748b;font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.03em;">Risk Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {table_rows}
+            </tbody>
+        </table>
+        </div>
+        <script>
+        document.querySelectorAll('.symbol-link').forEach(function(link) {{
+            link.addEventListener('click', function(e) {{
+                e.preventDefault();
+                var symbol = this.getAttribute('data-symbol');
+                var url = new URL(window.parent.location);
+                url.searchParams.set('drilldown', symbol);
+                window.parent.location.href = url.toString();
+            }});
+        }});
+        </script>
+        <style>
+        table tbody tr {{
+            border-bottom: 1px solid #f1f5f9;
+        }}
+        table tbody tr:hover {{
+            background-color: #f8fafc;
+        }}
+        table tbody td {{
+            padding: 10px 12px;
+            color: #334155;
+        }}
+        </style>
+        """
+        row_count = len(flagged)
+        table_height = 56 + row_count * 46 + 20
+        components.html(table_html, height=table_height, scrolling=False)
 
     st.markdown('<div class="section-header">Sentiment Overview</div>', unsafe_allow_html=True)
     if not sentiment_results:
