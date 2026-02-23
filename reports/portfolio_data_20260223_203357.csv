@@ -1,0 +1,54 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+GYDR,Innovative Industries,Technology,269.33,477779691377,27.69,0.0365,NASDAQ,USD
+STD,National Systems,Technology,174.23,331908328059,24.79,0.0189,NYSE,USD
+SLHB,Superior Partners,Real Estate,151.19,294691974536,,0.0,NYSE,USD
+VAEU,Regional Holdings,Real Estate,173.44,281173784124,16.47,0.0046,NASDAQ,USD
+AXL,Global Technologies,Industrial,132.65,250363127577,24.31,0.0,NYSE,USD
+RLLD,Premier Industries,Technology,151.7,238986515052,14.05,0.0,NYSE,USD
+BPH,Alliance Group,Healthcare,278.49,230233187866,8.98,0.0474,NASDAQ,USD
+XJXX,Alliance Services,Healthcare,212.39,224599451678,34.22,0.0255,NYSE,USD
+TIA,Premier Holdings,Real Estate,143.41,217701843034,8.41,0.0483,NYSE,USD
+RA,American Solutions,Real Estate,172.85,214119930971,,0.0028,NASDAQ,USD
+SOI,American Services,Real Estate,102.89,198006527008,10.17,0.0031,NASDAQ,USD
+DHG,Capital Solutions,Industrial,134.21,195664867198,22.74,0.0,NYSE,USD
+CPMR,Strategic Enterprises,Materials,161.78,192009590093,11.92,0.0042,NYSE,USD
+ZI,Alliance Group,Healthcare,238.41,186372602998,,0.0,NASDAQ,USD
+ZH,Global Services,Materials,97.06,184844392371,12.67,0.0129,NASDAQ,USD
+NWB,Alliance Industries,Real Estate,95.33,176188991774,33.99,0.0,NASDAQ,USD
+ZZR,Global Services,Consumer Discretionary,183.12,175571102661,10.02,0.0349,NYSE,USD
+XBU,Advanced Technologies,Energy,87.06,169457463783,19.89,0.0451,NYSE,USD
+CYMN,Advanced Enterprises,Energy,75.96,147485560135,9.87,0.0,NASDAQ,USD
+ZA,Pacific Partners,Consumer Staples,94.71,147137147588,13.64,0.0,NYSE,USD
+GBC,Superior Enterprises,Consumer Staples,111.75,136628637980,30.81,0.0115,NYSE,USD
+PQB,Dynamic Services,Utilities,115.18,126240171160,12.39,0.0149,NYSE,USD
+MI,Global Capital,Financial Services,118.59,123133218777,30.66,0.0466,NYSE,USD
+XPN,Superior International,Financial Services,108.76,117512395860,21.83,0.0453,NASDAQ,USD
+CCBR,United Systems,Materials,114.87,115649000245,14.26,0.012,NASDAQ,USD
+VXS,Superior Resources,Consumer Discretionary,107.11,115152399495,21.46,0.0569,NYSE,USD
+RTF,Consolidated Industries,Consumer Discretionary,155.35,105809546206,16.23,0.0332,NYSE,USD
+RTZ,International Capital,Healthcare,254.22,104680860083,19.45,0.0217,NYSE,USD
+CM,Innovative Holdings,Energy,135.83,102912274694,23.05,0.0,NASDAQ,USD
+VYBB,Superior Capital,Utilities,109.65,97237897978,24.73,0.0249,NASDAQ,USD
+BG,National Inc,Materials,54.05,96498556129,22.24,0.0,NYSE,USD
+TMA,Premier Resources,Healthcare,51.97,88670381823,10.44,0.0281,NASDAQ,USD
+RY,Global Industries,Energy,45.06,80144660821,28.67,0.0,NYSE,USD
+AZ,Dynamic International,Consumer Staples,88.28,70647287640,30.0,0.0596,NASDAQ,USD
+RPN,Innovative Holdings,Financial Services,93.37,69611699828,25.82,0.0119,NASDAQ,USD
+CG,Premier Technologies,Consumer Staples,112.25,68505941291,33.14,0.0443,NYSE,USD
+ZC,International Corp,Technology,71.83,61946402304,24.93,0.0421,NYSE,USD
+RGVQ,Capital Technologies,Industrial,58.21,61404598407,,0.0205,NASDAQ,USD
+PCE,Alliance Capital,Financial Services,148.23,57783992487,18.5,0.0596,NASDAQ,USD
+ZRX,First Resources,Financial Services,72.69,50100998241,25.73,0.0052,NASDAQ,USD
+RK,Regional Inc,Financial Services,115.7,46663691751,22.91,0.0,NASDAQ,USD
+BZA,Alliance International,Utilities,46.72,44439579704,9.68,0.032,NASDAQ,USD
+CQK,National Solutions,Consumer Discretionary,91.38,42667631533,18.94,0.0331,NASDAQ,USD
+RW,National International,Consumer Staples,109.06,40470348616,,0.01,NYSE,USD
+PVTV,Strategic Resources,Materials,44.46,36368686785,11.28,0.0,NASDAQ,USD
+ZEP,National Holdings,Energy,43.55,30880211276,18.32,0.0377,NYSE,USD
+XKA,Metro Resources,Financial Services,37.63,26033180721,,0.0586,NYSE,USD
+ATLQ,International LLC,Consumer Discretionary,192.38,22281738957,19.37,0.0292,NASDAQ,USD
+XUY,Superior Holdings,Consumer Discretionary,67.41,21635501265,,0.0504,NASDAQ,USD
+AUSP,Premier LLC,Consumer Staples,108.72,18069508926,22.2,0.0389,NYSE,USD
+APT,Capital Systems,Energy,149.39,8624602347,32.32,0.044,NASDAQ,USD
+XWEU,United Industries,Energy,139.81,8538576902,32.95,0.0,NYSE,USD
+RUKD,Advanced Technologies,Consumer Staples,82.15,4655173223,,0.0173,NASDAQ,USD
