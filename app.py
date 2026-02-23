@@ -553,6 +553,11 @@ def render_tab_risk_sentiment(analysis_results, sentiment_results):
     if not flagged:
         st.info("No flagged assets.")
     else:
+        rating_color_map = {
+            'RED': 'background-color: #fef2f2; color: #dc2626; font-weight: 700;',
+            'YELLOW': 'background-color: #fffbeb; color: #b45309; font-weight: 700;',
+            'GREEN': 'background-color: #f0fdf4; color: #15803d; font-weight: 700;',
+        }
         rows = []
         for a in flagged:
             rows.append({
@@ -564,7 +569,24 @@ def render_tab_risk_sentiment(analysis_results, sentiment_results):
                 'Sharpe Ratio': f"{a['sharpe_ratio']:.2f}",
                 'Risk Score': a['risk_score'],
             })
-        st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+        df_flagged = pd.DataFrame(rows)
+
+        def color_risk_rating(val):
+            return rating_color_map.get(val, '')
+
+        styled = df_flagged.style.map(color_risk_rating, subset=['Risk Rating'])
+        st.dataframe(styled, use_container_width=True, hide_index=True)
+
+        st.markdown("**Jump to Deep Dive**")
+        cols = st.columns(min(len(flagged), 6))
+        for i, a in enumerate(flagged):
+            col_idx = i % min(len(flagged), 6)
+            rating = a['risk_rating']
+            badge = 'risk-badge-red' if rating == 'RED' else 'risk-badge-yellow'
+            with cols[col_idx]:
+                if st.button(f"{a['symbol']}", key=f"deepdive_{a['symbol']}"):
+                    st.session_state['drilldown_symbol'] = a['symbol']
+                    st.info(f"Switch to the **Asset Deep Dive** tab to view {a['symbol']}")
 
     st.markdown('<div class="section-header">Sentiment Overview</div>', unsafe_allow_html=True)
     if not sentiment_results:
@@ -590,6 +612,28 @@ def render_tab_risk_sentiment(analysis_results, sentiment_results):
                     'Key Themes': themes,
                 })
             st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+
+        for s in sentiment_results:
+            articles = s.get('all_articles', [])
+            if not articles:
+                continue
+            with st.expander(f"Articles for {s['symbol']} ({len(articles)} articles)", expanded=False):
+                article_rows = []
+                for art in articles:
+                    pub_date = art.get('published_date', '')
+                    if pub_date:
+                        try:
+                            pub_date = datetime.fromisoformat(pub_date).strftime('%Y-%m-%d')
+                        except Exception:
+                            pass
+                    article_rows.append({
+                        'Date': pub_date,
+                        'Headline': art.get('headline', ''),
+                        'Source': art.get('source', ''),
+                        'Sentiment': f"{art.get('sentiment_score', 0):.2f}",
+                        'Relevance': f"{art.get('relevance_score', 0):.2f}",
+                    })
+                st.dataframe(pd.DataFrame(article_rows), use_container_width=True, hide_index=True)
 
 
 def render_recommendations_content(analysis_results, sentiment_results):
@@ -649,7 +693,15 @@ def render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment
         rating = next((a['risk_rating'] for a in analysis_results if a['symbol'] == p['symbol']), 'N/A')
         asset_options.append(f"{p['symbol']} - {p['company_name']} [{rating}]")
 
-    selected = st.selectbox("Select an asset to explore", asset_options, key="drilldown_select")
+    default_idx = 0
+    if 'drilldown_symbol' in st.session_state:
+        target = st.session_state['drilldown_symbol']
+        for i, opt in enumerate(asset_options):
+            if opt.startswith(target + ' '):
+                default_idx = i
+                break
+
+    selected = st.selectbox("Select an asset to explore", asset_options, index=default_idx, key="drilldown_select")
     if not selected:
         return
 

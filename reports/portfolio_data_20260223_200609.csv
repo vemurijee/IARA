@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+RDC,Innovative Global,Technology,371.45,719129557170,9.46,0.0471,NASDAQ,USD
+RL,Advanced International,Industrial,134.04,266980973425,14.87,0.0,NASDAQ,USD
+AFX,Innovative Corp,Energy,112.56,221099964768,15.93,0.0,NYSE,USD
+RM,American Systems,Industrial,190.11,196526580037,33.13,0.0084,NASDAQ,USD
+SRK,Advanced International,Consumer Staples,105.58,179731332390,13.41,0.0173,NASDAQ,USD
+VQT,Alliance International,Utilities,110.21,149138490543,10.83,0.0507,NASDAQ,USD
+XMJ,First Group,Real Estate,125.2,133958940188,25.88,0.0,NYSE,USD
+CIX,Strategic Solutions,Consumer Staples,95.49,128044275624,25.6,0.0031,NASDAQ,USD
+NABQ,United Industries,Utilities,91.22,124791071982,22.68,0.0573,NASDAQ,USD
+NRUT,Advanced Group,Financial Services,123.34,111217458291,13.76,0.0108,NASDAQ,USD
+VG,Superior Partners,Real Estate,58.13,101838968737,16.89,0.0067,NYSE,USD
+BU,Regional Enterprises,Healthcare,54.77,92273851040,32.33,0.0374,NASDAQ,USD
+AS,Metro Group,Consumer Staples,89.47,87927925521,9.09,0.0,NYSE,USD
+DUS,Consolidated Resources,Healthcare,321.82,85723040347,11.05,0.0,NYSE,USD
+XK,Regional Global,Materials,59.65,78719149880,,0.0474,NYSE,USD
+BMI,Consolidated Corp,Materials,115.0,76519621737,28.38,0.0059,NASDAQ,USD
+XJ,Strategic Holdings,Industrial,167.79,49985714429,15.69,0.0,NYSE,USD
+TWW,Pacific Enterprises,Materials,39.51,49501951793,,0.0,NASDAQ,USD
+GDL,First Holdings,Consumer Staples,82.21,35534419815,22.4,0.0519,NASDAQ,USD
+PGI,Alliance Solutions,Industrial,71.06,35219685425,23.32,0.0,NASDAQ,USD
+DHCU,Premier LLC,Industrial,84.22,34731101115,31.06,0.0381,NASDAQ,USD
+NND,Advanced Solutions,Utilities,82.42,25080902721,13.51,0.0,NYSE,USD
+VWF,National Solutions,Technology,373.48,20459519582,,0.0545,NASDAQ,USD
+VLE,Superior Partners,Technology,210.12,14308629805,14.19,0.0027,NYSE,USD
+PTLQ,Superior International,Technology,122.44,12709665240,17.84,0.0182,NYSE,USD

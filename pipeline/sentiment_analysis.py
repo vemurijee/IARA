@@ -205,7 +205,8 @@ class SentimentAnalysisEngine:
             'older_sentiment': older_sentiment,
             'sentiment_volatility': sentiment_std,
             
-            # Analysis timestamp
+            'all_articles': news_articles,
+
             'analysis_timestamp': datetime.now().isoformat()
         }
     

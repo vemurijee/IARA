@@ -7,7 +7,7 @@ A multi-stage portfolio risk analysis application built with Streamlit. Features
 - **Feb 2026**: Added configurable risk thresholds in sidebar expander — all thresholds (volatility, drawdown, volume decline, Sharpe, momentum, etc.) can now be adjusted via sliders before running the pipeline
 - **Feb 2026**: Restructured dashboard from single-page scroll to 4-tab layout
   - Tab 1 (Overview): KPI strip, Summary charts (sector allocation, risk distribution, scatter), ML Summary footnote with anomaly drilldown
-  - Tab 2 (Risk & Sentiment): Recommendations at top (collapsed, amber text highlight), Flagged assets table, sentiment overview
+  - Tab 2 (Risk & Sentiment): Recommendations, color-coded Flagged Assets table with Deep Dive links, Sentiment Overview with per-asset article listings in collapsible panes
   - Tab 3 (Asset Deep Dive): Type-ahead selectbox, per-asset drilldown with horizontal risk flags, Sentiment collapsed expander, Historical Prices & ML Anomaly collapsed expander
   - Tab 4 (Appendix): Methodology, performance metrics, risk thresholds (collapsed), risk flags detail
 - Multi-color palette (sky blue, violet, orange, emerald, rose) replacing monotone indigo
