@@ -326,7 +326,7 @@ if 'show_anomalies' not in st.session_state:
     st.session_state.show_anomalies = False
 
 
-def execute_pipeline(portfolio_size):
+def execute_pipeline(portfolio_size, risk_thresholds=None):
     progress_bar = st.progress(0)
     status_text = st.empty()
     start_time = time.time()
@@ -340,7 +340,7 @@ def execute_pipeline(portfolio_size):
 
         status_text.text("Stage 2: Running core risk analysis...")
         progress_bar.progress(30)
-        analysis_engine = CoreAnalysisEngine()
+        analysis_engine = CoreAnalysisEngine(risk_thresholds=risk_thresholds)
         analysis_results = analysis_engine.analyze_portfolio(portfolio_data)
         progress_bar.progress(50)
 
@@ -808,11 +808,46 @@ def render_tab_appendix(portfolio_data, analysis_results):
 def main():
     st.sidebar.header("Pipeline Controls")
     portfolio_size = st.sidebar.slider("Portfolio Size", min_value=10, max_value=100, value=25)
+
+    with st.sidebar.expander("Risk Thresholds", expanded=False):
+        st.markdown("**Volatility**")
+        vol_red = st.slider("Volatility RED (%)", 10, 80, 40, 1, key="vol_red")
+        vol_yellow = st.slider("Volatility YELLOW (%)", 5, 60, 25, 1, key="vol_yellow")
+
+        st.markdown("**Max Drawdown**")
+        dd_red = st.slider("Drawdown RED (%)", -60, -5, -20, 1, key="dd_red")
+        dd_yellow = st.slider("Drawdown YELLOW (%)", -40, -1, -10, 1, key="dd_yellow")
+
+        st.markdown("**Volume Decline**")
+        vd_red = st.slider("Volume Decline RED (%)", -80, -10, -50, 1, key="vd_red")
+        vd_yellow = st.slider("Volume Decline YELLOW (%)", -60, -5, -30, 1, key="vd_yellow")
+
+        st.markdown("**Other Thresholds**")
+        corr_thresh = st.slider("Correlation Threshold (%)", 50, 100, 80, 1, key="corr_thresh")
+        severe_1m = st.slider("Severe Decline 1M (%)", -40, -5, -15, 1, key="severe_1m")
+        extended_3m = st.slider("Extended Decline 3M (%)", -50, -10, -25, 1, key="extended_3m")
+        poor_sharpe = st.slider("Poor Sharpe Ratio", -2.0, 0.0, -0.5, 0.1, key="poor_sharpe")
+        momentum_bd = st.slider("Momentum Breakdown (%)", -30, -1, -10, 1, key="momentum_bd")
+
+    risk_thresholds = {
+        'volatility_red': vol_red / 100,
+        'volatility_yellow': vol_yellow / 100,
+        'drawdown_red': dd_red / 100,
+        'drawdown_yellow': dd_yellow / 100,
+        'volume_decline_red': vd_red / 100,
+        'volume_decline_yellow': vd_yellow / 100,
+        'correlation_threshold': corr_thresh / 100,
+        'severe_decline_1m': severe_1m / 100,
+        'extended_decline_3m': extended_3m / 100,
+        'poor_sharpe': poor_sharpe,
+        'momentum_breakdown': momentum_bd / 100,
+    }
+
     execute_btn = st.sidebar.button("Execute Full Pipeline", type="primary")
 
     if execute_btn:
         with st.sidebar:
-            execute_pipeline(portfolio_size)
+            execute_pipeline(portfolio_size, risk_thresholds=risk_thresholds)
 
     if st.session_state.execution_time is not None:
         st.sidebar.markdown(

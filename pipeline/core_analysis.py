@@ -11,16 +11,23 @@ class CoreAnalysisEngine:
     Performs time-series and rule-based analysis to determine Asset Quality Ratings
     """
     
-    def __init__(self):
-        self.risk_thresholds = {
-            'volatility_red': 0.4,      # 40% annualized volatility
-            'volatility_yellow': 0.25,   # 25% annualized volatility
-            'drawdown_red': -0.2,        # -20% maximum drawdown
-            'drawdown_yellow': -0.1,     # -10% maximum drawdown
-            'volume_decline_red': -0.5,  # -50% volume decline
-            'volume_decline_yellow': -0.3, # -30% volume decline
-            'correlation_threshold': 0.8  # High correlation threshold
+    def __init__(self, risk_thresholds=None):
+        defaults = {
+            'volatility_red': 0.4,
+            'volatility_yellow': 0.25,
+            'drawdown_red': -0.2,
+            'drawdown_yellow': -0.1,
+            'volume_decline_red': -0.5,
+            'volume_decline_yellow': -0.3,
+            'correlation_threshold': 0.8,
+            'severe_decline_1m': -0.15,
+            'extended_decline_3m': -0.25,
+            'poor_sharpe': -0.5,
+            'momentum_breakdown': -0.1,
         }
+        if risk_thresholds:
+            defaults.update(risk_thresholds)
+        self.risk_thresholds = defaults
     
     def analyze_portfolio(self, portfolio_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
@@ -150,10 +157,10 @@ class CoreAnalysisEngine:
             'high_volatility': volatility > self.risk_thresholds['volatility_red'],
             'extreme_drawdown': max_drawdown < self.risk_thresholds['drawdown_red'],
             'volume_collapse': volume_decline < self.risk_thresholds['volume_decline_red'],
-            'severe_decline': price_change_1m < -0.15,  # -15% in 1 month
-            'extended_decline': price_change_3m < -0.25,  # -25% in 3 months
-            'poor_risk_return': sharpe_ratio < -0.5,
-            'momentum_breakdown': price_change_1m < -0.1 and price_change_3m < -0.1
+            'severe_decline': price_change_1m < self.risk_thresholds['severe_decline_1m'],
+            'extended_decline': price_change_3m < self.risk_thresholds['extended_decline_3m'],
+            'poor_risk_return': sharpe_ratio < self.risk_thresholds['poor_sharpe'],
+            'momentum_breakdown': price_change_1m < self.risk_thresholds['momentum_breakdown'] and price_change_3m < self.risk_thresholds['momentum_breakdown']
         }
     
     def determine_risk_rating(self, risk_flags: Dict[str, bool]) -> str:
