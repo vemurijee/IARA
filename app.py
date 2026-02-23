@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
@@ -325,6 +326,11 @@ if 'execution_time' not in st.session_state:
 if 'show_anomalies' not in st.session_state:
     st.session_state.show_anomalies = False
 
+qp = st.query_params
+if 'drilldown' in qp:
+    st.session_state['drilldown_symbol'] = qp['drilldown']
+    st.query_params.clear()
+
 
 def execute_pipeline(portfolio_size, risk_thresholds=None):
     progress_bar = st.progress(0)
@@ -553,29 +559,73 @@ def render_tab_risk_sentiment(analysis_results, sentiment_results):
     if not flagged:
         st.info("No flagged assets.")
     else:
-        rating_color_map = {
-            'RED': 'background-color: #fef2f2; color: #dc2626; font-weight: 700;',
-            'YELLOW': 'background-color: #fffbeb; color: #b45309; font-weight: 700;',
-            'GREEN': 'background-color: #f0fdf4; color: #15803d; font-weight: 700;',
+        rating_badges = {
+            'RED': '<span style="background:linear-gradient(135deg,#fef2f2,#fee2e2);color:#dc2626;padding:3px 10px;border-radius:12px;font-weight:700;font-size:0.85rem;border:1px solid #fca5a5;">RED</span>',
+            'YELLOW': '<span style="background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#b45309;padding:3px 10px;border-radius:12px;font-weight:700;font-size:0.85rem;border:1px solid #fcd34d;">YELLOW</span>',
         }
-        rows = []
+        table_rows = ""
         for a in flagged:
-            rows.append({
-                'Symbol': a['symbol'],
-                'Sector': a['sector'],
-                'Risk Rating': a['risk_rating'],
-                'Volatility (%)': f"{a['volatility'] * 100:.1f}",
-                'Max Drawdown (%)': f"{a['max_drawdown'] * 100:.1f}",
-                'Sharpe Ratio': f"{a['sharpe_ratio']:.2f}",
-                'Risk Score': a['risk_score'],
-            })
-        df_flagged = pd.DataFrame(rows)
+            sym = a['symbol']
+            badge = rating_badges.get(a['risk_rating'], a['risk_rating'])
+            table_rows += f"""<tr>
+                <td><a href="javascript:void(0)" class="symbol-link" data-symbol="{sym}"
+                    style="color:#0ea5e9;font-weight:700;text-decoration:none;cursor:pointer;"
+                    onmouseover="this.style.textDecoration='underline'"
+                    onmouseout="this.style.textDecoration='none'">{sym}</a></td>
+                <td>{a['sector']}</td>
+                <td>{badge}</td>
+                <td>{a['volatility']*100:.1f}</td>
+                <td>{a['max_drawdown']*100:.1f}</td>
+                <td>{a['sharpe_ratio']:.2f}</td>
+                <td>{a['risk_score']}</td>
+            </tr>"""
 
-        def color_risk_rating(val):
-            return rating_color_map.get(val, '')
-
-        styled = df_flagged.style.map(color_risk_rating, subset=['Risk Rating'])
-        st.dataframe(styled, use_container_width=True, hide_index=True)
+        table_html = f"""
+        <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-family:Inter,sans-serif;font-size:0.9rem;">
+            <thead>
+                <tr style="border-bottom:2px solid #e2e8f0;text-align:left;">
+                    <th style="padding:10px 12px;color:#64748b;font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.03em;">Symbol</th>
+                    <th style="padding:10px 12px;color:#64748b;font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.03em;">Sector</th>
+                    <th style="padding:10px 12px;color:#64748b;font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.03em;">Risk Rating</th>
+                    <th style="padding:10px 12px;color:#64748b;font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.03em;">Volatility (%)</th>
+                    <th style="padding:10px 12px;color:#64748b;font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.03em;">Max Drawdown (%)</th>
+                    <th style="padding:10px 12px;color:#64748b;font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.03em;">Sharpe Ratio</th>
+                    <th style="padding:10px 12px;color:#64748b;font-weight:600;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.03em;">Risk Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {table_rows}
+            </tbody>
+        </table>
+        </div>
+        <script>
+        document.querySelectorAll('.symbol-link').forEach(function(link) {{
+            link.addEventListener('click', function(e) {{
+                e.preventDefault();
+                var symbol = this.getAttribute('data-symbol');
+                var url = new URL(window.parent.location);
+                url.searchParams.set('drilldown', symbol);
+                window.parent.location.href = url.toString();
+            }});
+        }});
+        </script>
+        <style>
+        table tbody tr {{
+            border-bottom: 1px solid #f1f5f9;
+        }}
+        table tbody tr:hover {{
+            background-color: #f8fafc;
+        }}
+        table tbody td {{
+            padding: 10px 12px;
+            color: #334155;
+        }}
+        </style>
+        """
+        row_count = len(flagged)
+        table_height = 56 + row_count * 46 + 20
+        components.html(table_html, height=table_height, scrolling=False)
 
     st.markdown('<div class="section-header">Sentiment Overview</div>', unsafe_allow_html=True)
     if not sentiment_results:

@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+RZY,Advanced Enterprises,Healthcare,383.92,536612288483,25.86,0.0462,NYSE,USD
+VZ,Superior Technologies,Technology,241.83,469003008123,,0.0,NASDAQ,USD
+VLY,Consolidated Resources,Financial Services,146.68,287574898942,,0.0095,NYSE,USD
+VZ,Innovative Enterprises,Real Estate,186.41,273765681800,17.27,0.0287,NASDAQ,USD
+XHPV,Premier Inc,Technology,153.32,231900335831,9.57,0.0,NASDAQ,USD
+GWT,Global Services,Consumer Discretionary,167.59,201564807025,13.69,0.0,NASDAQ,USD
+SKH,National Capital,Materials,187.62,153818427497,12.61,0.0164,NYSE,USD
+ZH,Superior Industries,Consumer Staples,66.59,129131085167,18.87,0.0133,NASDAQ,USD
+RD,Dynamic International,Financial Services,90.35,121703179390,21.84,0.0477,NASDAQ,USD
+SGS,National Group,Industrial,97.71,118030231909,26.5,0.0448,NYSE,USD
+AKK,American LLC,Financial Services,147.61,113982349638,13.38,0.0463,NYSE,USD
+XE,Metro Technologies,Financial Services,117.16,113008730467,17.05,0.0303,NYSE,USD
+AX,Superior Systems,Utilities,91.75,90066120143,15.92,0.0076,NYSE,USD
+XP,Consolidated Partners,Consumer Discretionary,184.25,88253683351,34.0,0.016,NYSE,USD
+ROGD,Premier International,Energy,114.46,82242262048,11.54,0.0584,NASDAQ,USD
+SVJ,United Systems,Financial Services,46.19,78320218123,22.83,0.0,NASDAQ,USD
+NLHR,Advanced Partners,Utilities,41.03,66284229513,,0.0309,NASDAQ,USD
+PXXS,Dynamic Systems,Consumer Staples,63.44,56890149771,14.24,0.0294,NASDAQ,USD
+AZ,International Systems,Energy,82.81,53095110399,22.5,0.0421,NYSE,USD
+RUI,Global Solutions,Financial Services,78.97,46545115009,19.45,0.0,NASDAQ,USD
+PQD,Pacific Group,Industrial,88.74,45010333806,18.59,0.0,NASDAQ,USD
+AYVB,Advanced Global,Energy,55.67,36610179087,25.33,0.0195,NYSE,USD
+VFH,Regional Corp,Healthcare,91.07,36005721286,24.53,0.0035,NASDAQ,USD
+NWW,Advanced Inc,Materials,41.47,20988728709,28.65,0.0205,NYSE,USD
+SU,Capital Resources,Industrial,57.14,5230342261,,0.0081,NASDAQ,USD
