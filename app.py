@@ -82,6 +82,39 @@ st.markdown("""
         font-weight: 700 !important;
     }
 
+    section[data-testid="stSidebar"] div[data-baseweb="select"] > div {
+        background: rgba(255, 255, 255, 0.15) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 8px !important;
+    }
+    section[data-testid="stSidebar"] div[data-baseweb="select"] * {
+        color: #f1f5f9 !important;
+    }
+    section[data-testid="stSidebar"] div[data-baseweb="select"] svg {
+        fill: #e2e8f0 !important;
+    }
+    section[data-testid="stSidebar"] .stSelectbox label,
+    section[data-testid="stSidebar"] .stSlider label {
+        color: #cbd5e1 !important;
+    }
+    section[data-testid="stSidebar"] .stButton > button {
+        background: rgba(255, 255, 255, 0.18) !important;
+        color: #f1f5f9 !important;
+        border: 1px solid rgba(255, 255, 255, 0.35) !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        padding: 0.45rem 1rem !important;
+        font-size: 0.9rem !important;
+    }
+    section[data-testid="stSidebar"] .stButton > button:hover {
+        background: rgba(255, 255, 255, 0.3) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+    }
+    section[data-testid="stSidebar"] .stButton > button[kind="primary"] {
+        background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
+        border: none !important;
+    }
+
     div[data-testid="stMetric"] {
         background: #ffffff;
         border: 1px solid #e2e8f0;
