@@ -706,7 +706,7 @@ def render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment
     rating = anal_asset['risk_rating']
     badge_class = f"risk-badge-{rating.lower()}"
 
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.markdown("**Asset Info**")
         st.markdown(f"<span class='{badge_class}'>{rating}</span>", unsafe_allow_html=True)
@@ -742,17 +742,16 @@ def render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment
             st.metric("ML Predicted Rating", ml_pred['predicted_rating'])
             st.metric("ML Confidence", f"{ml_pred['confidence']:.1f}%")
 
-    flags = anal_asset.get('risk_flags', {})
-    if flags:
+    with col4:
         st.markdown("**Risk Flags**")
-        flag_html = ""
-        for flag_name, flag_val in flags.items():
-            label = flag_name.replace('_', ' ').title()
-            if flag_val:
-                flag_html += f"<span class='risk-badge-red'>{label}</span>"
-            else:
-                flag_html += f"<span class='risk-badge-green'>{label}</span>"
-        st.markdown(flag_html, unsafe_allow_html=True)
+        flags = anal_asset.get('risk_flags', {})
+        if flags:
+            for flag_name, flag_val in flags.items():
+                label = flag_name.replace('_', ' ').title()
+                if flag_val:
+                    st.markdown(f"<span class='risk-badge-red'>{label}</span>", unsafe_allow_html=True)
+                else:
+                    st.markdown(f"<span class='risk-badge-green'>{label}</span>", unsafe_allow_html=True)
 
     sent_asset = next((s for s in sentiment_results if s['symbol'] == symbol), None)
     if sent_asset:
