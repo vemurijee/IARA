@@ -665,7 +665,7 @@ def render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sent
     if not flagged:
         st.info("No flagged assets.")
     else:
-      flagged_container = st.container(height=600)
+      flagged_container = st.container(height=500)
       with flagged_container:
         for a in flagged:
             sym = a['symbol']
@@ -790,6 +790,8 @@ def render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sent
     if not sentiment_results:
         st.info("No RED-flagged assets required sentiment analysis.")
     else:
+      sentiment_container = st.container(height=400)
+      with sentiment_container:
         left, right = st.columns(2)
         with left:
             avg_sent = np.mean([s['sentiment_score'] for s in sentiment_results])
