@@ -62,7 +62,7 @@ class YahooFinanceData:
         if ticker is None:
             return None
 
-        hist = ticker.history(period="1y")
+        hist = ticker.history(period="6mo")
         if hist.empty or len(hist) < 30:
             return None
 
