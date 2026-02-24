@@ -665,6 +665,8 @@ def render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sent
     if not flagged:
         st.info("No flagged assets.")
     else:
+      flagged_container = st.container(height=600)
+      with flagged_container:
         for a in flagged:
             sym = a['symbol']
             rating_emoji = {"RED": "🔴", "YELLOW": "🟡"}.get(a['risk_rating'], "")
