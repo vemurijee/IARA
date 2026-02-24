@@ -503,7 +503,7 @@ def render_dashboard():
     tab1, tab2, tab3, tab4 = st.tabs(["Overview", "Risk & Sentiment", "Asset Deep Dive", "Appendix"])
 
     with tab1:
-        render_tab_overview(portfolio_data, analysis_results, ml_results, red_count, yellow_count, green_count, total_mcap, avg_vol, r)
+        render_tab_overview(portfolio_data, analysis_results, ml_results, sentiment_results, red_count, yellow_count, green_count, total_mcap, avg_vol, r)
 
     with tab2:
         render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sentiment_results)
@@ -515,7 +515,7 @@ def render_dashboard():
         render_tab_appendix(portfolio_data, analysis_results)
 
 
-def render_tab_overview(portfolio_data, analysis_results, ml_results, red_count, yellow_count, green_count, total_mcap, avg_vol, r):
+def render_tab_overview(portfolio_data, analysis_results, ml_results, sentiment_results, red_count, yellow_count, green_count, total_mcap, avg_vol, r):
     c1, c2, c3, c4, c5, c6, c7 = st.columns([1, 1, 1, 1, 1, 1, 1])
     c1.metric("Total Assets", len(portfolio_data))
     c2.metric("Market Cap", f"${total_mcap / 1e9:.1f}B")
