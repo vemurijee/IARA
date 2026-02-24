@@ -1097,7 +1097,8 @@ def render_tab_market_news():
                 continue
             try:
                 feed = feedparser.parse(feed_url)
-                for entry in feed.entries[:10]:
+                cutoff = datetime.now() - timedelta(days=2)
+                for entry in feed.entries[:20]:
                     title = entry.get('title', '')
                     link = entry.get('link', '')
                     published = entry.get('published', entry.get('updated', ''))
@@ -1114,6 +1115,9 @@ def render_tab_market_news():
                     elif hasattr(entry, 'updated_parsed') and entry.updated_parsed:
                         import time as _time
                         pub_dt = datetime.fromtimestamp(_time.mktime(entry.updated_parsed))
+
+                    if pub_dt and pub_dt < cutoff:
+                        continue
 
                     all_articles.append({
                         'title': title,
