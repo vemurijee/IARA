@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+NVDA,NVIDIA Corporation,Technology,193.09,4701040934912,47.79,0.02,NMS,USD
+AMZN,"Amazon.com, Inc.",Consumer Cyclical,209.57,2249717448704,29.27,0.0,NMS,USD
+META,"Meta Platforms, Inc.",Communication Services,639.76,1618295783424,27.21,0.33,NMS,USD
+WMT,Walmart Inc.,Consumer Defensive,127.03,1012791246848,46.53,0.79,NMS,USD
+LLY,Eli Lilly and Company,Healthcare,1049.94,990468636672,45.71,0.59,NYQ,USD
+ORCL,Oracle Corporation,Technology,144.81,416197115904,27.27,1.42,NYQ,USD
+PG,Procter & Gamble Company (The),Consumer Defensive,165.35,386999255040,24.46,2.56,NYQ,USD
+CVX,Chevron Corporation,Energy,185.17,370220302336,27.89,3.85,NYQ,USD
+GE,GE Aerospace,Industrials,341.58,360303329280,42.54,0.55,NYQ,USD
+CAT,"Caterpillar, Inc.",Industrials,768.79,359778025472,40.81,0.8,NYQ,USD
+AMD,"Advanced Micro Devices, Inc.",Technology,215.07,350657216512,82.4,0.0,NMS,USD
+NFLX,"Netflix, Inc.",Communication Services,77.35,328067710976,30.57,0.0,NMS,USD
+RTX,RTX Corporation,Industrials,197.9,265638707200,39.82,1.35,NYQ,USD
+UNH,UnitedHealth Group Incorporated,Healthcare,274.11,248294899712,20.7,3.13,NYQ,USD
+MCD,McDonald's Corporation,Consumer Cyclical,332.53,237294944256,27.85,2.22,NYQ,USD
+TMO,Thermo Fisher Scientific Inc,Healthcare,515.99,193861599232,29.04,0.33,NYQ,USD
+BA,Boeing Company (The),Industrials,233.35,183260741632,93.71,0.0,NYQ,USD
+CRM,"Salesforce, Inc.",Technology,185.37,176472227840,24.78,0.93,NYQ,USD
+ISRG,"Intuitive Surgical, Inc.",Healthcare,493.48,175249670144,62.7,0.0,NMS,USD
+LOW,"Lowe's Companies, Inc.",Consumer Cyclical,279.52,156794355712,23.16,1.75,NYQ,USD
+SBUX,Starbucks Corporation,Consumer Cyclical,95.52,108825927680,79.6,2.62,NMS,USD
+ADBE,Adobe Inc.,Technology,255.36,106893697024,15.29,0.0,NMS,USD
+UPS,"United Parcel Service, Inc.",Industrials,115.41,97994833920,17.59,5.7,NYQ,USD
+AMT,American Tower Corporation (REI,Real Estate,190.73,89309552640,30.42,3.58,NYQ,USD
+PYPL,"PayPal Holdings, Inc.",Financial Services,43.69,40883310592,8.08,1.27,NMS,USD
