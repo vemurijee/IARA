@@ -497,7 +497,7 @@ def render_dashboard():
     total_mcap = sum(a['market_cap'] for a in portfolio_data)
     avg_vol = np.mean([a['volatility'] for a in analysis_results])
 
-    user_tz = get_browser_timezone()
+    user_tz = st.session_state.get('browser_tz') or "UTC"
     now_utc = datetime.now(timezone.utc)
     display_time = convert_ts(now_utc, user_tz)
     st.markdown(
