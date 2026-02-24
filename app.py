@@ -914,6 +914,61 @@ def render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment
                 st.markdown(f"Key Themes: {themes}")
             st.markdown(f"Confidence: **{sent_asset.get('confidence', 0):.2f}**")
 
+    articles = []
+    if sent_asset:
+        articles = sent_asset.get('all_articles', [])
+
+    with st.expander("News Articles", expanded=True):
+        fetch_key = f"fetch_news_{symbol}"
+        if not articles:
+            st.caption(f"No articles from pipeline for {symbol}.")
+            if st.button(f"Fetch Latest News for {symbol}", key=fetch_key):
+                with st.spinner("Fetching news..."):
+                    from utils.news_fetcher import fetch_stock_news
+                    articles = fetch_stock_news(symbol, days_back=2)
+
+        if articles:
+            st.markdown(f"**{len(articles)}** recent article{'s' if len(articles) != 1 else ''} (last 2 days)")
+            for idx, article in enumerate(articles):
+                headline = article.get('headline', 'Untitled')
+                source = article.get('source', 'Unknown')
+                pub_date = article.get('published_date', '')
+                url = article.get('url', '')
+                score = article.get('sentiment_score', 0)
+
+                if pub_date:
+                    try:
+                        from datetime import datetime
+                        dt = datetime.fromisoformat(pub_date)
+                        pub_display = dt.strftime('%b %d, %Y %I:%M %p')
+                    except Exception:
+                        pub_display = pub_date
+                else:
+                    pub_display = ''
+
+                if score > 0.1:
+                    sent_color = COLORS['success']
+                    sent_label = 'Positive'
+                elif score < -0.1:
+                    sent_color = COLORS['danger']
+                    sent_label = 'Negative'
+                else:
+                    sent_color = COLORS['warning']
+                    sent_label = 'Neutral'
+
+                title_link = f"<a href='{url}' target='_blank' style='text-decoration:none;color:#0f172a;font-weight:600;'>{headline}</a>" if url else f"<span style='font-weight:600;color:#0f172a;'>{headline}</span>"
+                st.markdown(
+                    f"<div style='padding:10px 14px;margin-bottom:8px;border-radius:8px;border:1px solid #e2e8f0;background:#f8fafc;'>"
+                    f"{title_link}"
+                    f"<div style='margin-top:4px;font-size:0.82em;color:#64748b;'>"
+                    f"{source}{' · ' + pub_display if pub_display else ''} · "
+                    f"<span style='color:{sent_color};font-weight:600;'>{sent_label} ({score:+.2f})</span>"
+                    f"</div></div>",
+                    unsafe_allow_html=True,
+                )
+        elif not articles:
+            st.info("No recent news articles found for this asset.")
+
     with st.expander("Historical Prices & ML Anomaly Analysis", expanded=False):
         lc, rc = st.columns(2)
         with lc:
