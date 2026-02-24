@@ -415,6 +415,7 @@ def execute_pipeline(portfolio_size, risk_thresholds=None):
     progress_bar = st.progress(0)
     status_text = st.empty()
     start_time = time.time()
+    st.session_state.generated_reports = {}
 
     try:
         status_text.text("Stage 1: Ingesting portfolio data (checking cache)...")
@@ -444,10 +445,6 @@ def execute_pipeline(portfolio_size, risk_thresholds=None):
         sentiment_results = sentiment_engine.analyze_sentiment(red_flagged)
         progress_bar.progress(85)
 
-        status_text.text("Stage 5: Generating reports...")
-        progress_bar.progress(90)
-        report_gen = ReportGenerator()
-        report_files = report_gen.generate_report(portfolio_data, analysis_results, sentiment_results, ml_results)
         progress_bar.progress(100)
 
         execution_time = time.time() - start_time
@@ -456,9 +453,6 @@ def execute_pipeline(portfolio_size, risk_thresholds=None):
             'analysis_results': analysis_results,
             'ml_results': ml_results,
             'sentiment_results': sentiment_results,
-            'pdf_path': report_files['pdf_path'],
-            'portfolio_csv': report_files['portfolio_csv'],
-            'analysis_csv': report_files['analysis_csv'],
         }
         st.session_state.execution_time = execution_time
 
@@ -532,15 +526,27 @@ def render_tab_overview(portfolio_data, analysis_results, ml_results, red_count,
     with c7:
         st.markdown("<div style='height: 0.5rem'></div>", unsafe_allow_html=True)
         with st.popover("Download Report", use_container_width=True):
-            if os.path.exists(r['pdf_path']):
-                with open(r['pdf_path'], 'rb') as f:
-                    st.download_button("PDF Report", f.read(), os.path.basename(r['pdf_path']), "application/pdf", key="dl_pdf_top")
-            if os.path.exists(r['portfolio_csv']):
-                with open(r['portfolio_csv'], 'rb') as f:
-                    st.download_button("Portfolio CSV", f.read(), os.path.basename(r['portfolio_csv']), "text/csv", key="dl_port_top")
-            if os.path.exists(r['analysis_csv']):
-                with open(r['analysis_csv'], 'rb') as f:
-                    st.download_button("Risk Analysis CSV", f.read(), os.path.basename(r['analysis_csv']), "text/csv", key="dl_risk_top")
+            if 'generated_reports' not in st.session_state:
+                st.session_state.generated_reports = {}
+            if st.button("Generate Reports", key="gen_reports_btn"):
+                with st.spinner("Generating..."):
+                    report_gen = ReportGenerator()
+                    report_files = report_gen.generate_report(
+                        portfolio_data, analysis_results,
+                        sentiment_results, ml_results
+                    )
+                    st.session_state.generated_reports = report_files
+                    st.rerun()
+            rpts = st.session_state.generated_reports
+            if rpts.get('pdf_path') and os.path.exists(rpts['pdf_path']):
+                with open(rpts['pdf_path'], 'rb') as f:
+                    st.download_button("PDF Report", f.read(), os.path.basename(rpts['pdf_path']), "application/pdf", key="dl_pdf_top")
+            if rpts.get('portfolio_csv') and os.path.exists(rpts['portfolio_csv']):
+                with open(rpts['portfolio_csv'], 'rb') as f:
+                    st.download_button("Portfolio CSV", f.read(), os.path.basename(rpts['portfolio_csv']), "text/csv", key="dl_port_top")
+            if rpts.get('analysis_csv') and os.path.exists(rpts['analysis_csv']):
+                with open(rpts['analysis_csv'], 'rb') as f:
+                    st.download_button("Risk Analysis CSV", f.read(), os.path.basename(rpts['analysis_csv']), "text/csv", key="dl_risk_top")
 
     st.markdown('<div class="section-header">Summary</div>', unsafe_allow_html=True)
 
@@ -1195,10 +1201,8 @@ def main():
                             'analysis_results': loaded['analysis_results'],
                             'ml_results': loaded['ml_results'],
                             'sentiment_results': loaded['sentiment_results'],
-                            'pdf_path': '',
-                            'portfolio_csv': '',
-                            'analysis_csv': '',
                         }
+                        st.session_state.generated_reports = {}
                         st.session_state.execution_time = loaded['execution_time']
                         st.session_state.loaded_run_name = loaded['run_name']
                         st.session_state.loaded_run_timestamp = loaded['run_timestamp']
