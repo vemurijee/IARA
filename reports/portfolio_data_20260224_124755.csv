@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+SEDF,American Resources,Real Estate,190.09,372488115043,31.9,0.0,NASDAQ,USD
+ZET,Strategic Enterprises,Technology,186.41,282227916303,20.85,0.0143,NASDAQ,USD
+GB,Alliance Enterprises,Financial Services,141.18,259016397980,,0.0569,NASDAQ,USD
+RYN,Superior Global,Healthcare,134.56,258214515396,9.64,0.0152,NYSE,USD
+NA,United LLC,Technology,385.8,253461839897,34.62,0.0,NYSE,USD
+VXQH,Consolidated Enterprises,Financial Services,112.73,188268143781,16.4,0.0,NYSE,USD
+RHOT,Advanced International,Technology,84.53,162694929705,12.3,0.0,NASDAQ,USD
+ACS,National International,Materials,118.08,159271542329,19.38,0.0485,NYSE,USD
+NJ,National Services,Technology,317.1,158225760305,9.39,0.0208,NYSE,USD
+DMH,Dynamic LLC,Utilities,102.68,133552511186,31.23,0.0359,NASDAQ,USD
+AJVH,Global Systems,Financial Services,81.0,132938375744,16.34,0.0045,NASDAQ,USD
+TNX,Capital Systems,Real Estate,76.32,128736425404,32.81,0.0562,NASDAQ,USD
+GB,Regional Resources,Healthcare,193.56,128688430775,24.27,0.0,NASDAQ,USD
+PPWZ,Premier Global,Consumer Discretionary,82.94,112943409935,19.36,0.0,NASDAQ,USD
+XZQ,National International,Consumer Staples,51.29,92251488357,10.43,0.0524,NYSE,USD
+GRJ,Innovative LLC,Industrial,175.97,81228619167,34.94,0.0334,NYSE,USD
+CJE,First Industries,Financial Services,88.22,79938072734,,0.0584,NASDAQ,USD
+AYK,American Holdings,Real Estate,75.62,61959416905,12.54,0.0219,NYSE,USD
+BP,Premier Technologies,Industrial,163.74,61789221423,26.33,0.0,NYSE,USD
+VV,United Global,Consumer Staples,94.55,58801460594,21.95,0.0148,NASDAQ,USD
+SJU,National International,Materials,128.04,44449319048,25.38,0.0008,NYSE,USD
+XT,Superior Services,Consumer Discretionary,80.5,38764267244,18.97,0.0156,NASDAQ,USD
+RGO,Dynamic Global,Financial Services,72.92,10327509539,12.06,0.0364,NASDAQ,USD
+CL,National Services,Financial Services,31.61,9778710419,11.29,0.0303,NASDAQ,USD
+PJU,Advanced Systems,Industrial,35.53,4609401235,25.35,0.0,NYSE,USD

@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+REV,Pacific Systems,Healthcare,374.91,407646822115,16.33,0.0191,NYSE,USD
+MY,Superior Industries,Real Estate,191.65,334792938845,29.21,0.0239,NASDAQ,USD
+SGFD,Pacific Global,Industrial,114.04,182465050208,28.57,0.0,NASDAQ,USD
+RLO,American Resources,Industrial,86.3,165600374380,22.78,0.0,NYSE,USD
+ZOH,First Partners,Materials,105.75,161256833429,12.41,0.0,NYSE,USD
+PGJE,Regional Systems,Industrial,114.3,146952001053,11.49,0.0415,NASDAQ,USD
+CSDL,First Enterprises,Materials,194.26,127349664765,,0.0194,NYSE,USD
+VD,Consolidated Inc,Real Estate,85.8,118033164041,14.24,0.005,NASDAQ,USD
+DM,International Systems,Consumer Discretionary,141.38,106161342231,,0.042,NASDAQ,USD
+RT,Premier Holdings,Utilities,92.43,88744020852,26.91,0.0,NYSE,USD
+SSQ,Global Corp,Technology,87.91,76672884530,21.54,0.0086,NYSE,USD
+NEJQ,First Group,Financial Services,41.97,76262655909,12.64,0.0,NASDAQ,USD
+BF,Capital International,Consumer Discretionary,79.2,74135788731,22.87,0.0377,NYSE,USD
+MU,American Technologies,Financial Services,73.45,73010032956,8.82,0.0,NYSE,USD
+PNX,Capital Enterprises,Financial Services,50.53,71059549304,29.11,0.0158,NASDAQ,USD
+BCZQ,National Inc,Technology,119.47,54503064878,13.39,0.0554,NYSE,USD
+PWH,Pacific Industries,Consumer Discretionary,94.69,51658678678,32.67,0.0535,NYSE,USD
+BTNV,Advanced International,Consumer Discretionary,142.36,47133649717,33.34,0.0,NASDAQ,USD
+RVWV,Dynamic Technologies,Industrial,67.61,39477661541,21.06,0.0447,NASDAQ,USD
+PAI,Metro Holdings,Consumer Staples,48.3,37485213006,31.56,0.0,NASDAQ,USD
+PRS,Consolidated Technologies,Real Estate,49.91,32998187908,12.12,0.0486,NYSE,USD
+DI,United Industries,Healthcare,64.04,32911207930,25.35,0.0366,NASDAQ,USD
+GIC,Capital Inc,Utilities,41.5,23745024712,32.73,0.0579,NASDAQ,USD
+TQQ,Consolidated Global,Financial Services,72.19,20259118834,20.24,0.0354,NASDAQ,USD
+NL,Regional Inc,Consumer Staples,44.42,16908347509,11.3,0.0283,NYSE,USD

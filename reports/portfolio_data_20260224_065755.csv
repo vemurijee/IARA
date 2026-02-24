@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+SCWG,Capital Solutions,Consumer Discretionary,177.35,241800646087,20.87,0.052,NYSE,USD
+PV,Advanced Corp,Healthcare,282.62,205964657178,16.47,0.0,NASDAQ,USD
+MOD,First Services,Energy,115.12,196577329155,28.12,0.0,NYSE,USD
+TGW,American Holdings,Financial Services,131.9,178370610498,9.62,0.0205,NASDAQ,USD
+XJRU,National Industries,Utilities,102.52,173076465885,13.34,0.0,NASDAQ,USD
+CTB,Strategic Holdings,Technology,84.5,168134734458,16.74,0.0,NYSE,USD
+TTY,Superior Global,Consumer Staples,82.43,146972430761,25.05,0.0,NYSE,USD
+TBIC,American Capital,Energy,54.3,101235758382,,0.0423,NASDAQ,USD
+CRFK,United Technologies,Consumer Discretionary,130.62,98699721654,29.03,0.0481,NASDAQ,USD
+CFK,Strategic Holdings,Healthcare,323.3,97138304067,15.22,0.0,NASDAQ,USD
+TG,Pacific Corp,Utilities,64.42,93398262042,33.1,0.0,NASDAQ,USD
+CBR,Innovative Resources,Energy,109.63,83637731006,20.21,0.0096,NYSE,USD
+MVIS,Pacific Inc,Industrial,88.12,82379258557,34.41,0.0146,NYSE,USD
+ZHL,Dynamic Partners,Healthcare,275.92,81418108395,34.3,0.053,NYSE,USD
+ATE,First Group,Real Estate,86.87,64682674196,11.95,0.0,NASDAQ,USD
+SPSA,Strategic LLC,Utilities,99.32,60154856480,,0.0024,NASDAQ,USD
+NKJ,Global Group,Energy,33.09,52530457996,17.48,0.0427,NASDAQ,USD
+XGML,Innovative Industries,Healthcare,94.56,49952355333,17.49,0.055,NYSE,USD
+PZB,First Systems,Consumer Discretionary,50.76,45017995525,32.36,0.0384,NYSE,USD
+BES,Superior Solutions,Utilities,75.52,32418916796,17.01,0.0407,NYSE,USD
+MTR,United Solutions,Utilities,95.59,25018398881,21.01,0.0464,NYSE,USD
+AEQ,Capital Capital,Energy,55.66,22826031319,,0.0478,NASDAQ,USD
+AMQ,Innovative Enterprises,Industrial,123.77,10767171451,15.17,0.0266,NASDAQ,USD
+RWE,Regional International,Energy,55.13,10059715822,22.15,0.0,NASDAQ,USD
+PKQ,Alliance Systems,Industrial,68.29,6310536018,,0.0392,NASDAQ,USD

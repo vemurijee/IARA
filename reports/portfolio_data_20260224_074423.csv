@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+DEC,Capital Enterprises,Technology,215.62,410442816043,28.57,0.0298,NASDAQ,USD
+CDVA,International Enterprises,Healthcare,182.91,249845686005,27.36,0.0,NASDAQ,USD
+MHTY,Regional Capital,Industrial,178.5,191545345705,21.91,0.0082,NYSE,USD
+RT,Consolidated Systems,Healthcare,135.54,181579841855,32.37,0.0477,NYSE,USD
+XFH,Superior Resources,Consumer Staples,119.28,173129212079,17.46,0.0,NYSE,USD
+PXT,Strategic Holdings,Industrial,76.99,151809732626,25.68,0.0357,NYSE,USD
+DZ,Consolidated LLC,Materials,88.86,141467605168,9.56,0.0153,NASDAQ,USD
+ZYI,National Solutions,Consumer Staples,102.82,121297886530,26.3,0.0166,NASDAQ,USD
+DJP,Superior Capital,Materials,135.13,120595596499,10.28,0.019,NYSE,USD
+ZHY,United Industries,Consumer Discretionary,92.61,117359104943,,0.0,NASDAQ,USD
+GEU,Dynamic Capital,Technology,145.45,106822473481,26.57,0.0408,NYSE,USD
+RTW,Metro Inc,Consumer Discretionary,163.49,91891886870,,0.0281,NASDAQ,USD
+SKQM,Advanced Solutions,Utilities,95.72,91486334766,12.31,0.0278,NYSE,USD
+ZKB,International Solutions,Industrial,140.07,90992180857,28.24,0.0,NYSE,USD
+BUV,Alliance Holdings,Real Estate,177.09,90465129708,9.42,0.0157,NYSE,USD
+BHD,National Group,Financial Services,51.59,81186439517,19.94,0.048,NASDAQ,USD
+DXR,United Technologies,Financial Services,56.06,76808369761,11.34,0.0333,NYSE,USD
+CK,National Group,Utilities,55.17,56700989657,20.47,0.0067,NYSE,USD
+ZJ,National Technologies,Real Estate,134.42,42708299703,26.05,0.0219,NYSE,USD
+SJE,International Resources,Financial Services,99.12,41630714231,34.93,0.0,NYSE,USD
+MVJ,Innovative Enterprises,Materials,62.41,35992217334,16.23,0.0156,NASDAQ,USD
+XMHW,Superior Solutions,Utilities,40.32,35365955974,15.27,0.0255,NASDAQ,USD
+GAIE,Regional Capital,Utilities,87.85,34334850653,11.35,0.0191,NYSE,USD
+XC,Premier Industries,Financial Services,48.26,26414455661,13.38,0.0,NYSE,USD
+BGES,Pacific Holdings,Consumer Staples,55.82,5280132089,17.56,0.0069,NASDAQ,USD
