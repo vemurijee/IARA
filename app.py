@@ -786,12 +786,10 @@ def render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sent
                         elif not articles:
                             st.info("No recent news articles found for this asset.")
 
-    st.markdown('<div class="section-header">Sentiment Overview</div>', unsafe_allow_html=True)
     if not sentiment_results:
         st.info("No RED-flagged assets required sentiment analysis.")
     else:
-      sentiment_container = st.container(height=400)
-      with sentiment_container:
+      with st.expander("Sentiment Overview", expanded=False):
         left, right = st.columns(2)
         with left:
             avg_sent = np.mean([s['sentiment_score'] for s in sentiment_results])
