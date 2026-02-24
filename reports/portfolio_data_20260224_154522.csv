@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+DG,Global Industries,Healthcare,282.69,507105151616,11.49,0.0437,NASDAQ,USD
+PCP,Metro Corp,Materials,191.18,369210424106,18.06,0.0356,NYSE,USD
+CE,Consolidated Inc,Technology,244.14,280774036781,10.04,0.0074,NASDAQ,USD
+RZDL,Advanced Partners,Healthcare,243.66,270477714849,23.27,0.0,NASDAQ,USD
+CJQM,Capital Enterprises,Consumer Discretionary,171.16,256738838750,23.33,0.0,NASDAQ,USD
+DVVM,Pacific Group,Energy,139.46,238785524032,18.55,0.0416,NASDAQ,USD
+SDL,Advanced Resources,Real Estate,147.16,216898462984,18.36,0.0,NYSE,USD
+ZO,Premier Solutions,Technology,125.71,192584145482,33.76,0.0093,NASDAQ,USD
+MW,Consolidated Inc,Real Estate,119.01,186720638816,24.79,0.0213,NASDAQ,USD
+MHL,Pacific Resources,Technology,100.97,162841637762,,0.0,NYSE,USD
+PYM,Metro Inc,Financial Services,100.76,149688586723,34.53,0.0576,NYSE,USD
+CJ,Innovative Technologies,Utilities,89.85,115291440368,22.66,0.0,NASDAQ,USD
+XU,First LLC,Energy,142.39,93049928048,29.74,0.0,NYSE,USD
+BUXI,Innovative International,Consumer Discretionary,114.34,88830946963,23.36,0.0397,NYSE,USD
+TZ,Dynamic International,Materials,73.37,84870765638,,0.0,NYSE,USD
+COID,Pacific Corp,Consumer Staples,59.66,78283904640,14.27,0.041,NYSE,USD
+CGQN,Innovative Corp,Energy,82.56,59024434674,22.18,0.0273,NYSE,USD
+XR,Strategic LLC,Materials,122.06,44444561215,13.59,0.0259,NYSE,USD
+BDI,Metro Global,Industrial,193.46,38384082664,22.53,0.0,NASDAQ,USD
+RRJ,Premier Corp,Healthcare,53.03,29593593343,26.81,0.0,NASDAQ,USD
+ZCM,Advanced Solutions,Industrial,43.45,18637622340,8.47,0.0,NASDAQ,USD
+GZJ,Premier Global,Financial Services,109.67,16353973651,20.24,0.0,NYSE,USD
+SE,Premier Solutions,Utilities,49.5,15470526539,,0.002,NYSE,USD
+BAL,Innovative Technologies,Industrial,119.94,15129925334,28.15,0.0,NYSE,USD
+MMXY,Regional Group,Utilities,82.34,10159820189,23.84,0.0292,NYSE,USD

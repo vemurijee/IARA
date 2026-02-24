@@ -4,6 +4,7 @@
 A multi-stage portfolio risk analysis application built with Streamlit. Features a tabbed interactive dashboard with drilldown capabilities. Uses a 5-stage pipeline: Data Ingestion, Core Risk Analysis, ML Analysis (Anomaly Detection & Risk Prediction), Sentiment Analysis, and Report Generation.
 
 ## Recent Changes
+- **Feb 2026**: Replaced mock/simulated data with real-time Yahoo Finance data — pipeline now fetches actual stock prices, company info, historical data, and volumes from Yahoo Finance API via yfinance library. Uses a curated universe of ~60 major US stocks.
 - **Feb 2026**: Cloud storage for pipeline runs — results from each execution are automatically saved to PostgreSQL and can be loaded later from the sidebar. Supports listing, loading, and deleting past runs.
 - **Feb 2026**: Added configurable risk thresholds in sidebar expander — all thresholds (volatility, drawdown, volume decline, Sharpe, momentum, etc.) can now be adjusted via sliders before running the pipeline
 - **Feb 2026**: Restructured dashboard from single-page scroll to 4-tab layout
@@ -28,12 +29,13 @@ A multi-stage portfolio risk analysis application built with Streamlit. Features
 
 ## Project Architecture
 - `app.py` - Main Streamlit dashboard application (tabbed layout)
-- `pipeline/data_ingestion.py` - Stage 1: Bloomberg data ingestion (simulated)
+- `pipeline/data_ingestion.py` - Stage 1: Real-time data ingestion from Yahoo Finance
 - `pipeline/core_analysis.py` - Stage 2: Time-series and rule-based risk analysis
 - `pipeline/ml_analysis.py` - Stage 3: ML anomaly detection and risk prediction
 - `pipeline/sentiment_analysis.py` - Stage 4: NLP sentiment analysis for RED-flagged assets
 - `pipeline/report_generator.py` - Stage 5: PDF and CSV report generation
-- `utils/mock_data.py` - Mock Bloomberg data generator
+- `utils/yahoo_data.py` - Yahoo Finance data fetcher (replaces mock data)
+- `utils/mock_data.py` - Legacy mock data generator (no longer used)
 - `.streamlit/config.toml` - Streamlit theme and server configuration (port 5000)
 - `pipeline/storage.py` - Cloud storage: save/load/delete pipeline runs in PostgreSQL
 - `reports/` - Generated PDF and CSV reports
@@ -44,4 +46,4 @@ A multi-stage portfolio risk analysis application built with Streamlit. Features
 - Table `pipeline_runs`: stores complete pipeline results as JSONB for later reload
 
 ## Dependencies
-- streamlit, pandas, numpy, scikit-learn, plotly, matplotlib, reportlab, textblob, psycopg2-binary
+- streamlit, pandas, numpy, scikit-learn, plotly, matplotlib, reportlab, textblob, psycopg2-binary, yfinance
