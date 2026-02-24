@@ -7,7 +7,8 @@ A multi-stage portfolio risk analysis application built with Streamlit. Features
 - **Feb 2026**: Delta-based data caching — stock prices and metadata are cached in PostgreSQL. Subsequent pipeline runs only fetch new data since last cached date per stock, dramatically reducing Yahoo Finance API calls. Cache stats visible in Appendix tab and sidebar.
 - **Feb 2026**: Real-time news for sentiment analysis — replaced mock news with live Yahoo Finance news articles (limited to last 2 days). TextBlob sentiment scoring on actual headlines.
 - **Feb 2026**: Auto-detect browser timezone for saved run timestamps (no manual selector). Light/dark theme toggle moved next to main dashboard title.
-- **Feb 2026**: Replaced mock/simulated data with real-time Yahoo Finance data — pipeline now fetches actual stock prices, company info, historical data, and volumes from Yahoo Finance API via yfinance library. Uses a curated universe of ~60 major US stocks.
+- **Feb 2026**: Expanded stock universe to ~1,074 tickers (S&P 500 + additional US stocks). Portfolio size slider now goes up to 1,000.
+- **Feb 2026**: Replaced mock/simulated data with real-time Yahoo Finance data — pipeline now fetches actual stock prices, company info, historical data, and volumes from Yahoo Finance API via yfinance library.
 - **Feb 2026**: Cloud storage for pipeline runs — results from each execution are automatically saved to PostgreSQL and can be loaded later from the sidebar. Supports listing, loading, and deleting past runs.
 - **Feb 2026**: Added configurable risk thresholds in sidebar expander — all thresholds (volatility, drawdown, volume decline, Sharpe, momentum, etc.) can now be adjusted via sliders before running the pipeline
 - **Feb 2026**: Restructured dashboard from single-page scroll to 4-tab layout
@@ -38,6 +39,7 @@ A multi-stage portfolio risk analysis application built with Streamlit. Features
 - `pipeline/sentiment_analysis.py` - Stage 4: NLP sentiment analysis for RED-flagged assets
 - `pipeline/report_generator.py` - Stage 5: PDF and CSV report generation
 - `utils/yahoo_data.py` - Yahoo Finance data fetcher with delta-based caching
+- `utils/stock_universe.py` - Comprehensive stock ticker list (~1,074 US stocks with sector mapping)
 - `utils/news_fetcher.py` - Real-time news fetcher from Yahoo Finance (2-day window)
 - `utils/mock_data.py` - Legacy mock data generator (no longer used)
 - `.streamlit/config.toml` - Streamlit theme and server configuration (port 5000)
