@@ -417,10 +417,12 @@ def execute_pipeline(portfolio_size, risk_thresholds=None):
     start_time = time.time()
 
     try:
-        status_text.text("Stage 1: Ingesting portfolio data...")
+        status_text.text("Stage 1: Ingesting portfolio data (checking cache)...")
         progress_bar.progress(10)
         data_engine = DataIngestionEngine()
-        portfolio_data = data_engine.ingest_portfolio_data(portfolio_size)
+        portfolio_data = data_engine.ingest_portfolio_data(portfolio_size, progress_callback=lambda msg: status_text.text(f"Stage 1: {msg}"))
+        fetch_stats = data_engine.get_fetch_stats()
+        st.session_state.fetch_stats = fetch_stats
         progress_bar.progress(25)
 
         status_text.text("Stage 2: Running core risk analysis...")
@@ -944,12 +946,28 @@ def render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment
 def render_tab_appendix(portfolio_data, analysis_results):
     st.markdown('<div class="section-header">Methodology</div>', unsafe_allow_html=True)
     st.markdown(
-        "This pipeline uses a five-stage approach: (1) Data Ingestion from simulated Bloomberg feeds, "
+        "This pipeline uses a five-stage approach: (1) Data Ingestion from Yahoo Finance with delta-based caching, "
         "(2) Core time-series and rule-based risk analysis with 7 risk flags, "
         "(3) ML-based anomaly detection (Isolation Forest) and risk prediction (Random Forest), "
         "(4) Sentiment analysis on RED-flagged assets using financial news, and "
         "(5) Comprehensive report generation with PDF and CSV outputs."
     )
+
+    with st.expander("Data Cache", expanded=False):
+        try:
+            from pipeline.stock_cache import get_cache_stats
+            cache_stats = get_cache_stats()
+            c1, c2, c3 = st.columns(3)
+            c1.metric("Cached Symbols", cache_stats['cached_symbols'])
+            c2.metric("Price Records", f"{cache_stats['total_price_rows']:,}")
+            c3.metric("Metadata Entries", cache_stats['metadata_entries'])
+            if cache_stats['oldest_date'] and cache_stats['newest_date']:
+                st.caption(f"Date range: {cache_stats['oldest_date']} to {cache_stats['newest_date']}")
+            fetch_stats = st.session_state.get('fetch_stats')
+            if fetch_stats:
+                st.caption(f"Last run: {fetch_stats.get('cache_only', 0)} from cache, {fetch_stats.get('delta_fetches', 0)} delta updates, {fetch_stats.get('full_fetches', 0)} full fetches")
+        except Exception as e:
+            st.info("No cached data yet. Run the pipeline to populate the cache.")
 
     with st.expander("Performance Metrics", expanded=False):
         perf_rows = []
@@ -1133,6 +1151,17 @@ def main():
             f"<div class='exec-time-badge'>Completed in {st.session_state.execution_time:.1f}s</div>",
             unsafe_allow_html=True
         )
+        fetch_stats = st.session_state.get('fetch_stats')
+        if fetch_stats:
+            parts = []
+            if fetch_stats.get('cache_only', 0):
+                parts.append(f"{fetch_stats['cache_only']} cached")
+            if fetch_stats.get('delta_fetches', 0):
+                parts.append(f"{fetch_stats['delta_fetches']} delta")
+            if fetch_stats.get('full_fetches', 0):
+                parts.append(f"{fetch_stats['full_fetches']} full")
+            if parts:
+                st.sidebar.caption(f"Data fetch: {', '.join(parts)}")
 
     if st.session_state.get('last_saved_run_id'):
         st.sidebar.success(f"Saved as Run #{st.session_state.last_saved_run_id}")

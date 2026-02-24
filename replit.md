@@ -4,6 +4,7 @@
 A multi-stage portfolio risk analysis application built with Streamlit. Features a tabbed interactive dashboard with drilldown capabilities. Uses a 5-stage pipeline: Data Ingestion, Core Risk Analysis, ML Analysis (Anomaly Detection & Risk Prediction), Sentiment Analysis, and Report Generation.
 
 ## Recent Changes
+- **Feb 2026**: Delta-based data caching — stock prices and metadata are cached in PostgreSQL. Subsequent pipeline runs only fetch new data since last cached date per stock, dramatically reducing Yahoo Finance API calls. Cache stats visible in Appendix tab and sidebar.
 - **Feb 2026**: Real-time news for sentiment analysis — replaced mock news with live Yahoo Finance news articles (limited to last 2 days). TextBlob sentiment scoring on actual headlines.
 - **Feb 2026**: Auto-detect browser timezone for saved run timestamps (no manual selector). Light/dark theme toggle moved next to main dashboard title.
 - **Feb 2026**: Replaced mock/simulated data with real-time Yahoo Finance data — pipeline now fetches actual stock prices, company info, historical data, and volumes from Yahoo Finance API via yfinance library. Uses a curated universe of ~60 major US stocks.
@@ -36,17 +37,20 @@ A multi-stage portfolio risk analysis application built with Streamlit. Features
 - `pipeline/ml_analysis.py` - Stage 3: ML anomaly detection and risk prediction
 - `pipeline/sentiment_analysis.py` - Stage 4: NLP sentiment analysis for RED-flagged assets
 - `pipeline/report_generator.py` - Stage 5: PDF and CSV report generation
-- `utils/yahoo_data.py` - Yahoo Finance data fetcher (replaces mock data)
+- `utils/yahoo_data.py` - Yahoo Finance data fetcher with delta-based caching
 - `utils/news_fetcher.py` - Real-time news fetcher from Yahoo Finance (2-day window)
 - `utils/mock_data.py` - Legacy mock data generator (no longer used)
 - `.streamlit/config.toml` - Streamlit theme and server configuration (port 5000)
 - `pipeline/storage.py` - Cloud storage: save/load/delete pipeline runs in PostgreSQL
+- `pipeline/stock_cache.py` - Delta-based stock price and metadata caching in PostgreSQL
 - `reports/` - Generated PDF and CSV reports
 - `charts/` - Generated chart images
 
 ## Database
 - PostgreSQL (Replit built-in) via `DATABASE_URL` environment variable
 - Table `pipeline_runs`: stores complete pipeline results as JSONB for later reload
+- Table `stock_price_cache`: stores historical stock prices per symbol/date (UNIQUE on symbol+trade_date)
+- Table `stock_metadata_cache`: stores company info per symbol (company name, sector, market cap, PE ratio, etc.)
 
 ## Dependencies
 - streamlit, pandas, numpy, scikit-learn, plotly, matplotlib, reportlab, textblob, psycopg2-binary, yfinance

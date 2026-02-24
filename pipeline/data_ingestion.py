@@ -2,47 +2,47 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import random
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Callable, Optional
 from utils.yahoo_data import YahooFinanceData, pick_random_symbols
 
 class DataIngestionEngine:
     """
     Stage 1: Data Ingestion Engine
-    Fetches real-time portfolio data from Yahoo Finance
+    Fetches real-time portfolio data from Yahoo Finance with delta-based caching
     """
     
     def __init__(self):
         self.yahoo_data = YahooFinanceData()
         self.connection_status = "Connected"
     
-    def ingest_portfolio_data(self, portfolio_size: int = 25) -> List[Dict[str, Any]]:
+    def ingest_portfolio_data(self, portfolio_size: int = 25, progress_callback: Optional[Callable] = None) -> List[Dict[str, Any]]:
         """
-        Ingest portfolio data from Yahoo Finance API
-        
-        Args:
-            portfolio_size: Number of assets in portfolio
-            
-        Returns:
-            List of dictionaries containing asset data
+        Ingest portfolio data from Yahoo Finance API with delta-based caching.
+        Only fetches new data since last cached date per stock.
         """
+        if progress_callback:
+            progress_callback("Connecting to Yahoo Finance API...")
         print(f"Connecting to Yahoo Finance API...")
         print(f"Fetching data for {portfolio_size} assets...")
         
         symbols = pick_random_symbols(portfolio_size)
-        portfolio_data = self.yahoo_data.fetch_assets(symbols)
+        portfolio_data = self.yahoo_data.fetch_assets(symbols, progress_callback=progress_callback)
         
+        stats = self.yahoo_data.get_fetch_stats()
         print(f"Successfully ingested data for {len(portfolio_data)} assets")
+        print(f"Fetch stats: {stats['full_fetches']} full, {stats['delta_fetches']} delta, {stats['cache_only']} from cache")
+        
+        if progress_callback:
+            progress_callback(f"Ingested {len(portfolio_data)} assets ({stats['cache_only']} cached, {stats['delta_fetches']} delta, {stats['full_fetches']} full)")
+        
         return portfolio_data
+    
+    def get_fetch_stats(self) -> Dict[str, int]:
+        return self.yahoo_data.get_fetch_stats()
     
     def validate_data_integrity(self, portfolio_data: List[Dict]) -> Dict[str, Any]:
         """
         Validate the integrity of ingested data
-        
-        Args:
-            portfolio_data: List of asset data dictionaries
-            
-        Returns:
-            Validation results
         """
         validation_results = {
             'total_assets': len(portfolio_data),
@@ -83,12 +83,6 @@ class DataIngestionEngine:
     def get_real_time_data(self, symbols: List[str]) -> Dict[str, Dict[str, Any]]:
         """
         Fetch real-time data for specific symbols via Yahoo Finance
-        
-        Args:
-            symbols: List of asset symbols
-            
-        Returns:
-            Dictionary with real-time data for each symbol
         """
         import yfinance as yf
         real_time_data = {}
@@ -120,9 +114,6 @@ class DataIngestionEngine:
     def check_connection_status(self) -> Dict[str, Any]:
         """
         Check Yahoo Finance API connection status
-        
-        Returns:
-            Connection status information
         """
         return {
             'status': self.connection_status,
