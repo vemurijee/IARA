@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+GOOGL,Alphabet Inc.,Communication Services,310.84,3759989850112,28.75,0.27,NMS,USD
+MSFT,Microsoft Corporation,Technology,386.09,2869566636032,24.15,0.95,NMS,USD
+AVGO,Broadcom Inc.,Technology,324.86,1540226547712,68.25,0.79,NMS,USD
+TSLA,"Tesla, Inc.",Consumer Cyclical,403.52,1514068639744,373.6,0.0,NMS,USD
+COST,Costco Wholesale Corporation,Consumer Defensive,995.02,441746784256,53.38,0.53,NMS,USD
+ORCL,Oracle Corporation,Technology,144.51,415334891520,27.21,1.42,NYQ,USD
+ABBV,AbbVie Inc.,Healthcare,228.57,403962265600,96.85,2.94,NYQ,USD
+PG,Procter & Gamble Company (The),Consumer Defensive,165.44,387209920512,24.47,2.56,NYQ,USD
+GE,GE Aerospace,Industrials,338.55,357107236864,42.16,0.55,NYQ,USD
+NFLX,"Netflix, Inc.",Communication Services,76.57,324971986944,30.28,0.0,NMS,USD
+CSCO,"Cisco Systems, Inc.",Technology,78.42,309884354560,28.21,2.16,NMS,USD
+GS,"Goldman Sachs Group, Inc. (The)",Financial Services,901.3,272842506240,17.57,2.02,NYQ,USD
+RTX,RTX Corporation,Industrials,198.6,266585030656,39.96,1.35,NYQ,USD
+PEP,"Pepsico, Inc.",Consumer Defensive,168.52,230424166400,28.13,3.38,NMS,USD
+IBM,International Business Machines,Technology,233.05,217807323136,20.9,3.01,NYQ,USD
+GILD,"Gilead Sciences, Inc.",Healthcare,148.32,184017616896,21.84,2.19,NMS,USD
+BA,Boeing Company (The),Industrials,233.59,183449223168,93.81,0.0,NYQ,USD
+ISRG,"Intuitive Surgical, Inc.",Healthcare,493.35,175201730560,62.69,0.0,NMS,USD
+DE,Deere & Company,Industrials,637.09,172698845184,34.44,1.0,NYQ,USD
+BLK,"BlackRock, Inc.",Financial Services,1074.19,166660014080,30.4,2.14,NYQ,USD
+LOW,"Lowe's Companies, Inc.",Consumer Cyclical,280.7,157456285696,23.26,1.75,NYQ,USD
+NOW,"ServiceNow, Inc.",Technology,103.26,108954066944,61.83,0.0,NYQ,USD
+SBUX,Starbucks Corporation,Consumer Cyclical,95.33,108609470464,79.44,2.62,NMS,USD
+AMT,American Tower Corporation (REI,Real Estate,191.9,89857409024,30.61,3.58,NYQ,USD
+PYPL,"PayPal Holdings, Inc.",Financial Services,43.44,40662405120,8.03,1.27,NMS,USD

@@ -246,6 +246,25 @@ st.markdown("""
         font-size: 2rem !important;
         margin-bottom: 1rem;
     }
+    .welcome-desc {
+        font-size: 1.15rem;
+        color: #0c4a6e;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+    }
+    .step-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        box-shadow: 0 2px 8px rgba(14,165,233,0.1);
+        min-width: 130px;
+    }
+    .step-name {
+        font-size: 0.9rem;
+        color: #1e293b;
+        font-weight: 600;
+        margin-top: 4px;
+    }
 
     .info-card {
         background: #ffffff;
@@ -443,7 +462,7 @@ def execute_pipeline(portfolio_size, risk_thresholds=None):
 
         status_text.text("Saving results to cloud storage...")
         try:
-            run_name = f"Run {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+            run_name = f"Run {datetime.now().strftime('%b %d %H:%M')}"
             run_id = save_pipeline_run(
                 run_name=run_name,
                 portfolio_size=portfolio_size,
@@ -989,15 +1008,17 @@ def inject_dark_css():
 
         .info-card { background: #1e293b !important; border-color: #334155 !important; color: #e2e8f0 !important; }
 
-        .welcome-box { background: linear-gradient(135deg, #0c1929 0%, #162032 40%, #1a1a2e 100%) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important; }
+        .welcome-box { background: linear-gradient(135deg, #0c1929 0%, #162032 40%, #1a1a2e 100%) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important; border: 1px solid #1e293b !important; }
         .welcome-box h2 { color: #f1f5f9 !important; }
-        .welcome-box p { color: #94a3b8 !important; }
-        .welcome-box div[style*="background:white"] { background: #1e293b !important; }
+        .welcome-box p { color: #cbd5e1 !important; }
+        .welcome-box .step-card { background: #1e293b !important; box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important; border: 1px solid #334155 !important; }
+        .welcome-box .step-card .step-name { color: #e2e8f0 !important; }
 
         .stTabs [data-baseweb="tab-list"] { background: #1e293b !important; box-shadow: 0 1px 4px rgba(0,0,0,0.3) !important; }
         .stTabs [data-baseweb="tab"] { color: #cbd5e1 !important; }
         .stTabs [data-baseweb="tab"]:hover { background: rgba(14, 165, 233, 0.15) !important; }
         .stTabs [aria-selected="true"] { background: #334155 !important; color: #f1f5f9 !important; }
+        .stTabs [data-baseweb="tab-panel"] { background: #0f172a !important; }
 
         div[data-testid="stExpander"] { border-color: #334155 !important; }
         div[data-testid="stExpander"] details { background: #1e293b !important; }
@@ -1008,13 +1029,14 @@ def inject_dark_css():
         .stDataFrame th { background: #334155 !important; color: #e2e8f0 !important; }
         .stDataFrame td { background: #1e293b !important; color: #e2e8f0 !important; }
 
-        p, span, li, td, th, label, .stMarkdown, div[data-testid="stText"] { color: #e2e8f0 !important; }
-        h1, h2, h3, h4, h5, h6 { color: #f1f5f9 !important; }
+        .main p, .main span, .main li, .main td, .main th, .main label,
+        .main .stMarkdown, .main div[data-testid="stText"] { color: #e2e8f0 !important; }
+        .main h1, .main h2, .main h3, .main h4, .main h5, .main h6 { color: #f1f5f9 !important; }
         hr { border-color: #334155 !important; }
 
-        .stSelectbox label, .stSlider label, .stNumberInput label { color: #e2e8f0 !important; }
-        div[data-baseweb="select"] > div { background: #1e293b !important; border-color: #475569 !important; }
-        div[data-baseweb="select"] span { color: #e2e8f0 !important; }
+        .main .stSelectbox label, .main .stSlider label, .main .stNumberInput label { color: #e2e8f0 !important; }
+        .main div[data-baseweb="select"] > div { background: #1e293b !important; border-color: #475569 !important; color: #e2e8f0 !important; }
+        .main div[data-baseweb="select"] span { color: #e2e8f0 !important; }
         ul[data-baseweb="menu"] { background: #1e293b !important; }
         ul[data-baseweb="menu"] li { color: #e2e8f0 !important; }
         ul[data-baseweb="menu"] li:hover { background: #334155 !important; }
@@ -1025,13 +1047,23 @@ def inject_dark_css():
 
         .stDownloadButton > button { background: linear-gradient(135deg, #0ea5e9, #0284c7) !important; color: white !important; }
 
-        .stAlert, div[data-testid="stAlert"] { background: #1e293b !important; border-color: #334155 !important; }
+        .stAlert, div[data-testid="stAlert"] { background: #1e293b !important; border-color: #334155 !important; color: #e2e8f0 !important; }
+        div[data-testid="stAlert"] p, div[data-testid="stAlert"] span { color: #e2e8f0 !important; }
 
         .stPopover, div[data-testid="stPopover"] > div > div { background: #1e293b !important; border-color: #334155 !important; }
 
-        .risk-badge-red { background: linear-gradient(135deg, #3b1111, #4a1515) !important; border-color: #7f1d1d !important; }
-        .risk-badge-yellow { background: linear-gradient(135deg, #3b2e0a, #4a3a0d) !important; border-color: #78350f !important; }
-        .risk-badge-green { background: linear-gradient(135deg, #0a3b1a, #0d4a22) !important; border-color: #14532d !important; }
+        .risk-badge-red { background: linear-gradient(135deg, #3b1111, #4a1515) !important; border-color: #7f1d1d !important; color: #fca5a5 !important; }
+        .risk-badge-yellow { background: linear-gradient(135deg, #3b2e0a, #4a3a0d) !important; border-color: #78350f !important; color: #fcd34d !important; }
+        .risk-badge-green { background: linear-gradient(135deg, #0a3b1a, #0d4a22) !important; border-color: #14532d !important; color: #86efac !important; }
+
+        .plotly .main-svg { background: transparent !important; }
+        .js-plotly-plot .plotly .main-svg text { fill: #e2e8f0 !important; }
+
+        div[data-testid="column"] div[data-testid="stVerticalBlock"] > div[style] { color: #e2e8f0 !important; }
+
+        .stProgress > div > div { background: #334155 !important; }
+
+        div[data-testid="stMetricDelta"] svg { fill: currentColor !important; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -1163,29 +1195,29 @@ def main():
         st.markdown("""
         <div class="welcome-box">
             <h2>Get Started</h2>
-            <p style="font-size:1.15rem; color:#0c4a6e; font-weight:500; margin-bottom:1.5rem;">
+            <p class="welcome-desc">
                 Configure your portfolio size in the sidebar and click <b>Execute Full Pipeline</b> to begin analysis.
             </p>
             <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
-                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(14,165,233,0.1); min-width:130px;">
+                <div class="step-card">
                     <div style="font-size:0.75rem; color:#0ea5e9; text-transform:uppercase; font-weight:700;">Step 1</div>
-                    <div style="font-size:0.9rem; color:#1e293b; font-weight:600; margin-top:4px;">Data Ingestion</div>
+                    <div class="step-name">Data Ingestion</div>
                 </div>
-                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(139,92,246,0.1); min-width:130px;">
+                <div class="step-card">
                     <div style="font-size:0.75rem; color:#8b5cf6; text-transform:uppercase; font-weight:700;">Step 2</div>
-                    <div style="font-size:0.9rem; color:#1e293b; font-weight:600; margin-top:4px;">Core Analysis</div>
+                    <div class="step-name">Core Analysis</div>
                 </div>
-                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(249,115,22,0.1); min-width:130px;">
+                <div class="step-card">
                     <div style="font-size:0.75rem; color:#f97316; text-transform:uppercase; font-weight:700;">Step 3</div>
-                    <div style="font-size:0.9rem; color:#1e293b; font-weight:600; margin-top:4px;">ML Analysis</div>
+                    <div class="step-name">ML Analysis</div>
                 </div>
-                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(16,185,129,0.1); min-width:130px;">
+                <div class="step-card">
                     <div style="font-size:0.75rem; color:#10b981; text-transform:uppercase; font-weight:700;">Step 4</div>
-                    <div style="font-size:0.9rem; color:#1e293b; font-weight:600; margin-top:4px;">Sentiment</div>
+                    <div class="step-name">Sentiment</div>
                 </div>
-                <div style="background:white; border-radius:12px; padding:1rem 1.5rem; box-shadow:0 2px 8px rgba(244,63,94,0.1); min-width:130px;">
+                <div class="step-card">
                     <div style="font-size:0.75rem; color:#f43f5e; text-transform:uppercase; font-weight:700;">Step 5</div>
-                    <div style="font-size:0.9rem; color:#1e293b; font-weight:600; margin-top:4px;">Reports</div>
+                    <div class="step-name">Reports</div>
                 </div>
             </div>
         </div>
