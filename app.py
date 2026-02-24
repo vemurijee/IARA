@@ -734,25 +734,55 @@ def render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sent
                         sc4.metric("Confidence", f"{sent_asset.get('confidence', 0):.2f}")
 
                         articles = sent_asset.get('all_articles', [])
+                        st.markdown("---")
+                        fetch_key = f"fetch_news_tab2_{sym}"
+                        if not articles:
+                            st.caption(f"No articles from pipeline for {sym}.")
+                            if st.button(f"Fetch Latest News for {sym}", key=fetch_key):
+                                with st.spinner("Fetching news..."):
+                                    from utils.news_fetcher import fetch_stock_news
+                                    articles = fetch_stock_news(sym, days_back=2)
+
                         if articles:
-                            st.markdown("---")
-                            st.markdown(f"**News Articles** ({len(articles)})")
-                            article_rows = []
-                            for art in articles:
+                            st.markdown(f"**{len(articles)}** recent article{'s' if len(articles) != 1 else ''} (last 2 days)")
+                            for art_idx, art in enumerate(articles):
+                                headline = art.get('headline', 'Untitled')
+                                source = art.get('source', 'Unknown')
                                 pub_date = art.get('published_date', '')
+                                url = art.get('url', '')
+                                score = art.get('sentiment_score', 0)
+
                                 if pub_date:
                                     try:
-                                        pub_date = datetime.fromisoformat(pub_date).strftime('%Y-%m-%d')
+                                        dt = datetime.fromisoformat(pub_date)
+                                        pub_display = dt.strftime('%b %d, %Y %I:%M %p')
                                     except Exception:
-                                        pass
-                                article_rows.append({
-                                    'Date': pub_date,
-                                    'Headline': art.get('headline', ''),
-                                    'Source': art.get('source', ''),
-                                    'Sentiment': f"{art.get('sentiment_score', 0):.2f}",
-                                    'Relevance': f"{art.get('relevance_score', 0):.2f}",
-                                })
-                            st.dataframe(pd.DataFrame(article_rows), use_container_width=True, hide_index=True)
+                                        pub_display = pub_date
+                                else:
+                                    pub_display = ''
+
+                                if score > 0.1:
+                                    sent_color = COLORS['success']
+                                    sent_label = 'Positive'
+                                elif score < -0.1:
+                                    sent_color = COLORS['danger']
+                                    sent_label = 'Negative'
+                                else:
+                                    sent_color = COLORS['warning']
+                                    sent_label = 'Neutral'
+
+                                title_link = f"<a href='{url}' target='_blank' style='text-decoration:none;color:#0f172a;font-weight:600;'>{headline}</a>" if url else f"<span style='font-weight:600;color:#0f172a;'>{headline}</span>"
+                                st.markdown(
+                                    f"<div style='padding:10px 14px;margin-bottom:8px;border-radius:8px;border:1px solid #e2e8f0;background:#f8fafc;'>"
+                                    f"{title_link}"
+                                    f"<div style='margin-top:4px;font-size:0.82em;color:#64748b;'>"
+                                    f"{source}{' · ' + pub_display if pub_display else ''} · "
+                                    f"<span style='color:{sent_color};font-weight:600;'>{sent_label} ({score:+.2f})</span>"
+                                    f"</div></div>",
+                                    unsafe_allow_html=True,
+                                )
+                        elif not articles:
+                            st.info("No recent news articles found for this asset.")
 
     st.markdown('<div class="section-header">Sentiment Overview</div>', unsafe_allow_html=True)
     if not sentiment_results:
