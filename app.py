@@ -1165,7 +1165,7 @@ def main():
 
     st.sidebar.header("Pipeline Controls")
 
-    portfolio_size = st.sidebar.slider("Portfolio Size", min_value=10, max_value=1000, value=25)
+    portfolio_size = st.sidebar.slider("Portfolio Size", min_value=10, max_value=1000, value=100)
 
     with st.sidebar.expander("Risk Thresholds", expanded=False):
         st.markdown("**Volatility**")
