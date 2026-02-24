@@ -85,7 +85,7 @@ def execute_full_pipeline(portfolio_size):
 
     try:
         # Stage 1: Data Ingestion
-        status_text.text("Stage 1: Fetching real market data from Yahoo Finance...")
+        status_text.text("Stage 1: Ingesting Bloomberg data...")
         progress_bar.progress(10)
 
         data_engine = DataIngestionEngine()
@@ -93,7 +93,7 @@ def execute_full_pipeline(portfolio_size):
 
         progress_bar.progress(25)
         st.success(
-            f"✅ Stage 1 Complete: Fetched real data for {len(portfolio_data)} assets"
+            f"✅ Stage 1 Complete: Ingested data for {len(portfolio_data)} assets"
         )
 
         # Stage 2: Core Analysis
@@ -213,7 +213,7 @@ def execute_stage_1(portfolio_size):
     """Execute Stage 1: Data Ingestion"""
     st.header("📥 Stage 1: Data Ingestion")
 
-    with st.spinner("Fetching real market data from Yahoo Finance..."):
+    with st.spinner("Connecting to Bloomberg API and fetching data..."):
         data_engine = DataIngestionEngine()
         portfolio_data = data_engine.ingest_portfolio_data(portfolio_size)
 
