@@ -506,7 +506,7 @@ def render_dashboard():
         unsafe_allow_html=True
     )
 
-    tab1, tab2, tab3, tab4 = st.tabs(["Overview", "Risk & Sentiment", "Asset Deep Dive", "Appendix"])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(["Overview", "Risk & Sentiment", "Asset Deep Dive", "Market News", "Appendix"])
 
     with tab1:
         render_tab_overview(portfolio_data, analysis_results, ml_results, sentiment_results, red_count, yellow_count, green_count, total_mcap, avg_vol, r)
@@ -518,6 +518,9 @@ def render_dashboard():
         render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment_results)
 
     with tab4:
+        render_tab_market_news()
+
+    with tab5:
         render_tab_appendix(portfolio_data, analysis_results)
 
 
@@ -1042,6 +1045,166 @@ def render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment
                 st.markdown(f"Trend: **{ml_pred['trend']}**")
 
 
+def render_tab_market_news():
+    import feedparser
+    from textblob import TextBlob
+
+    RSS_FEEDS = {
+        'Reuters Business': 'https://feeds.reuters.com/reuters/businessNews',
+        'CNBC Top News': 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114',
+        'MarketWatch': 'https://feeds.marketwatch.com/marketwatch/topstories/',
+        'Yahoo Finance': 'https://finance.yahoo.com/news/rssindex',
+        'WSJ Markets': 'https://feeds.a.dj.com/rss/RSSMarketsMain.xml',
+    }
+
+    CATEGORY_KEYWORDS = {
+        'Fed & Monetary Policy': ['fed', 'federal reserve', 'interest rate', 'inflation', 'monetary', 'fomc', 'powell', 'rate hike', 'rate cut', 'basis points'],
+        'Earnings & Corporate': ['earnings', 'revenue', 'profit', 'quarterly', 'guidance', 'eps', 'beat', 'miss', 'forecast'],
+        'Geopolitical': ['tariff', 'trade war', 'sanction', 'geopolit', 'china', 'russia', 'ukraine', 'nato', 'conflict'],
+        'Tech & AI': ['artificial intelligence', 'ai ', 'chip', 'semiconductor', 'nvidia', 'tech', 'apple', 'google', 'microsoft', 'amazon'],
+        'Energy & Commodities': ['oil', 'crude', 'opec', 'natural gas', 'gold', 'commodity', 'energy'],
+        'Jobs & Economy': ['jobs', 'employment', 'gdp', 'recession', 'economic', 'labor', 'consumer', 'spending'],
+    }
+
+    def categorize_article(title):
+        title_lower = title.lower()
+        for category, keywords in CATEGORY_KEYWORDS.items():
+            for kw in keywords:
+                if kw in title_lower:
+                    return category
+        return 'General Market'
+
+    st.markdown('<div class="section-header">Market News Feed</div>', unsafe_allow_html=True)
+    st.caption("Live RSS news from major financial outlets that could impact markets")
+
+    col_filter, col_refresh = st.columns([4, 1])
+    with col_filter:
+        selected_sources = st.multiselect(
+            "Filter by source",
+            options=list(RSS_FEEDS.keys()),
+            default=list(RSS_FEEDS.keys()),
+            key="news_source_filter"
+        )
+    with col_refresh:
+        st.markdown("<div style='height:28px'></div>", unsafe_allow_html=True)
+        refresh = st.button("Refresh", key="refresh_news", use_container_width=True)
+
+    cache_key = 'market_news_cache'
+    if refresh or cache_key not in st.session_state:
+        all_articles = []
+        for source_name, feed_url in RSS_FEEDS.items():
+            if source_name not in selected_sources:
+                continue
+            try:
+                feed = feedparser.parse(feed_url)
+                for entry in feed.entries[:10]:
+                    title = entry.get('title', '')
+                    link = entry.get('link', '')
+                    published = entry.get('published', entry.get('updated', ''))
+                    summary = entry.get('summary', '')[:200] if entry.get('summary') else ''
+                    summary = summary.replace('<', '&lt;').replace('>', '&gt;')
+
+                    blob = TextBlob(title)
+                    sentiment_score = blob.sentiment.polarity
+
+                    pub_dt = None
+                    if hasattr(entry, 'published_parsed') and entry.published_parsed:
+                        import time as _time
+                        pub_dt = datetime.fromtimestamp(_time.mktime(entry.published_parsed))
+                    elif hasattr(entry, 'updated_parsed') and entry.updated_parsed:
+                        import time as _time
+                        pub_dt = datetime.fromtimestamp(_time.mktime(entry.updated_parsed))
+
+                    all_articles.append({
+                        'title': title,
+                        'link': link,
+                        'published': published,
+                        'pub_dt': pub_dt,
+                        'summary': summary,
+                        'source': source_name,
+                        'sentiment': sentiment_score,
+                        'category': categorize_article(title),
+                    })
+            except Exception:
+                continue
+
+        all_articles.sort(key=lambda x: x['pub_dt'] or datetime.min, reverse=True)
+        st.session_state[cache_key] = all_articles
+    else:
+        all_articles = st.session_state[cache_key]
+        all_articles = [a for a in all_articles if a['source'] in selected_sources]
+
+    categories = sorted(set(a['category'] for a in all_articles))
+    selected_cats = st.multiselect("Filter by category", options=categories, default=categories, key="news_cat_filter")
+    filtered = [a for a in all_articles if a['category'] in selected_cats]
+
+    cat_counts = {}
+    for a in all_articles:
+        cat_counts[a['category']] = cat_counts.get(a['category'], 0) + 1
+
+    cat_cols = st.columns(min(len(cat_counts), 7))
+    cat_colors = ['#0ea5e9', '#8b5cf6', '#f97316', '#10b981', '#f43f5e', '#06b6d4', '#eab308']
+    for i, (cat, count) in enumerate(sorted(cat_counts.items(), key=lambda x: -x[1])):
+        if i < len(cat_cols):
+            color = cat_colors[i % len(cat_colors)]
+            cat_cols[i].markdown(
+                f"<div style='text-align:center;padding:8px;border-radius:8px;border:1px solid #e2e8f0;background:#f8fafc;'>"
+                f"<div style='font-size:1.2rem;font-weight:700;color:{color};'>{count}</div>"
+                f"<div style='font-size:0.7rem;color:#64748b;'>{cat}</div></div>",
+                unsafe_allow_html=True
+            )
+
+    st.markdown(f"<div style='margin:0.8rem 0 0.3rem;color:#64748b;font-size:0.85rem;'>"
+                f"Showing <b>{len(filtered)}</b> articles from <b>{len(selected_sources)}</b> sources</div>",
+                unsafe_allow_html=True)
+
+    news_container = st.container(height=550)
+    with news_container:
+        if not filtered:
+            st.info("No articles found. Try adjusting your filters or click Refresh.")
+        for article in filtered:
+            title = article['title']
+            link = article['link']
+            source = article['source']
+            summary = article['summary']
+            score = article['sentiment']
+            category = article['category']
+            pub_dt = article.get('pub_dt')
+
+            if pub_dt:
+                user_tz = st.session_state.get('browser_tz') or 'UTC'
+                pub_display = convert_ts(pub_dt.replace(tzinfo=timezone.utc), user_tz)
+            else:
+                pub_display = article.get('published', '')[:20]
+
+            if score > 0.1:
+                sent_color = COLORS['success']
+                sent_icon = '▲'
+            elif score < -0.1:
+                sent_color = COLORS['danger']
+                sent_icon = '▼'
+            else:
+                sent_color = COLORS['warning']
+                sent_icon = '●'
+
+            title_link = f"<a href='{link}' target='_blank' style='text-decoration:none;color:#0f172a;font-weight:600;font-size:0.95rem;'>{title}</a>" if link else f"<span style='font-weight:600;color:#0f172a;font-size:0.95rem;'>{title}</span>"
+
+            cat_badge = f"<span style='background:#f1f5f9;color:#475569;padding:2px 8px;border-radius:4px;font-size:0.72rem;font-weight:600;margin-left:6px;'>{category}</span>"
+
+            summary_html = f"<div style='margin-top:6px;font-size:0.82em;color:#475569;'>{summary}...</div>" if summary else ""
+            st.markdown(
+                f"<div style='padding:12px 16px;margin-bottom:8px;border-radius:8px;border:1px solid #e2e8f0;background:#ffffff;'>"
+                f"<div>{title_link}{cat_badge}</div>"
+                f"{summary_html}"
+                f"<div style='margin-top:6px;font-size:0.78em;color:#94a3b8;display:flex;align-items:center;gap:12px;'>"
+                f"<span style='font-weight:600;'>{source}</span>"
+                f"<span>{pub_display}</span>"
+                f"<span style='color:{sent_color};font-weight:600;'>{sent_icon} {score:+.2f}</span>"
+                f"</div></div>",
+                unsafe_allow_html=True,
+            )
+
+
 def render_tab_appendix(portfolio_data, analysis_results):
     st.markdown('<div class="section-header">Methodology</div>', unsafe_allow_html=True)
     st.markdown(
@@ -1318,32 +1481,36 @@ def main():
     if st.session_state.pipeline_results:
         render_dashboard()
     else:
-        st.markdown("""
-        <div class="welcome-box">
-            <h2>Get Started</h2>
-            <p class="welcome-desc">
-                Configure your portfolio size in the sidebar and click <b>Execute Full Pipeline</b> to begin analysis.
-            </p>
-            <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
-                <div class="step-card">
-                    <div style="font-size:0.75rem; color:#0ea5e9; text-transform:uppercase; font-weight:700;">Step 1</div>
-                    <div class="step-name">Data Ingestion</div>
-                </div>
-                <div class="step-card">
-                    <div style="font-size:0.75rem; color:#8b5cf6; text-transform:uppercase; font-weight:700;">Step 2</div>
-                    <div class="step-name">Core Analysis</div>
-                </div>
-                <div class="step-card">
-                    <div style="font-size:0.75rem; color:#f97316; text-transform:uppercase; font-weight:700;">Step 3</div>
-                    <div class="step-name">ML Analysis</div>
-                </div>
-                <div class="step-card">
-                    <div style="font-size:0.75rem; color:#10b981; text-transform:uppercase; font-weight:700;">Step 4</div>
-                    <div class="step-name">Sentiment Analysis</div>
+        welcome_tab, news_tab = st.tabs(["Get Started", "Market News"])
+        with welcome_tab:
+            st.markdown("""
+            <div class="welcome-box">
+                <h2>Get Started</h2>
+                <p class="welcome-desc">
+                    Configure your portfolio size in the sidebar and click <b>Execute Full Pipeline</b> to begin analysis.
+                </p>
+                <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
+                    <div class="step-card">
+                        <div style="font-size:0.75rem; color:#0ea5e9; text-transform:uppercase; font-weight:700;">Step 1</div>
+                        <div class="step-name">Data Ingestion</div>
+                    </div>
+                    <div class="step-card">
+                        <div style="font-size:0.75rem; color:#8b5cf6; text-transform:uppercase; font-weight:700;">Step 2</div>
+                        <div class="step-name">Core Analysis</div>
+                    </div>
+                    <div class="step-card">
+                        <div style="font-size:0.75rem; color:#f97316; text-transform:uppercase; font-weight:700;">Step 3</div>
+                        <div class="step-name">ML Analysis</div>
+                    </div>
+                    <div class="step-card">
+                        <div style="font-size:0.75rem; color:#10b981; text-transform:uppercase; font-weight:700;">Step 4</div>
+                        <div class="step-name">Sentiment Analysis</div>
+                    </div>
                 </div>
             </div>
-        </div>
-        """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
+        with news_tab:
+            render_tab_market_news()
 
 
 if __name__ == "__main__":
