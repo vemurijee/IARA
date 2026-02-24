@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit_javascript import st_javascript
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta, timezone
@@ -362,21 +363,13 @@ if 'show_anomalies' not in st.session_state:
 if 'dark_mode' not in st.session_state:
     st.session_state.dark_mode = False
 
-TIMEZONE_OPTIONS = {
-    "US/Eastern": "Eastern (ET)",
-    "US/Central": "Central (CT)",
-    "US/Mountain": "Mountain (MT)",
-    "US/Pacific": "Pacific (PT)",
-    "US/Hawaii": "Hawaii (HT)",
-    "US/Alaska": "Alaska (AKT)",
-    "UTC": "UTC",
-    "Europe/London": "London (GMT/BST)",
-    "Europe/Paris": "Paris (CET)",
-    "Asia/Tokyo": "Tokyo (JST)",
-    "Asia/Shanghai": "Shanghai (CST)",
-    "Asia/Kolkata": "India (IST)",
-    "Australia/Sydney": "Sydney (AEST)",
-}
+def get_browser_timezone():
+    if 'browser_tz' not in st.session_state:
+        st.session_state.browser_tz = None
+    tz = st_javascript("Intl.DateTimeFormat().resolvedOptions().timeZone")
+    if tz and isinstance(tz, str) and tz != "0":
+        st.session_state.browser_tz = tz
+    return st.session_state.browser_tz or "UTC"
 
 def convert_ts(ts, tz_name):
     if ts is None:
@@ -487,10 +480,8 @@ def render_dashboard():
     avg_vol = np.mean([a['volatility'] for a in analysis_results])
 
     st.markdown(
-        f'<div class="dash-title-row">'
-        f'<h1>Portfolio Risk Dashboard</h1>'
-        f'<span class="dash-date">{datetime.now().strftime("%B %d, %Y %I:%M %p")}</span>'
-        f'</div>',
+        f'<div style="text-align:right;color:#64748b;font-size:0.95rem;font-weight:500;margin-bottom:0.5rem;">'
+        f'{datetime.now().strftime("%B %d, %Y %I:%M %p")}</div>',
         unsafe_allow_html=True
     )
 
@@ -1046,16 +1037,22 @@ def inject_dark_css():
 
 
 def main():
-    with st.sidebar:
-        col_theme_l, col_theme_r = st.columns([3, 1])
-        with col_theme_l:
-            st.header("Pipeline Controls")
-        with col_theme_r:
-            st.markdown("<div style='height:0.4rem'></div>", unsafe_allow_html=True)
-            st.session_state.dark_mode = st.toggle("🌙", value=st.session_state.dark_mode, key="theme_toggle")
+    user_tz = get_browser_timezone()
+
+    col_title, col_toggle = st.columns([9, 1])
+    with col_title:
+        st.markdown(
+            '<div style="padding-top:0.3rem;"><span style="font-size:1.8rem;font-weight:800;letter-spacing:-0.02em;">Portfolio Risk Dashboard</span></div>',
+            unsafe_allow_html=True
+        )
+    with col_toggle:
+        st.markdown("<div style='height:0.5rem'></div>", unsafe_allow_html=True)
+        st.session_state.dark_mode = st.toggle("🌙", value=st.session_state.dark_mode, key="theme_toggle")
 
     if st.session_state.dark_mode:
         inject_dark_css()
+
+    st.sidebar.header("Pipeline Controls")
 
     portfolio_size = st.sidebar.slider("Portfolio Size", min_value=10, max_value=100, value=25)
 
@@ -1111,11 +1108,6 @@ def main():
     st.sidebar.markdown("---")
     st.sidebar.header("Saved Runs")
 
-    tz_labels = list(TIMEZONE_OPTIONS.values())
-    tz_keys = list(TIMEZONE_OPTIONS.keys())
-    selected_tz_label = st.sidebar.selectbox("Timezone", tz_labels, index=0, key="tz_select")
-    selected_tz = tz_keys[tz_labels.index(selected_tz_label)]
-
     try:
         saved_runs = list_pipeline_runs()
     except Exception:
@@ -1123,7 +1115,7 @@ def main():
 
     if saved_runs:
         run_options = {
-            f"#{r['id']} — {r['run_name']} · {convert_ts(r.get('run_timestamp'), selected_tz)} "
+            f"#{r['id']} — {r['run_name']} · {convert_ts(r.get('run_timestamp'), user_tz)} "
             f"({r['total_assets']} assets, "
             f"R:{r['red_count']} Y:{r['yellow_count']} G:{r['green_count']})": r['id']
             for r in saved_runs
@@ -1162,7 +1154,7 @@ def main():
     if st.session_state.get('loaded_run_name'):
         ts = st.session_state.get('loaded_run_timestamp', '')
         if ts:
-            ts = convert_ts(ts, selected_tz)
+            ts = convert_ts(ts, user_tz)
         st.sidebar.info(f"Viewing: {st.session_state.loaded_run_name} ({ts})")
 
     if st.session_state.pipeline_results:
@@ -1170,7 +1162,7 @@ def main():
     else:
         st.markdown("""
         <div class="welcome-box">
-            <h2>Portfolio Risk Dashboard</h2>
+            <h2>Get Started</h2>
             <p style="font-size:1.15rem; color:#0c4a6e; font-weight:500; margin-bottom:1.5rem;">
                 Configure your portfolio size in the sidebar and click <b>Execute Full Pipeline</b> to begin analysis.
             </p>

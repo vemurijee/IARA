@@ -1,0 +1,51 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+NVDA,NVIDIA Corporation,Technology,192.49,4686432698368,47.64,0.02,NMS,USD
+GOOGL,Alphabet Inc.,Communication Services,310.4,3754908975104,28.71,0.27,NMS,USD
+AMZN,"Amazon.com, Inc.",Consumer Cyclical,208.37,2236834381824,29.1,0.0,NMS,USD
+META,"Meta Platforms, Inc.",Communication Services,637.33,1612148899840,27.11,0.33,NMS,USD
+BRK-B,Berkshire Hathaway Inc. New,Financial Services,491.54,1060409442304,15.71,0.0,NYQ,USD
+WMT,Walmart Inc.,Consumer Defensive,127.68,1017933791232,46.77,0.79,NMS,USD
+LLY,Eli Lilly and Company,Healthcare,1052.4,992789397504,45.82,0.59,NYQ,USD
+JPM,JP Morgan Chase & Co.,Financial Services,295.09,795865186304,14.73,2.02,NYQ,USD
+XOM,Exxon Mobil Corporation,Energy,149.29,629578530816,22.32,2.73,NYQ,USD
+JNJ,Johnson & Johnson,Healthcare,247.0,595256410112,22.37,2.12,NYQ,USD
+V,Visa Inc.,Financial Services,304.06,586234265600,28.58,0.87,NYQ,USD
+COST,Costco Wholesale Corporation,Consumer Defensive,993.97,441280626688,53.32,0.53,NMS,USD
+MA,Mastercard Incorporated,Financial Services,492.42,439458627584,29.81,0.7,NYQ,USD
+ABBV,AbbVie Inc.,Healthcare,228.6,404032946176,96.87,2.94,NYQ,USD
+PG,Procter & Gamble Company (The),Consumer Defensive,165.88,388239720448,24.54,2.56,NYQ,USD
+HD,"Home Depot, Inc. (The)",Consumer Cyclical,388.36,386616819712,26.49,2.44,NYQ,USD
+CVX,Chevron Corporation,Energy,184.75,369380589568,27.82,3.85,NYQ,USD
+CAT,"Caterpillar, Inc.",Industrials,772.35,361444016128,41.0,0.8,NYQ,USD
+GE,GE Aerospace,Industrials,338.36,356906827776,42.14,0.55,NYQ,USD
+KO,Coca-Cola Company (The),Consumer Defensive,80.73,347286962176,26.56,2.56,NYQ,USD
+AMD,"Advanced Micro Devices, Inc.",Technology,210.32,342916169728,80.58,0.0,NMS,USD
+NFLX,"Netflix, Inc.",Communication Services,76.38,323995500544,30.19,0.0,NMS,USD
+CSCO,"Cisco Systems, Inc.",Technology,78.43,309884354560,28.21,2.16,NMS,USD
+GS,"Goldman Sachs Group, Inc. (The)",Financial Services,897.68,271747465216,17.5,2.02,NYQ,USD
+RTX,RTX Corporation,Industrials,198.29,266155507712,39.9,1.35,NYQ,USD
+MS,Morgan Stanley,Financial Services,167.4,266050371584,16.4,2.4,NYQ,USD
+UNH,UnitedHealth Group Incorporated,Healthcare,273.79,248009555968,20.68,3.13,NYQ,USD
+MCD,McDonald's Corporation,Consumer Cyclical,334.92,239000403968,28.05,2.22,NYQ,USD
+INTC,Intel Corporation,Technology,45.81,228854104064,,0.0,NMS,USD
+IBM,International Business Machines,Technology,233.96,218690666496,20.98,3.01,NYQ,USD
+TXN,Texas Instruments Incorporated,Technology,219.44,199388250112,40.26,2.58,NMS,USD
+ABT,Abbott Laboratories,Healthcare,114.56,199386972160,30.8,2.19,NYQ,USD
+TMO,Thermo Fisher Scientific Inc,Healthcare,519.43,195154034688,29.23,0.33,NYQ,USD
+DIS,Walt Disney Company (The),Communication Services,106.21,188351430656,15.64,1.44,NYQ,USD
+GILD,"Gilead Sciences, Inc.",Healthcare,148.57,184327782400,21.88,2.19,NMS,USD
+BA,Boeing Company (The),Industrials,232.97,182962307072,93.56,0.0,NYQ,USD
+CRM,"Salesforce, Inc.",Technology,185.45,176548397056,24.79,0.93,NYQ,USD
+DE,Deere & Company,Industrials,637.97,172936019968,34.48,1.0,NYQ,USD
+LOW,"Lowe's Companies, Inc.",Consumer Cyclical,280.07,157102882816,23.2,1.75,NYQ,USD
+PFE,"Pfizer, Inc.",Healthcare,27.27,155032190976,20.05,6.36,NYQ,USD
+QCOM,QUALCOMM Incorporated,Technology,145.05,154919944192,29.24,2.54,NMS,USD
+NOW,"ServiceNow, Inc.",Technology,103.61,109323362304,62.04,0.0,NYQ,USD
+ADBE,Adobe Inc.,Technology,254.58,106567188480,15.24,0.0,NMS,USD
+INTU,Intuit Inc.,Technology,363.66,101242945536,24.98,1.25,NMS,USD
+UPS,"United Parcel Service, Inc.",Industrials,115.71,98249555968,17.64,5.7,NYQ,USD
+NKE,"Nike, Inc.",Consumer Cyclical,64.26,95129436160,37.58,2.6,NYQ,USD
+AMT,American Tower Corporation (REI,Real Estate,193.05,90397073408,30.79,3.58,NYQ,USD
+MMM,3M Company,Industrials,167.56,88253906944,27.93,1.88,NYQ,USD
+MDLZ,"Mondelez International, Inc.",Consumer Defensive,60.85,78518312960,32.2,3.31,NMS,USD
+PYPL,"PayPal Holdings, Inc.",Financial Services,43.4,40602615808,8.02,1.27,NMS,USD
