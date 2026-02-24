@@ -3,53 +3,33 @@ import numpy as np
 from datetime import datetime, timedelta
 import random
 from typing import List, Dict, Any
-from utils.mock_data import MockBloombergData
+from utils.real_data import fetch_portfolio_data
+
 
 class DataIngestionEngine:
     """
     Stage 1: Data Ingestion Engine
-    Simulates Bloomberg data ingestion with realistic portfolio data
+    Fetches real market data from Yahoo Finance for portfolio analysis
     """
     
     def __init__(self):
-        self.mock_data_generator = MockBloombergData()
         self.connection_status = "Connected"
     
-    def ingest_portfolio_data(self, portfolio_size: int = 25) -> List[Dict[str, Any]]:
+    def ingest_portfolio_data(self, portfolio_size: int = 25, progress_callback=None) -> List[Dict[str, Any]]:
         """
-        Ingest portfolio data from Bloomberg API (simulated)
+        Ingest portfolio data from Yahoo Finance (real market data)
         
         Args:
             portfolio_size: Number of assets in portfolio
+            progress_callback: Optional callback for progress updates
             
         Returns:
             List of dictionaries containing asset data
         """
-        print(f"Connecting to Bloomberg API...")
-        print(f"Fetching data for {portfolio_size} assets...")
+        print(f"Connecting to Yahoo Finance API...")
+        print(f"Fetching real market data for {portfolio_size} assets...")
         
-        # Generate mock portfolio data
-        portfolio_data = []
-        
-        for i in range(portfolio_size):
-            asset_data = self.mock_data_generator.generate_asset_data()
-            
-            # Add historical price data (252 trading days = 1 year)
-            historical_data = self.mock_data_generator.generate_historical_prices(
-                asset_data['current_price'], 
-                days=252
-            )
-            
-            asset_data.update({
-                'data_ingestion_timestamp': datetime.now().isoformat(),
-                'historical_prices': historical_data['prices'],
-                'historical_dates': historical_data['dates'],
-                'trading_volume_history': historical_data['volumes'],
-                'bloomberg_id': f"BBG{random.randint(100000000, 999999999)}",
-                'data_quality_score': random.uniform(0.85, 1.0)
-            })
-            
-            portfolio_data.append(asset_data)
+        portfolio_data = fetch_portfolio_data(portfolio_size, progress_callback)
         
         print(f"Successfully ingested data for {len(portfolio_data)} assets")
         return portfolio_data
@@ -75,7 +55,6 @@ class DataIngestionEngine:
         quality_scores = []
         
         for asset in portfolio_data:
-            # Check for required fields
             required_fields = ['symbol', 'current_price', 'historical_prices', 'market_cap']
             missing_fields = [field for field in required_fields if field not in asset or asset[field] is None]
             
@@ -87,7 +66,6 @@ class DataIngestionEngine:
                     'missing_fields': missing_fields
                 })
             
-            # Track data quality scores
             if 'data_quality_score' in asset:
                 quality_scores.append(asset['data_quality_score'])
                 
@@ -104,7 +82,7 @@ class DataIngestionEngine:
     
     def get_real_time_data(self, symbols: List[str]) -> Dict[str, Dict[str, Any]]:
         """
-        Fetch real-time data for specific symbols (simulated)
+        Fetch real-time data for specific symbols
         
         Args:
             symbols: List of asset symbols
@@ -112,30 +90,68 @@ class DataIngestionEngine:
         Returns:
             Dictionary with real-time data for each symbol
         """
+        import yfinance as yf
+        
         real_time_data = {}
         
         for symbol in symbols:
-            real_time_data[symbol] = {
-                'last_price': random.uniform(50, 500),
-                'bid': random.uniform(50, 500),
-                'ask': random.uniform(50, 500),
-                'volume': random.randint(10000, 1000000),
-                'timestamp': datetime.now().isoformat(),
-                'change_percent': random.uniform(-5.0, 5.0)
-            }
+            try:
+                ticker = yf.Ticker(symbol)
+                info = ticker.info or {}
+                hist = ticker.history(period="2d")
+                
+                if not hist.empty:
+                    last_price = float(hist['Close'].iloc[-1])
+                    prev_price = float(hist['Close'].iloc[-2]) if len(hist) > 1 else last_price
+                    change_pct = ((last_price - prev_price) / prev_price) * 100
+                    
+                    real_time_data[symbol] = {
+                        'last_price': round(last_price, 2),
+                        'bid': round(info.get('bid', last_price), 2),
+                        'ask': round(info.get('ask', last_price), 2),
+                        'volume': int(hist['Volume'].iloc[-1]),
+                        'timestamp': datetime.now().isoformat(),
+                        'change_percent': round(change_pct, 2)
+                    }
+            except Exception as e:
+                real_time_data[symbol] = {
+                    'last_price': 0,
+                    'bid': 0,
+                    'ask': 0,
+                    'volume': 0,
+                    'timestamp': datetime.now().isoformat(),
+                    'change_percent': 0,
+                    'error': str(e)
+                }
         
         return real_time_data
     
     def check_connection_status(self) -> Dict[str, Any]:
         """
-        Check Bloomberg API connection status
+        Check Yahoo Finance API connection status
         
         Returns:
             Connection status information
         """
+        import yfinance as yf
+        
+        try:
+            test = yf.Ticker("AAPL")
+            hist = test.history(period="1d")
+            if not hist.empty:
+                status = "Connected"
+                latency = "OK"
+            else:
+                status = "Limited"
+                latency = "Slow"
+        except Exception:
+            status = "Disconnected"
+            latency = "N/A"
+        
         return {
-            'status': self.connection_status,
+            'status': status,
+            'data_source': 'Yahoo Finance (Free)',
             'last_check': datetime.now().isoformat(),
-            'latency_ms': random.uniform(50, 200),
-            'api_rate_limit_remaining': random.randint(800, 1000)
+            'latency': latency,
+            'rate_limit': 'No hard limit (respectful throttling applied)'
         }
