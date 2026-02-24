@@ -4,6 +4,7 @@
 A multi-stage portfolio risk analysis application built with Streamlit. Features a tabbed interactive dashboard with drilldown capabilities. Uses a 5-stage pipeline: Data Ingestion, Core Risk Analysis, ML Analysis (Anomaly Detection & Risk Prediction), Sentiment Analysis, and Report Generation.
 
 ## Recent Changes
+- **Feb 2026**: Added timezone selector for saved run timestamps — converts UTC timestamps to user's selected timezone (supports US, Europe, Asia, Australia zones). Added light/dark theme toggle in sidebar header.
 - **Feb 2026**: Replaced mock/simulated data with real-time Yahoo Finance data — pipeline now fetches actual stock prices, company info, historical data, and volumes from Yahoo Finance API via yfinance library. Uses a curated universe of ~60 major US stocks.
 - **Feb 2026**: Cloud storage for pipeline runs — results from each execution are automatically saved to PostgreSQL and can be loaded later from the sidebar. Supports listing, loading, and deleting past runs.
 - **Feb 2026**: Added configurable risk thresholds in sidebar expander — all thresholds (volatility, drawdown, volume decline, Sharpe, momentum, etc.) can now be adjusted via sliders before running the pipeline

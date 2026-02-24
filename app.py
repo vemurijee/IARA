@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 import json
 import os
 import time
@@ -358,6 +359,43 @@ if 'execution_time' not in st.session_state:
     st.session_state.execution_time = None
 if 'show_anomalies' not in st.session_state:
     st.session_state.show_anomalies = False
+if 'dark_mode' not in st.session_state:
+    st.session_state.dark_mode = False
+
+TIMEZONE_OPTIONS = {
+    "US/Eastern": "Eastern (ET)",
+    "US/Central": "Central (CT)",
+    "US/Mountain": "Mountain (MT)",
+    "US/Pacific": "Pacific (PT)",
+    "US/Hawaii": "Hawaii (HT)",
+    "US/Alaska": "Alaska (AKT)",
+    "UTC": "UTC",
+    "Europe/London": "London (GMT/BST)",
+    "Europe/Paris": "Paris (CET)",
+    "Asia/Tokyo": "Tokyo (JST)",
+    "Asia/Shanghai": "Shanghai (CST)",
+    "Asia/Kolkata": "India (IST)",
+    "Australia/Sydney": "Sydney (AEST)",
+}
+
+def convert_ts(ts, tz_name):
+    if ts is None:
+        return ""
+    if isinstance(ts, str):
+        try:
+            ts = datetime.fromisoformat(ts)
+        except Exception:
+            return str(ts)[:16]
+    if hasattr(ts, 'tzinfo'):
+        if ts.tzinfo is not None and ts.tzinfo != timezone.utc:
+            pass
+        else:
+            ts = ts.replace(tzinfo=timezone.utc)
+    try:
+        local_dt = ts.astimezone(ZoneInfo(tz_name))
+    except Exception:
+        return ts.strftime('%b %d, %Y %I:%M %p') if hasattr(ts, 'strftime') else str(ts)[:16]
+    return local_dt.strftime('%b %d, %Y %I:%M %p')
 
 
 
@@ -942,8 +980,83 @@ def render_tab_appendix(portfolio_data, analysis_results):
         st.dataframe(thresholds, use_container_width=True, hide_index=True)
 
 
+def inject_dark_css():
+    st.markdown("""
+    <style>
+        .stApp, .main .block-container { background-color: #0f172a !important; color: #e2e8f0 !important; }
+        .stApp [data-testid="stHeader"] { background-color: #0f172a !important; }
+
+        div[data-testid="stMetric"] { background: #1e293b !important; border-color: #334155 !important; box-shadow: 0 1px 3px rgba(0,0,0,0.3) !important; }
+        div[data-testid="stMetric"] label { color: #94a3b8 !important; }
+        div[data-testid="stMetric"] [data-testid="stMetricValue"] { color: #f1f5f9 !important; }
+
+        .dash-title-row h1 { color: #f1f5f9 !important; }
+        .dash-title-row .dash-date { color: #94a3b8 !important; }
+        .section-header { color: #f1f5f9 !important; border-bottom-color: #0ea5e9 !important; }
+        .section-header-row .title { color: #f1f5f9 !important; }
+        .section-header-row { border-bottom-color: #0ea5e9 !important; }
+
+        .info-card { background: #1e293b !important; border-color: #334155 !important; color: #e2e8f0 !important; }
+
+        .welcome-box { background: linear-gradient(135deg, #0c1929 0%, #162032 40%, #1a1a2e 100%) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important; }
+        .welcome-box h2 { color: #f1f5f9 !important; }
+        .welcome-box p { color: #94a3b8 !important; }
+        .welcome-box div[style*="background:white"] { background: #1e293b !important; }
+
+        .stTabs [data-baseweb="tab-list"] { background: #1e293b !important; box-shadow: 0 1px 4px rgba(0,0,0,0.3) !important; }
+        .stTabs [data-baseweb="tab"] { color: #cbd5e1 !important; }
+        .stTabs [data-baseweb="tab"]:hover { background: rgba(14, 165, 233, 0.15) !important; }
+        .stTabs [aria-selected="true"] { background: #334155 !important; color: #f1f5f9 !important; }
+
+        div[data-testid="stExpander"] { border-color: #334155 !important; }
+        div[data-testid="stExpander"] details { background: #1e293b !important; }
+        div[data-testid="stExpander"] details summary { color: #e2e8f0 !important; }
+        div[data-testid="stExpander"] details summary span p { color: inherit !important; }
+
+        .stDataFrame, .stTable { background: #1e293b !important; }
+        .stDataFrame th { background: #334155 !important; color: #e2e8f0 !important; }
+        .stDataFrame td { background: #1e293b !important; color: #e2e8f0 !important; }
+
+        p, span, li, td, th, label, .stMarkdown, div[data-testid="stText"] { color: #e2e8f0 !important; }
+        h1, h2, h3, h4, h5, h6 { color: #f1f5f9 !important; }
+        hr { border-color: #334155 !important; }
+
+        .stSelectbox label, .stSlider label, .stNumberInput label { color: #e2e8f0 !important; }
+        div[data-baseweb="select"] > div { background: #1e293b !important; border-color: #475569 !important; }
+        div[data-baseweb="select"] span { color: #e2e8f0 !important; }
+        ul[data-baseweb="menu"] { background: #1e293b !important; }
+        ul[data-baseweb="menu"] li { color: #e2e8f0 !important; }
+        ul[data-baseweb="menu"] li:hover { background: #334155 !important; }
+
+        .stButton > button { background: rgba(30, 41, 59, 0.8) !important; color: #e2e8f0 !important; border-color: #475569 !important; }
+        .stButton > button:hover { background: rgba(51, 65, 85, 0.9) !important; }
+        .stButton > button[kind="primary"] { background: linear-gradient(135deg, #0ea5e9, #0284c7) !important; color: white !important; border: none !important; }
+
+        .stDownloadButton > button { background: linear-gradient(135deg, #0ea5e9, #0284c7) !important; color: white !important; }
+
+        .stAlert, div[data-testid="stAlert"] { background: #1e293b !important; border-color: #334155 !important; }
+
+        .stPopover, div[data-testid="stPopover"] > div > div { background: #1e293b !important; border-color: #334155 !important; }
+
+        .risk-badge-red { background: linear-gradient(135deg, #3b1111, #4a1515) !important; border-color: #7f1d1d !important; }
+        .risk-badge-yellow { background: linear-gradient(135deg, #3b2e0a, #4a3a0d) !important; border-color: #78350f !important; }
+        .risk-badge-green { background: linear-gradient(135deg, #0a3b1a, #0d4a22) !important; border-color: #14532d !important; }
+    </style>
+    """, unsafe_allow_html=True)
+
+
 def main():
-    st.sidebar.header("Pipeline Controls")
+    with st.sidebar:
+        col_theme_l, col_theme_r = st.columns([3, 1])
+        with col_theme_l:
+            st.header("Pipeline Controls")
+        with col_theme_r:
+            st.markdown("<div style='height:0.4rem'></div>", unsafe_allow_html=True)
+            st.session_state.dark_mode = st.toggle("🌙", value=st.session_state.dark_mode, key="theme_toggle")
+
+    if st.session_state.dark_mode:
+        inject_dark_css()
+
     portfolio_size = st.sidebar.slider("Portfolio Size", min_value=10, max_value=100, value=25)
 
     with st.sidebar.expander("Risk Thresholds", expanded=False):
@@ -997,6 +1110,12 @@ def main():
 
     st.sidebar.markdown("---")
     st.sidebar.header("Saved Runs")
+
+    tz_labels = list(TIMEZONE_OPTIONS.values())
+    tz_keys = list(TIMEZONE_OPTIONS.keys())
+    selected_tz_label = st.sidebar.selectbox("Timezone", tz_labels, index=0, key="tz_select")
+    selected_tz = tz_keys[tz_labels.index(selected_tz_label)]
+
     try:
         saved_runs = list_pipeline_runs()
     except Exception:
@@ -1004,7 +1123,8 @@ def main():
 
     if saved_runs:
         run_options = {
-            f"#{r['id']} — {r['run_name']} ({r['total_assets']} assets, "
+            f"#{r['id']} — {r['run_name']} · {convert_ts(r.get('run_timestamp'), selected_tz)} "
+            f"({r['total_assets']} assets, "
             f"R:{r['red_count']} Y:{r['yellow_count']} G:{r['green_count']})": r['id']
             for r in saved_runs
         }
@@ -1042,7 +1162,7 @@ def main():
     if st.session_state.get('loaded_run_name'):
         ts = st.session_state.get('loaded_run_timestamp', '')
         if ts:
-            ts = ts.strftime('%Y-%m-%d %H:%M') if hasattr(ts, 'strftime') else str(ts)[:16]
+            ts = convert_ts(ts, selected_tz)
         st.sidebar.info(f"Viewing: {st.session_state.loaded_run_name} ({ts})")
 
     if st.session_state.pipeline_results:
