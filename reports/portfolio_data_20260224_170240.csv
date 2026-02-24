@@ -1,0 +1,51 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+NVDA,NVIDIA Corporation,Technology,192.96,4697999540224,47.76,0.02,NMS,USD
+GOOGL,Alphabet Inc.,Communication Services,311.05,3762786664448,28.77,0.27,NMS,USD
+MSFT,Microsoft Corporation,Technology,386.52,2872799920128,24.17,0.95,NMS,USD
+AMZN,"Amazon.com, Inc.",Consumer Cyclical,209.08,2244457267200,29.2,0.0,NMS,USD
+META,"Meta Platforms, Inc.",Communication Services,638.74,1615734505472,27.17,0.33,NMS,USD
+AVGO,Broadcom Inc.,Technology,327.32,1551913713664,68.76,0.79,NMS,USD
+TSLA,"Tesla, Inc.",Consumer Cyclical,404.27,1516845531136,374.29,0.0,NMS,USD
+BRK-B,Berkshire Hathaway Inc. New,Financial Services,492.51,1062508953600,15.75,0.0,NYQ,USD
+WMT,Walmart Inc.,Consumer Defensive,127.13,1013588557824,46.57,0.79,NMS,USD
+LLY,Eli Lilly and Company,Healthcare,1055.21,995440197632,45.94,0.59,NYQ,USD
+XOM,Exxon Mobil Corporation,Energy,149.26,629454077952,22.31,2.73,NYQ,USD
+JNJ,Johnson & Johnson,Healthcare,246.36,593702748160,22.32,2.12,NYQ,USD
+MA,Mastercard Incorporated,Financial Services,494.98,441756647424,29.96,0.7,NYQ,USD
+COST,Costco Wholesale Corporation,Consumer Defensive,994.83,441662439424,53.37,0.53,NMS,USD
+ORCL,Oracle Corporation,Technology,145.09,417059340288,27.33,1.42,NYQ,USD
+HD,"Home Depot, Inc. (The)",Consumer Cyclical,389.0,387253960704,26.53,2.44,NYQ,USD
+PG,Procter & Gamble Company (The),Consumer Defensive,165.43,387174793216,24.47,2.56,NYQ,USD
+CVX,Chevron Corporation,Energy,184.97,369820434432,27.86,3.85,NYQ,USD
+CAT,"Caterpillar, Inc.",Industrials,769.27,360002650112,40.83,0.8,NYQ,USD
+GE,GE Aerospace,Industrials,339.73,358351929344,42.31,0.55,NYQ,USD
+AMD,"Advanced Micro Devices, Inc.",Technology,212.87,347057422336,81.56,0.0,NMS,USD
+KO,Coca-Cola Company (The),Consumer Defensive,80.54,346473070592,26.5,2.56,NYQ,USD
+NFLX,"Netflix, Inc.",Communication Services,77.08,327005995008,30.47,0.0,NMS,USD
+MRK,"Merck & Company, Inc.",Healthcare,124.25,310349561856,17.07,2.75,NYQ,USD
+CSCO,"Cisco Systems, Inc.",Technology,78.28,309271920640,28.16,2.16,NMS,USD
+GS,"Goldman Sachs Group, Inc. (The)",Financial Services,900.96,272739598336,17.56,2.02,NYQ,USD
+MS,Morgan Stanley,Financial Services,167.79,266662264832,16.43,2.4,NYQ,USD
+RTX,RTX Corporation,Industrials,198.01,265779789824,39.84,1.35,NYQ,USD
+MCD,McDonald's Corporation,Consumer Cyclical,333.56,238029881344,27.94,2.22,NYQ,USD
+PEP,"Pepsico, Inc.",Consumer Defensive,168.68,230642925568,28.16,3.38,NMS,USD
+INTC,Intel Corporation,Technology,45.74,228504436736,,0.0,NMS,USD
+IBM,International Business Machines,Technology,230.91,215839719424,20.71,3.01,NYQ,USD
+ABT,Abbott Laboratories,Healthcare,114.54,199343472640,30.79,2.19,NYQ,USD
+NEE,"NextEra Energy, Inc.",Utilities,95.13,198205440000,28.83,2.65,NYQ,USD
+TMO,Thermo Fisher Scientific Inc,Healthcare,515.63,193726349312,29.02,0.33,NYQ,USD
+TXN,Texas Instruments Incorporated,Technology,212.26,192868876288,38.95,2.58,NMS,USD
+DIS,Walt Disney Company (The),Communication Services,106.4,188688384000,15.67,1.44,NYQ,USD
+GILD,"Gilead Sciences, Inc.",Healthcare,148.83,184650366976,21.92,2.19,NMS,USD
+BA,Boeing Company (The),Industrials,233.23,183166500864,93.67,0.0,NYQ,USD
+CRM,"Salesforce, Inc.",Technology,185.65,176734044160,24.82,0.93,NYQ,USD
+DE,Deere & Company,Industrials,638.08,172967198720,34.49,1.0,NYQ,USD
+LOW,"Lowe's Companies, Inc.",Consumer Cyclical,280.47,157330063360,23.24,1.75,NYQ,USD
+ACN,Accenture plc,Technology,201.3,124836126720,16.65,3.24,NYQ,USD
+NOW,"ServiceNow, Inc.",Technology,103.53,109238845440,61.99,0.0,NYQ,USD
+SBUX,Starbucks Corporation,Consumer Cyclical,95.34,108620857344,79.45,2.62,NMS,USD
+ADBE,Adobe Inc.,Technology,255.57,106983694336,15.3,0.0,NMS,USD
+UPS,"United Parcel Service, Inc.",Industrials,115.64,98190123008,17.63,5.7,NYQ,USD
+MMM,3M Company,Industrials,166.6,87748222976,27.77,1.88,NYQ,USD
+MDLZ,"Mondelez International, Inc.",Consumer Defensive,60.74,78376378368,32.14,3.31,NMS,USD
+PYPL,"PayPal Holdings, Inc.",Financial Services,43.72,40902025216,8.08,1.27,NMS,USD
