@@ -1,0 +1,26 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+AMZN,"Amazon.com, Inc.",Consumer Cyclical,209.05,2244188831744,29.2,0.0,NMS,USD
+META,"Meta Platforms, Inc.",Communication Services,638.2,1614412775424,27.15,0.33,NMS,USD
+AVGO,Broadcom Inc.,Technology,327.06,1550680981504,68.71,0.79,NMS,USD
+TSLA,"Tesla, Inc.",Consumer Cyclical,403.32,1513430843392,373.44,0.0,NMS,USD
+BRK-B,Berkshire Hathaway Inc. New,Financial Services,492.2,1061829410816,15.74,0.0,NYQ,USD
+WMT,Walmart Inc.,Consumer Defensive,127.26,1014625075200,46.62,0.79,NMS,USD
+LLY,Eli Lilly and Company,Healthcare,1056.22,996392828928,45.98,0.59,NYQ,USD
+JPM,JP Morgan Chase & Co.,Financial Services,295.9,798051860480,14.77,2.02,NYQ,USD
+MA,Mastercard Incorporated,Financial Services,494.73,441515704320,29.95,0.7,NYQ,USD
+COST,Costco Wholesale Corporation,Consumer Defensive,994.16,441367199744,53.34,0.53,NMS,USD
+ORCL,Oracle Corporation,Technology,144.8,416268976128,27.28,1.42,NYQ,USD
+ABBV,AbbVie Inc.,Healthcare,228.05,403052068864,96.63,2.94,NYQ,USD
+HD,"Home Depot, Inc. (The)",Consumer Cyclical,389.37,387622305792,26.56,2.44,NYQ,USD
+KO,Coca-Cola Company (The),Consumer Defensive,80.57,346559152128,26.5,2.56,NYQ,USD
+GS,"Goldman Sachs Group, Inc. (The)",Financial Services,899.1,272176529408,17.52,2.02,NYQ,USD
+RTX,RTX Corporation,Industrials,198.2,266041278464,39.88,1.35,NYQ,USD
+IBM,International Business Machines,Technology,230.6,215545266176,20.68,3.01,NYQ,USD
+TMO,Thermo Fisher Scientific Inc,Healthcare,516.58,194083274752,29.07,0.33,NYQ,USD
+GILD,"Gilead Sciences, Inc.",Healthcare,148.67,184451842048,21.9,2.19,NMS,USD
+CRM,"Salesforce, Inc.",Technology,185.4,176505552896,24.79,0.93,NYQ,USD
+QCOM,QUALCOMM Incorporated,Technology,144.4,154223050752,29.11,2.54,NMS,USD
+SBUX,Starbucks Corporation,Consumer Cyclical,95.12,108381601792,79.27,2.62,NMS,USD
+ADBE,Adobe Inc.,Technology,255.2,106872766464,15.29,0.0,NMS,USD
+INTU,Intuit Inc.,Technology,360.61,100393820160,24.77,1.25,NMS,USD
+PYPL,"PayPal Holdings, Inc.",Financial Services,43.71,40892669952,8.08,1.27,NMS,USD
