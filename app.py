@@ -1007,11 +1007,11 @@ def render_tab_deep_dive(portfolio_data, analysis_results, ml_results, sentiment
 def render_tab_appendix(portfolio_data, analysis_results):
     st.markdown('<div class="section-header">Methodology</div>', unsafe_allow_html=True)
     st.markdown(
-        "This pipeline uses a five-stage approach: (1) Data Ingestion from Yahoo Finance with delta-based caching, "
+        "This pipeline uses a four-stage approach: (1) Data Ingestion from Yahoo Finance with delta-based caching, "
         "(2) Core time-series and rule-based risk analysis with 7 risk flags, "
-        "(3) ML-based anomaly detection (Isolation Forest) and risk prediction (Random Forest), "
-        "(4) Sentiment analysis on RED-flagged assets using financial news, and "
-        "(5) Comprehensive report generation with PDF and CSV outputs."
+        "(3) ML-based anomaly detection (Isolation Forest) and risk prediction (Random Forest), and "
+        "(4) Sentiment analysis on RED-flagged assets using financial news. "
+        "Reports (PDF and CSV) can be generated on-demand from the Overview tab."
     )
 
     with st.expander("Data Cache", expanded=False):
@@ -1302,10 +1302,6 @@ def main():
                 <div class="step-card">
                     <div style="font-size:0.75rem; color:#10b981; text-transform:uppercase; font-weight:700;">Step 4</div>
                     <div class="step-name">Sentiment</div>
-                </div>
-                <div class="step-card">
-                    <div style="font-size:0.75rem; color:#f43f5e; text-transform:uppercase; font-weight:700;">Step 5</div>
-                    <div class="step-name">Reports</div>
                 </div>
             </div>
         </div>
