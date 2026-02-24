@@ -497,9 +497,12 @@ def render_dashboard():
     total_mcap = sum(a['market_cap'] for a in portfolio_data)
     avg_vol = np.mean([a['volatility'] for a in analysis_results])
 
+    user_tz = get_browser_timezone()
+    now_utc = datetime.now(timezone.utc)
+    display_time = convert_ts(now_utc, user_tz)
     st.markdown(
         f'<div style="text-align:right;color:#64748b;font-size:0.95rem;font-weight:500;margin-bottom:0.5rem;">'
-        f'{datetime.now().strftime("%B %d, %Y %I:%M %p")}</div>',
+        f'{display_time}</div>',
         unsafe_allow_html=True
     )
 
@@ -641,7 +644,7 @@ def render_ml_footnote(ml_results):
                 st.info("No anomalies flagged by the model.")
 
     if fi:
-        with st.expander("Feature Importance"):
+        with st.expander("Key Risk Drivers"):
             fi_df = pd.DataFrame(fi)
             fig_fi = px.bar(
                 fi_df, y='feature', x='importance', orientation='h',
