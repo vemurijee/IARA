@@ -1301,7 +1301,7 @@ def main():
                 </div>
                 <div class="step-card">
                     <div style="font-size:0.75rem; color:#10b981; text-transform:uppercase; font-weight:700;">Step 4</div>
-                    <div class="step-name">Sentiment</div>
+                    <div class="step-name">Sentiment Analysis</div>
                 </div>
             </div>
         </div>
