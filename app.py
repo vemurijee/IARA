@@ -1485,36 +1485,32 @@ def main():
     if st.session_state.pipeline_results:
         render_dashboard()
     else:
-        welcome_tab, news_tab = st.tabs(["Get Started", "Market News"])
-        with welcome_tab:
-            st.markdown("""
-            <div class="welcome-box">
-                <h2>Get Started</h2>
-                <p class="welcome-desc">
-                    Configure your portfolio size in the sidebar and click <b>Execute Full Pipeline</b> to begin analysis.
-                </p>
-                <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
-                    <div class="step-card">
-                        <div style="font-size:0.75rem; color:#0ea5e9; text-transform:uppercase; font-weight:700;">Step 1</div>
-                        <div class="step-name">Data Ingestion</div>
-                    </div>
-                    <div class="step-card">
-                        <div style="font-size:0.75rem; color:#8b5cf6; text-transform:uppercase; font-weight:700;">Step 2</div>
-                        <div class="step-name">Core Analysis</div>
-                    </div>
-                    <div class="step-card">
-                        <div style="font-size:0.75rem; color:#f97316; text-transform:uppercase; font-weight:700;">Step 3</div>
-                        <div class="step-name">ML Analysis</div>
-                    </div>
-                    <div class="step-card">
-                        <div style="font-size:0.75rem; color:#10b981; text-transform:uppercase; font-weight:700;">Step 4</div>
-                        <div class="step-name">Sentiment Analysis</div>
-                    </div>
+        st.markdown("""
+        <div class="welcome-box">
+            <h2>Get Started</h2>
+            <p class="welcome-desc">
+                Configure your portfolio size in the sidebar and click <b>Execute Full Pipeline</b> to begin analysis.
+            </p>
+            <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
+                <div class="step-card">
+                    <div style="font-size:0.75rem; color:#0ea5e9; text-transform:uppercase; font-weight:700;">Step 1</div>
+                    <div class="step-name">Data Ingestion</div>
+                </div>
+                <div class="step-card">
+                    <div style="font-size:0.75rem; color:#8b5cf6; text-transform:uppercase; font-weight:700;">Step 2</div>
+                    <div class="step-name">Core Analysis</div>
+                </div>
+                <div class="step-card">
+                    <div style="font-size:0.75rem; color:#f97316; text-transform:uppercase; font-weight:700;">Step 3</div>
+                    <div class="step-name">ML Analysis</div>
+                </div>
+                <div class="step-card">
+                    <div style="font-size:0.75rem; color:#10b981; text-transform:uppercase; font-weight:700;">Step 4</div>
+                    <div class="step-name">Sentiment Analysis</div>
                 </div>
             </div>
-            """, unsafe_allow_html=True)
-        with news_tab:
-            render_tab_market_news()
+        </div>
+        """, unsafe_allow_html=True)
 
 
 if __name__ == "__main__":
