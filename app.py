@@ -356,12 +356,12 @@ st.markdown("""
         overflow: hidden;
     }
 
-    .streamlit-expanderHeader {
+    .streamlit-expanderHeader,
+    [data-testid="stExpander"] summary,
+    [data-testid="stExpander"] summary span,
+    [data-testid="stExpander"] summary p,
+    [data-testid="stExpanderToggleDetails"] {
         font-size: 1.05rem !important;
-        font-weight: 400 !important;
-        color: #0ea5e9 !important;
-    }
-    .streamlit-expanderHeader p {
         font-weight: 400 !important;
         color: #0ea5e9 !important;
     }
