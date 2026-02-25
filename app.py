@@ -501,7 +501,7 @@ def render_dashboard():
     total_mcap = sum(a['market_cap'] for a in portfolio_data)
     avg_vol = np.mean([a['volatility'] for a in analysis_results])
 
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["Overview", "Risk & Sentiment", "Asset Deep Dive", "Market News", "Appendix"])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(["Overview", "Risk & Sentiment", "Asset Deep Dive", "Market News", "Metrics & Thresholds"])
 
     with tab1:
         render_tab_overview(portfolio_data, analysis_results, ml_results, sentiment_results, red_count, yellow_count, green_count, total_mcap, avg_vol, r)

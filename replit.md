@@ -48,7 +48,7 @@ A multi-stage portfolio risk analysis application built with Streamlit. Features
 2. **Risk & Sentiment**: Recommendations (collapsible), Flagged Assets in scrollable container with styled news cards, Sentiment Overview (collapsible)
 3. **Asset Deep Dive**: Type-ahead selectbox, per-asset drilldown with risk flags, sentiment expander, news articles with fetch button, historical prices & ML anomaly charts
 4. **Market News**: Live RSS feed from 5 major financial outlets, filterable by source and category, auto-categorized (Fed, Earnings, Geopolitical, Tech, Energy, Jobs), sentiment-scored, 2-day window
-5. **Appendix**: Methodology, data cache stats, performance metrics, risk thresholds, risk flags detail
+5. **Metrics & Thresholds**: Methodology, data cache stats, performance metrics, risk thresholds, risk flags detail
 
 ## Database
 - PostgreSQL (Replit built-in) via `DATABASE_URL` environment variable
