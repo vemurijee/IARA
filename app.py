@@ -9,6 +9,7 @@ import os
 import time
 import plotly.express as px
 import plotly.graph_objects as go
+import streamlit.components.v1 as components
 
 from pipeline.data_ingestion import DataIngestionEngine
 from pipeline.core_analysis import CoreAnalysisEngine
@@ -356,22 +357,8 @@ st.markdown("""
         overflow: hidden;
     }
 
-    .streamlit-expanderHeader,
-    details summary,
-    details summary *,
-    [data-testid="stExpander"] summary,
-    [data-testid="stExpander"] summary *,
-    [data-testid="stExpanderToggleDetails"],
-    [data-testid="stExpanderToggleDetails"] * {
+    .streamlit-expanderHeader {
         font-size: 1.05rem !important;
-        font-weight: 400 !important;
-        color: #0ea5e9 !important;
-    }
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(> div[data-key="recommendations_container"]) summary,
-    div[data-testid="stVerticalBlockBorderWrapper"]:has(> div[data-key="recommendations_container"]) summary *,
-    div[data-key="recommendations_container"] summary,
-    div[data-key="recommendations_container"] summary * {
-        color: #ef4444 !important;
     }
 
     .exec-time-badge {
@@ -670,10 +657,8 @@ def render_ml_footnote(ml_results):
 
 
 def render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sentiment_results):
-    rec_container = st.container(key="recommendations_container")
-    with rec_container:
-        with st.expander("⚠ Recommendations", expanded=False):
-            render_recommendations_content(analysis_results, sentiment_results)
+    with st.expander("⚠ Recommendations", expanded=False):
+        render_recommendations_content(analysis_results, sentiment_results)
 
     if not sentiment_results:
         st.info("No RED-flagged assets required sentiment analysis.")
@@ -1377,6 +1362,38 @@ def main():
 
     if st.session_state.dark_mode:
         inject_dark_css()
+
+    components.html("""
+    <script>
+    function styleExpanders() {
+        const doc = window.parent.document;
+        const summaries = doc.querySelectorAll('details summary');
+        summaries.forEach(function(s) {
+            const text = s.textContent || '';
+            if (text.includes('Recommendations')) {
+                s.style.setProperty('color', '#ef4444', 'important');
+                s.style.setProperty('font-weight', '400', 'important');
+                s.querySelectorAll('*').forEach(function(el) {
+                    el.style.setProperty('color', '#ef4444', 'important');
+                    el.style.setProperty('font-weight', '400', 'important');
+                });
+            } else {
+                s.style.setProperty('color', '#0ea5e9', 'important');
+                s.style.setProperty('font-weight', '400', 'important');
+                s.querySelectorAll('*').forEach(function(el) {
+                    el.style.setProperty('color', '#0ea5e9', 'important');
+                    el.style.setProperty('font-weight', '400', 'important');
+                });
+            }
+        });
+    }
+    const observer = new MutationObserver(styleExpanders);
+    observer.observe(window.parent.document.body, {childList: true, subtree: true});
+    setTimeout(styleExpanders, 500);
+    setTimeout(styleExpanders, 1500);
+    setTimeout(styleExpanders, 3000);
+    </script>
+    """, height=0)
 
     st.sidebar.header("Pipeline Controls")
 
