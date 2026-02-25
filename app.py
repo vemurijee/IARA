@@ -357,13 +357,21 @@ st.markdown("""
     }
 
     .streamlit-expanderHeader,
+    details summary,
+    details summary *,
     [data-testid="stExpander"] summary,
-    [data-testid="stExpander"] summary span,
-    [data-testid="stExpander"] summary p,
-    [data-testid="stExpanderToggleDetails"] {
+    [data-testid="stExpander"] summary *,
+    [data-testid="stExpanderToggleDetails"],
+    [data-testid="stExpanderToggleDetails"] * {
         font-size: 1.05rem !important;
         font-weight: 400 !important;
         color: #0ea5e9 !important;
+    }
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(> div[data-key="recommendations_container"]) summary,
+    div[data-testid="stVerticalBlockBorderWrapper"]:has(> div[data-key="recommendations_container"]) summary *,
+    div[data-key="recommendations_container"] summary,
+    div[data-key="recommendations_container"] summary * {
+        color: #ef4444 !important;
     }
 
     .exec-time-badge {
@@ -662,8 +670,10 @@ def render_ml_footnote(ml_results):
 
 
 def render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sentiment_results):
-    with st.expander(":red[⚠ Recommendations]", expanded=False):
-        render_recommendations_content(analysis_results, sentiment_results)
+    rec_container = st.container(key="recommendations_container")
+    with rec_container:
+        with st.expander("⚠ Recommendations", expanded=False):
+            render_recommendations_content(analysis_results, sentiment_results)
 
     if not sentiment_results:
         st.info("No RED-flagged assets required sentiment analysis.")
