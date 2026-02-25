@@ -1,9 +1,31 @@
 import os
 import json
+import math
 import psycopg2
 from datetime import datetime
 from typing import Dict, Any, List, Optional
 import numpy as np
+
+
+def sanitize_for_json(obj):
+    if isinstance(obj, dict):
+        return {k: sanitize_for_json(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [sanitize_for_json(v) for v in obj]
+    if isinstance(obj, float) and (math.isinf(obj) or math.isnan(obj)):
+        return None
+    if isinstance(obj, (np.integer,)):
+        return int(obj)
+    if isinstance(obj, (np.floating,)):
+        v = float(obj)
+        if math.isinf(v) or math.isnan(v):
+            return None
+        return v
+    if isinstance(obj, np.ndarray):
+        return sanitize_for_json(obj.tolist())
+    if isinstance(obj, np.bool_):
+        return bool(obj)
+    return obj
 
 
 class NumpyEncoder(json.JSONEncoder):
@@ -11,7 +33,10 @@ class NumpyEncoder(json.JSONEncoder):
         if isinstance(obj, (np.integer,)):
             return int(obj)
         if isinstance(obj, (np.floating,)):
-            return float(obj)
+            v = float(obj)
+            if math.isinf(v) or math.isnan(v):
+                return None
+            return v
         if isinstance(obj, np.ndarray):
             return obj.tolist()
         if isinstance(obj, np.bool_):
@@ -52,11 +77,11 @@ def save_pipeline_run(
             (
                 run_name,
                 portfolio_size,
-                json.dumps(risk_thresholds, cls=NumpyEncoder),
-                json.dumps(portfolio_data, cls=NumpyEncoder),
-                json.dumps(analysis_results, cls=NumpyEncoder),
-                json.dumps(ml_results, cls=NumpyEncoder),
-                json.dumps(sentiment_results, cls=NumpyEncoder),
+                json.dumps(sanitize_for_json(risk_thresholds)),
+                json.dumps(sanitize_for_json(portfolio_data)),
+                json.dumps(sanitize_for_json(analysis_results)),
+                json.dumps(sanitize_for_json(ml_results)),
+                json.dumps(sanitize_for_json(sentiment_results)),
                 execution_time,
                 red_count,
                 yellow_count,
