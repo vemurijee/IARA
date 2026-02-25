@@ -358,8 +358,12 @@ st.markdown("""
 
     .streamlit-expanderHeader {
         font-size: 1.05rem !important;
-        font-weight: 600 !important;
-        color: #1e293b !important;
+        font-weight: 400 !important;
+        color: #0ea5e9 !important;
+    }
+    .streamlit-expanderHeader p {
+        font-weight: 400 !important;
+        color: #0ea5e9 !important;
     }
 
     .exec-time-badge {
@@ -658,7 +662,7 @@ def render_ml_footnote(ml_results):
 
 
 def render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sentiment_results):
-    with st.expander("⚠ Recommendations", expanded=False):
+    with st.expander(":red[⚠ Recommendations]", expanded=False):
         render_recommendations_content(analysis_results, sentiment_results)
 
     if not sentiment_results:
