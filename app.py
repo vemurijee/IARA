@@ -1351,7 +1351,7 @@ def inject_dark_css():
 def main():
     user_tz = get_browser_timezone()
 
-    col_title, col_toggle, col_ts = st.columns([6, 1, 3])
+    col_title, col_toggle, col_ts = st.columns([7, 1, 3], gap="small")
     with col_title:
         st.markdown(
             '<div style="padding-top:0.3rem;"><span style="font-size:1.8rem;font-weight:800;letter-spacing:-0.02em;">Portfolio Risk Dashboard</span></div>',
@@ -1364,7 +1364,7 @@ def main():
         user_tz_ts = st.session_state.get('browser_tz') or "UTC"
         now_display = convert_ts(datetime.now(timezone.utc), user_tz_ts)
         st.markdown(
-            f'<div style="text-align:right;padding-top:0.55rem;color:#64748b;font-size:0.95rem;font-weight:500;">'
+            f'<div style="text-align:right;padding-top:0.7rem;color:#64748b;font-size:0.95rem;font-weight:500;">'
             f'{now_display}</div>',
             unsafe_allow_html=True
         )
