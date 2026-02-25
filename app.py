@@ -466,7 +466,7 @@ def execute_pipeline(portfolio_size, risk_thresholds=None):
                 now_local = datetime.now(timezone.utc).astimezone(ZoneInfo(user_tz_name))
             except Exception:
                 now_local = datetime.now()
-            run_name = f"Run {now_local.strftime('%b %d %I:%M %p')}"
+            run_name = f"Run"
             run_id = save_pipeline_run(
                 run_name=run_name,
                 portfolio_size=portfolio_size,
@@ -1447,7 +1447,7 @@ def main():
 
     if saved_runs:
         run_options = {
-            f"#{r['id']} — {r['run_name']} "
+            f"#{r['id']} — {r['run_name']} · {convert_ts(r.get('run_timestamp'), user_tz)} "
             f"({r['total_assets']} assets, "
             f"R:{r['red_count']} Y:{r['yellow_count']} G:{r['green_count']})": r['id']
             for r in saved_runs
