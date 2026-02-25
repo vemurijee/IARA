@@ -1,4 +1,4 @@
-# Portfolio Risk Analysis Dashboard
+# Financial Risk Intelligence Dashboard
 
 ## Overview
 A multi-stage portfolio risk analysis application built with Streamlit. Features a tabbed interactive dashboard with drilldown capabilities. Uses a 4-stage pipeline: Data Ingestion, Core Risk Analysis, ML Analysis (Anomaly Detection & Risk Prediction), and Sentiment Analysis. Report generation (PDF/CSV) is on-demand from the Overview tab.

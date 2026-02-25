@@ -19,7 +19,7 @@ from pipeline.report_generator import ReportGenerator
 from pipeline.storage import save_pipeline_run, list_pipeline_runs, load_pipeline_run, delete_pipeline_run
 
 st.set_page_config(
-    page_title="Portfolio Risk Dashboard",
+    page_title="Financial Risk Intelligence",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -1353,7 +1353,7 @@ def main():
     col_title, col_toggle = st.columns([9, 1])
     with col_title:
         st.markdown(
-            '<div style="padding-top:0.3rem;"><span style="font-size:1.8rem;font-weight:800;letter-spacing:-0.02em;">Portfolio Risk Dashboard</span></div>',
+            '<div style="padding-top:0.3rem;"><span style="font-size:1.8rem;font-weight:800;letter-spacing:-0.02em;">Financial Risk Intelligence</span></div>',
             unsafe_allow_html=True
         )
     with col_toggle:
