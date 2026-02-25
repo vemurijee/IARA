@@ -661,6 +661,31 @@ def render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sent
     with st.expander("⚠ Recommendations", expanded=False):
         render_recommendations_content(analysis_results, sentiment_results)
 
+    if not sentiment_results:
+        st.info("No RED-flagged assets required sentiment analysis.")
+    else:
+      with st.expander("Sentiment Overview", expanded=False):
+        left, right = st.columns(2)
+        with left:
+            avg_sent = np.mean([s['sentiment_score'] for s in sentiment_results])
+            neg_count = len([s for s in sentiment_results if s.get('sentiment_label') == 'NEGATIVE'])
+            total_articles = sum(s.get('news_count', 0) for s in sentiment_results)
+            st.metric("Avg Sentiment Score", f"{avg_sent:.3f}")
+            st.metric("Negative Sentiment Count", neg_count)
+            st.metric("Total Articles Analyzed", total_articles)
+        with right:
+            rows = []
+            for s in sentiment_results:
+                themes = ', '.join(s.get('key_themes', [])[:3]) if s.get('key_themes') else ''
+                rows.append({
+                    'Symbol': s['symbol'],
+                    'Sentiment Score': f"{s['sentiment_score']:.3f}",
+                    'Label': s.get('sentiment_label', ''),
+                    'Trend': s.get('sentiment_trend', ''),
+                    'Key Themes': themes,
+                })
+            st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+
     st.markdown('<div class="section-header">Flagged Assets</div>', unsafe_allow_html=True)
     flagged = [a for a in analysis_results if a['risk_rating'] in ['RED', 'YELLOW']]
     flagged = sorted(flagged, key=lambda x: x['risk_score'], reverse=True)
@@ -787,31 +812,6 @@ def render_tab_risk_sentiment(portfolio_data, analysis_results, ml_results, sent
                                 )
                         elif not articles:
                             st.info("No recent news articles found for this asset.")
-
-    if not sentiment_results:
-        st.info("No RED-flagged assets required sentiment analysis.")
-    else:
-      with st.expander("Sentiment Overview", expanded=False):
-        left, right = st.columns(2)
-        with left:
-            avg_sent = np.mean([s['sentiment_score'] for s in sentiment_results])
-            neg_count = len([s for s in sentiment_results if s.get('sentiment_label') == 'NEGATIVE'])
-            total_articles = sum(s.get('news_count', 0) for s in sentiment_results)
-            st.metric("Avg Sentiment Score", f"{avg_sent:.3f}")
-            st.metric("Negative Sentiment Count", neg_count)
-            st.metric("Total Articles Analyzed", total_articles)
-        with right:
-            rows = []
-            for s in sentiment_results:
-                themes = ', '.join(s.get('key_themes', [])[:3]) if s.get('key_themes') else ''
-                rows.append({
-                    'Symbol': s['symbol'],
-                    'Sentiment Score': f"{s['sentiment_score']:.3f}",
-                    'Label': s.get('sentiment_label', ''),
-                    'Trend': s.get('sentiment_trend', ''),
-                    'Key Themes': themes,
-                })
-            st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
 
 

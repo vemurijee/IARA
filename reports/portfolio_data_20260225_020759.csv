@@ -1,0 +1,90 @@
+symbol,company_name,sector,current_price,market_cap,pe_ratio,dividend_yield,exchange,currency
+PG,Procter & Gamble Company (The),Consumer Defensive,165.35,386999255040,24.46,2.56,NYQ,USD
+AMD,"Advanced Micro Devices, Inc.",Technology,215.07,350657216512,82.4,0.0,NMS,USD
+CSCO,"Cisco Systems, Inc.",Technology,78.35,309548515328,28.18,2.16,NMS,USD
+BA,Boeing Company (The),Industrials,233.35,183260741632,93.71,0.0,NYQ,USD
+LOW,"Lowe's Companies, Inc.",Consumer Cyclical,279.52,156794355712,23.16,1.75,NYQ,USD
+QCOM,QUALCOMM Incorporated,Technology,144.34,154161528832,29.1,2.54,NMS,USD
+COP,ConocoPhillips,Energy,110.4,134946250752,17.39,3.06,NYQ,USD
+BMY,Bristol-Myers Squibb Company,Healthcare,61.6,125446774784,17.8,4.11,NYQ,USD
+VRTX,Vertex Pharmaceuticals Incorpor,Healthcare,490.56,124602236928,32.06,0.0,NMS,USD
+IBKR,"Interactive Brokers Group, Inc.",Financial Services,72.64,123474968576,32.72,0.45,NMS,USD
+ICE,Intercontinental Exchange Inc.,Financial Services,155.77,88819564544,27.04,1.35,NYQ,USD
+ADP,"Automatic Data Processing, Inc.",Technology,204.25,82608701440,19.62,3.31,NMS,USD
+REGN,"Regeneron Pharmaceuticals, Inc.",Healthcare,776.06,82044911616,18.71,0.48,NMS,USD
+CI,The Cigna Group,Healthcare,283.44,75714142208,12.78,2.2,NYQ,USD
+LHX,"L3Harris Technologies, Inc.",Industrials,354.27,66267209728,41.68,1.41,NYQ,USD
+APD,"Air Products and Chemicals, Inc",Basic Materials,279.47,62225674240,,2.56,NYQ,USD
+O,Realty Income Corporation,Real Estate,66.47,61026492416,62.12,4.86,NYQ,USD
+ZTS,Zoetis Inc.,Healthcare,128.42,56593821696,21.3,1.69,NYQ,USD
+MET,"MetLife, Inc.",Financial Services,75.72,49894567936,15.61,3.02,NYQ,USD
+XEL,Xcel Energy Inc.,Utilities,83.58,49440894976,24.44,2.74,NMS,USD
+FANG,"Diamondback Energy, Inc.",Energy,172.52,49431396352,12.21,2.3,NMS,USD
+UI,Ubiquiti Inc.,Technology,757.9,45868707840,51.66,0.44,NYQ,USD
+KMB,Kimberly-Clark Corporation,Consumer Defensive,110.8,36777000960,22.8,4.63,NMS,USD
+UAL,"United Airlines Holdings, Inc.",Industrials,112.42,36394622976,11.02,0.0,NMS,USD
+MTB,M&T Bank Corporation,Financial Services,220.95,34526920704,13.0,2.7,NYQ,USD
+DG,Dollar General Corporation,Consumer Defensive,152.61,33592340480,26.36,1.54,NYQ,USD
+PAYX,"Paychex, Inc.",Technology,88.98,31940925440,20.13,4.94,NMS,USD
+CBOE,"Cboe Global Markets, Inc.",Financial Services,293.59,30722582528,28.2,0.96,BTS,USD
+CTSH,Cognizant Technology Solutions ,Technology,61.87,29861337088,13.57,2.16,NMS,USD
+DVN,Devon Energy Corporation,Energy,43.37,26900862976,10.4,2.2,NYQ,USD
+GIS,"General Mills, Inc.",Consumer Defensive,45.07,24048543744,9.69,5.38,NYQ,USD
+XPO,"XPO, Inc.",Industrials,204.2,23969865728,77.35,0.0,NYQ,USD
+EFX,"Equifax, Inc.",Industrials,194.68,23827060736,36.66,1.06,NYQ,USD
+ATI,ATI Inc.,Industrials,161.41,22248171520,56.64,0.0,NYQ,USD
+CNC,Centene Corporation,Healthcare,42.0,20654383104,,0.0,NYQ,USD
+INCY,Incyte Corporation,Healthcare,100.97,20095485952,15.75,0.0,NMS,USD
+BURL,"Burlington Stores, Inc.",Consumer Cyclical,307.16,19328659456,35.22,0.0,NYQ,USD
+CSL,Carlisle Companies Incorporated,Industrials,406.29,16977142784,23.69,1.07,NYQ,USD
+SUI,"Sun Communities, Inc.",Real Estate,131.59,16929383424,,3.17,NYQ,USD
+CLX,Clorox Company (The),Consumer Defensive,126.67,15450644480,20.73,3.91,NYQ,USD
+FFIV,"F5, Inc.",Technology,271.65,15432732672,22.51,0.0,NMS,USD
+GFL,GFL Environmental Inc. Subordin,Industrials,42.25,15199926272,103.05,0.15,NYQ,USD
+REG,Regency Centers Corporation,Real Estate,77.12,14402689024,27.35,3.88,NMS,USD
+PNFP,"Pinnacle Financial Partners, In",Financial Services,94.12,14144547840,12.01,1.29,NYQ,USD
+HRL,Hormel Foods Corporation,Consumer Defensive,25.57,14063492096,29.39,4.65,NYQ,USD
+NWSA,News Corporation,Communication Services,23.32,13557029888,30.29,0.87,NMS,USD
+MEDP,"Medpace Holdings, Inc.",Healthcare,443.81,12595897344,29.08,0.0,NMS,USD
+HLI,"Houlihan Lokey, Inc.",Financial Services,165.66,11607582720,25.45,1.47,NYQ,USD
+TTMI,"TTM Technologies, Inc.",Technology,107.71,11137485824,64.11,0.0,NMS,USD
+Z,"Zillow Group, Inc.",Communication Services,43.24,10472605696,480.5,0.0,NMS,USD
+OGE,OGE Energy Corp,Utilities,48.15,9931372544,20.75,3.53,NYQ,USD
+MASI,Masimo Corporation,Healthcare,175.52,9427872768,,0.0,NMS,USD
+LLYVK,"Liberty Live Holdings, Inc. - S",Communication Services,95.16,8745452544,,0.0,NMS,USD
+VICR,Vicor Corporation,Technology,186.64,8383731200,101.99,0.0,NMS,USD
+PRI,"Primerica, Inc.",Financial Services,253.71,8097583104,11.08,1.71,NYQ,USD
+U,Unity Software Inc.,Technology,18.08,7825545728,,0.0,NYQ,USD
+VFC,V.F. Corporation,Consumer Cyclical,20.0,7824914432,35.09,1.83,NYQ,USD
+TKR,Timken Company (The),Industrials,109.54,7617882112,26.65,1.3,NYQ,USD
+FND,"Floor & Decor Holdings, Inc.",Consumer Cyclical,69.51,7490128896,34.76,0.0,NYQ,USD
+INGR,Ingredion Incorporated,Consumer Defensive,117.1,7439378944,10.47,2.83,NYQ,USD
+BYD,Boyd Gaming Corporation,Consumer Cyclical,85.51,6856551936,3.79,0.88,NYQ,USD
+FBIN,"Fortune Brands Innovations, Inc",Industrials,56.39,6774349824,22.83,1.87,NYQ,USD
+VSEC,VSE Corporation,Industrials,224.86,6291584512,74.95,0.18,NMS,USD
+MTDR,Matador Resources Company,Energy,50.27,6258334720,8.06,2.93,NYQ,USD
+RIOT,"Riot Platforms, Inc.",Financial Services,16.55,6153409024,31.83,0.0,NCM,USD
+DOCN,"DigitalOcean Holdings, Inc.",Technology,64.26,5879285248,25.7,0.0,NYQ,USD
+ST,Sensata Technologies Holding pl,Technology,38.88,5663989248,,1.3,NYQ,USD
+SON,Sonoco Products Company,Consumer Cyclical,57.27,5648712704,9.66,3.73,NYQ,USD
+ATMU,Atmus Filtration Technologies I,Consumer Cyclical,64.96,5295123968,25.99,0.35,NYQ,USD
+FTDR,"frontdoor, inc.",Consumer Cyclical,55.46,4039863552,15.89,0.0,NMS,USD
+CNO,"CNO Financial Group, Inc.",Financial Services,41.53,3959554816,18.05,1.65,NYQ,USD
+BKU,"BankUnited, Inc.",Financial Services,47.79,3591063296,13.54,2.57,NYQ,USD
+QLYS,"Qualys, Inc.",Technology,87.76,3167774464,16.13,0.0,NMS,USD
+MTRN,Materion Corporation,Basic Materials,152.03,3152526336,42.47,0.38,NYQ,USD
+CVBF,CVB Financial Corporation,Financial Services,19.5,2648636672,12.83,4.1,NMS,USD
+NGVT,Ingevity Corporation,Basic Materials,71.69,2614450176,,0.0,NYQ,USD
+HUBG,"Hub Group, Inc.",Industrials,40.97,2509390592,23.56,1.21,NMS,USD
+RHI,Robert Half Inc.,Industrials,24.09,2450884352,18.11,9.9,NYQ,USD
+TENB,"Tenable Holdings, Inc.",Technology,18.56,2215029504,,0.0,NMS,USD
+FLO,"Flowers Foods, Inc.",Consumer Defensive,10.07,2127620608,25.19,9.77,NYQ,USD
+KSS,Kohl's Corporation,Consumer Cyclical,18.02,2021660416,10.42,2.76,NYQ,USD
+SYBT,"Stock Yards Bancorp, Inc.",Financial Services,65.78,1939123968,13.85,1.94,NMS,USD
+SONO,"Sonos, Inc.",Technology,14.99,1811995392,,0.0,NMS,USD
+FIVN,"Five9, Inc.",Technology,18.32,1432918016,48.21,0.0,NGM,USD
+FOXF,Fox Factory Holding Corp.,Consumer Cyclical,19.07,797151872,,0.0,NMS,USD
+UDMY,"Udemy, Inc.",Consumer Defensive,4.87,712854848,162.33,0.0,NMS,USD
+OFLX,"Omega Flex, Inc.",Industrials,36.66,370027584,23.05,3.72,NGM,USD
+SBNY,"Signature Bank (New York, NY)",Financial Services,0.75,59825336,0.07,0.0,PNK,USD
+CMBM,Cambium Networks Corporation,Technology,1.22,34448972,,0.0,NGM,USD
