@@ -502,15 +502,6 @@ def render_dashboard():
     total_mcap = sum(a['market_cap'] for a in portfolio_data)
     avg_vol = np.mean([a['volatility'] for a in analysis_results])
 
-    user_tz = st.session_state.get('browser_tz') or "UTC"
-    now_utc = datetime.now(timezone.utc)
-    display_time = convert_ts(now_utc, user_tz)
-    st.markdown(
-        f'<div style="text-align:right;color:#64748b;font-size:0.95rem;font-weight:500;margin-bottom:0.5rem;">'
-        f'{display_time}</div>',
-        unsafe_allow_html=True
-    )
-
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["Overview", "Risk & Sentiment", "Asset Deep Dive", "Market News", "Appendix"])
 
     with tab1:
@@ -1360,7 +1351,7 @@ def inject_dark_css():
 def main():
     user_tz = get_browser_timezone()
 
-    col_title, col_toggle = st.columns([9, 1])
+    col_title, col_toggle, col_ts = st.columns([6, 1, 3])
     with col_title:
         st.markdown(
             '<div style="padding-top:0.3rem;"><span style="font-size:1.8rem;font-weight:800;letter-spacing:-0.02em;">Portfolio Risk Dashboard</span></div>',
@@ -1369,6 +1360,14 @@ def main():
     with col_toggle:
         st.markdown("<div style='height:0.5rem'></div>", unsafe_allow_html=True)
         st.session_state.dark_mode = st.toggle("🌙", value=st.session_state.dark_mode, key="theme_toggle")
+    with col_ts:
+        user_tz_ts = st.session_state.get('browser_tz') or "UTC"
+        now_display = convert_ts(datetime.now(timezone.utc), user_tz_ts)
+        st.markdown(
+            f'<div style="text-align:right;padding-top:0.55rem;color:#64748b;font-size:0.95rem;font-weight:500;">'
+            f'{now_display}</div>',
+            unsafe_allow_html=True
+        )
 
     if st.session_state.dark_mode:
         inject_dark_css()
